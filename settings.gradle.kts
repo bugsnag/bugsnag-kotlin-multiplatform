@@ -27,3 +27,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
+include(":bugsnag-kotlin")
