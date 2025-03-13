@@ -4,15 +4,20 @@ android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
 junit = "4.13.2"
-kotlin = "2.1.0"
+kotlin = "2.1.10"
 dokka = "1.7.20"
 detekt = "1.21.0"
 ktlint = "11.2.0"
+
+bugsnag-android = "6.12.1"
+bugsnag-js = "8.3.0"
+bugsnag-cocoa = "6.32.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+bugsnag-android = { module = "com.bugsnag:bugsnag-android", version.ref = "bugsnag-android" }
 
 [plugins]
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
@@ -21,4 +26,4 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.29.0" }
-native-cocoapods = {id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin"}
+native-cocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
