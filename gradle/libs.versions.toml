@@ -10,7 +10,7 @@ detekt = "1.21.0"
 ktlint = "11.2.0"
 
 bugsnag-android = "6.12.1"
-bugsnag-js = "8.3.0"
+bugsnag-js = "8.2.0"
 bugsnag-cocoa = "6.32.1"
 
 [libraries]
