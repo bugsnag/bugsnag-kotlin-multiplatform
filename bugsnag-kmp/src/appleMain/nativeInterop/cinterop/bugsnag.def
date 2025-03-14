@@ -1,0 +1,3 @@
+headers = Bugsnag/Bugsnag.h
+package = com.bugsnag.cocoa
+language = Objective-C
