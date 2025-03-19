@@ -9,4 +9,13 @@ public actual object Bugsnag {
     public actual fun start(configuration: Configuration) {
         PlatformBugsnag.startWithConfiguration(configuration.native)
     }
+
+    public actual fun addMetadata(section: String, key: String, value: Any?) {
+        PlatformBugsnag.addMetadata(value, key, section)
+    }
+
+    @Suppress("UNCHECKED", "UNCHECKED_CAST")
+    public actual fun addMetadata(section: String, data: Map<String, Any>) {
+        PlatformBugsnag.addMetadata(data as Map<Any?, *>, section)
+    }
 }

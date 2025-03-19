@@ -4,4 +4,13 @@ public actual object Bugsnag {
     public actual fun start(configuration: Configuration) {
         JsBugsnag.start(configuration.native)
     }
+
+    public actual fun addMetadata(section: String, key: String, value: Any?) {
+        JsBugsnag.addMetadata(section, key, value)
+    }
+
+    public actual fun addMetadata(section: String, data: Map<String, Any>) {
+        val dynamicData = data.convertToDynamic()
+        JsBugsnag.addMetadata(section, dynamicData)
+    }
 }

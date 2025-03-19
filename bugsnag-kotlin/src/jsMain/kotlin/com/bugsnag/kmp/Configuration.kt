@@ -38,4 +38,23 @@ public actual class Configuration(
     public actual var launchDurationMillis: Long
         get() = 0
         set(_) {}
+
+    private val metadata: dynamic
+        get() {
+            var m = obj.metadata
+            if (m == null) {
+                m = Any().asDynamic()
+                obj.metadata = m
+            }
+            return m
+        }
+
+    public actual fun addMetadata(section: String, key: String, value: Any?) {
+        val map = mapOf(key to value)
+        metadata[section]?.putAll(map.toSafeMetadata())
+    }
+
+    public actual fun addMetadata(section: String, data: Map<String, Any>) {
+        metadata[section]?.putAll(data.toSafeMetadata())
+    }
 }

@@ -33,4 +33,12 @@ public actual class Configuration(
         set(value) {
             native.autoTrackSessions = value
         }
+
+    public actual fun addMetadata(section: String, key: String, value: Any?) {
+        native.addMetadata(value, key, section)
+    }
+
+    public actual fun addMetadata(section: String, data: Map<String, Any>) {
+        native.addMetadata(data as Map<Any?, *>, section)
+    }
 }

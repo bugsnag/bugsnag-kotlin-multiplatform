@@ -38,4 +38,12 @@ public actual class Configuration(
         set(value) {
             native.versionCode = value
         }
+
+    public actual fun addMetadata(section: String, key: String, value: Any?) {
+        native.addMetadata(section, key, value)
+    }
+
+    public actual fun addMetadata(section: String, data: Map<String, Any>) {
+        native.addMetadata(section, data)
+    }
 }
