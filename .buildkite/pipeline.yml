@@ -1,0 +1,45 @@
+agents:
+  queue: 'opensource'
+
+steps:
+
+  - label: ':android: Build Fixtures'
+    key: "fixtures"
+    timeout_in_minutes: 30
+    agents:
+      queue: macos-14
+    artifact_paths:
+      - "build/test-fixture.apk"
+      - "build/fixture-url.txt"
+      - "build/bs-fixture-url.txt"
+      - "build/fixture/*"
+      - "features/fixtures/iosApp/output/iOSApp_Release.ipa"
+      - "features/fixtures/ios/output/ipa_url_bb_release.txt"
+      - "features/fixtures/ios/output/ipa_url_bs_release.txt"
+    commands:
+      - bundle install
+      - make test-fixture
+      - bundle exec upload-app --farm=bb --app=./build/test-fixture.apk --app-id-file=build/fixture-url.txt
+      - bundle exec upload-app --farm=bs --app=./build/test-fixture.apk --app-id-file=build/bs-fixture-url.txt
+      - bundle exec upload-app --farm=bb --app=./features/fixtures/iosApp/output/iOSApp_Release.ipa --app-id-file=./features/fixtures/ios/output/ipa_url_bb_release.txt
+      - bundle exec upload-app --farm=bs --app=./features/fixtures/iosApp/output/iOSApp_Release.ipa --app-id-file=./features/fixtures/ios/output/ipa_url_bs_release.txt
+    env:
+      JAVA_VERSION: 17
+
+  - label: ':android: Coding standards checks'
+    timeout_in_minutes: 20
+    agents:
+      queue: macos-14
+    command: './gradlew --continue detekt ktlintCheck'
+    env:
+      JAVA_VERSION: 17
+
+  - label: ':android: Lint mazerunner scenarios'
+    timeout_in_minutes: 10
+    agents:
+      queue: macos-14
+    commands:
+      - cd features/fixtures/mazerunner
+      - ./gradlew ktlintCheck detekt
+    env:
+      JAVA_VERSION: 17
