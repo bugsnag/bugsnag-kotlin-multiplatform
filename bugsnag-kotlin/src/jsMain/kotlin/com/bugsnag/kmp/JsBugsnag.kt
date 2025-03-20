@@ -7,4 +7,6 @@ internal external object JsBugsnag {
     fun startSession()
     fun pauseSession()
     fun resumeSession(): Boolean
+    fun clearFeatureFlag(name: String)
+    fun clearFeatureFlags()
 }

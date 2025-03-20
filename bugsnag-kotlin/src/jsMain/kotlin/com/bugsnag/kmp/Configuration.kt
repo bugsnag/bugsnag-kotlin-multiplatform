@@ -38,4 +38,18 @@ public actual class Configuration(
     public actual var launchDurationMillis: Long
         get() = 0
         set(_) {}
+
+    private var featureFlags: Array<FeatureFlag>?
+        get() = obj.featureFlags
+        set(value) {
+            obj.featureFlags = value
+        }
+
+    public actual fun clearFeatureFlag(name: String) {
+        featureFlags = featureFlags?.filter { it.name != name }?.toTypedArray()
+    }
+
+    public actual fun clearFeatureFlags() {
+        featureFlags = null
+    }
 }

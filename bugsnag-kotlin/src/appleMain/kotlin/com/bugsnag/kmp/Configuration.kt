@@ -33,4 +33,12 @@ public actual class Configuration(
         set(value) {
             native.autoTrackSessions = value
         }
+
+    public actual fun clearFeatureFlag(name: String) {
+        native.clearFeatureFlagWithName(name)
+    }
+
+    public actual fun clearFeatureFlags() {
+        native.clearFeatureFlags()
+    }
 }

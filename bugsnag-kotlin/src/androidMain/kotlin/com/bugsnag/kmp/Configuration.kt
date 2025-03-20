@@ -38,4 +38,12 @@ public actual class Configuration(
         set(value) {
             native.versionCode = value
         }
+
+    public actual fun clearFeatureFlag(name: String) {
+        native.clearFeatureFlag(name)
+    }
+
+    public actual fun clearFeatureFlags() {
+        native.clearFeatureFlags()
+    }
 }

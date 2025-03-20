@@ -14,4 +14,12 @@ public actual object Bugsnag {
     }
 
     public actual fun resumeSession(): Boolean = JsBugsnag.resumeSession()
+
+    public actual fun clearFeatureFlag(name: String) {
+        JsBugsnag.clearFeatureFlag(name)
+    }
+
+    public actual fun clearFeatureFlags() {
+        JsBugsnag.clearFeatureFlags()
+    }
 }

@@ -6,4 +6,6 @@ public expect object Bugsnag {
     public fun startSession()
     public fun pauseSession()
     public fun resumeSession(): Boolean
+    public fun clearFeatureFlag(name: String)
+    public fun clearFeatureFlags()
 }
