@@ -90,9 +90,18 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    signingConfigs {
+        create("release") {
+            keyAlias = "password"
+            keyPassword = "password"
+            storeFile = file("../fakekeys.jks")
+            storePassword = "password"
+        }
+    }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
