@@ -8,8 +8,9 @@ install:
 	@./gradlew -PVERSION_NAME=9.9.9 clean publishToMavenLocal
 
 test-fixture: install
-	@./gradlew -p=features/fixtures/mazerunner assembleRelease -x check
+	@./gradlew -p=features/fixtures/mazerunner assemble assembleRelease -x check
+	@mkdir build/web
+	@cp -R features/fixtures/mazerunner/app/build/dist/js/productionExecutable/* build/web
 	@./features/scripts/export_ios_app.sh Release
-	@cp features/fixtures/mazerunner/app/build/dist/js/productionExecutable/* build/web
 	@cp features/fixtures/mazerunner/app/build/outputs/apk/release/app-release.apk build/test-fixture.apk
 	@cp features/fixtures/mazerunner/iosApp/output/Mazerunner_$BUILD_CONFIGURATION.ipa build/test-fixture.ipa
