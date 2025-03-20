@@ -39,6 +39,7 @@ steps:
     agents:
       queue: macos-14
     commands:
+      - make install
       - cd features/fixtures/mazerunner
       - ./gradlew ktlintCheck detekt
     env:
