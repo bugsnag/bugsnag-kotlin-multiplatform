@@ -12,17 +12,18 @@ steps:
       - "build/test-fixture.apk"
       - "build/fixture-url.txt"
       - "build/bs-fixture-url.txt"
+      - "build/test-fixture.ipa"
+      - "build/ipa_url_bb_release.txt"
+      - "build/ipa_url_bs_release.txt"
+      - "build/web/*"
       - "build/fixture/*"
-      - "features/fixtures/iosApp/output/iOSApp_Release.ipa"
-      - "features/fixtures/ios/output/ipa_url_bb_release.txt"
-      - "features/fixtures/ios/output/ipa_url_bs_release.txt"
     commands:
       - bundle install
       - make test-fixture
       - bundle exec upload-app --farm=bb --app=./build/test-fixture.apk --app-id-file=build/fixture-url.txt
       - bundle exec upload-app --farm=bs --app=./build/test-fixture.apk --app-id-file=build/bs-fixture-url.txt
-      - bundle exec upload-app --farm=bb --app=./features/fixtures/iosApp/output/iOSApp_Release.ipa --app-id-file=./features/fixtures/ios/output/ipa_url_bb_release.txt
-      - bundle exec upload-app --farm=bs --app=./features/fixtures/iosApp/output/iOSApp_Release.ipa --app-id-file=./features/fixtures/ios/output/ipa_url_bs_release.txt
+      - bundle exec upload-app --farm=bb --app=./build/test-fixture.ipa --app-id-file=build/ipa_url_bb_release.txt
+      - bundle exec upload-app --farm=bs --app=./build/test-fixture.ipa --app-id-file=build/ipa_url_bs_release.txt
     env:
       JAVA_VERSION: 17
 

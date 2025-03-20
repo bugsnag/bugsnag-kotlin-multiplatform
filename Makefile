@@ -13,4 +13,4 @@ test-fixture: install
 	@cp -R features/fixtures/mazerunner/app/build/dist/js/productionExecutable/* build/web
 	@./features/scripts/export_ios_app.sh Release
 	@cp features/fixtures/mazerunner/app/build/outputs/apk/release/app-release.apk build/test-fixture.apk
-	@cp features/fixtures/mazerunner/iosApp/output/Mazerunner_$BUILD_CONFIGURATION.ipa build/test-fixture.ipa
+	@cp features/fixtures/mazerunner/iosApp/output/Mazerunner_Release.ipa build/test-fixture.ipa
