@@ -13,4 +13,14 @@ public actual object Bugsnag {
         val dynamicData = data.convertToDynamic()
         JsBugsnag.addMetadata(section, dynamicData)
     }
+
+    public actual fun startSession() {
+        JsBugsnag.startSession()
+    }
+
+    public actual fun pauseSession() {
+        JsBugsnag.pauseSession()
+    }
+
+    public actual fun resumeSession(): Boolean = JsBugsnag.resumeSession()
 }

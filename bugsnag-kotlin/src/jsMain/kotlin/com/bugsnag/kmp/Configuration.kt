@@ -49,12 +49,24 @@ public actual class Configuration(
             return m
         }
 
+    private fun getMetadataSection(section: String): dynamic {
+        var sectionObject = metadata[section]
+        if (sectionObject == null) {
+            sectionObject = Any().asDynamic()
+            metadata[section] = sectionObject
+        }
+        return sectionObject
+    }
+
     public actual fun addMetadata(section: String, key: String, value: Any?) {
-        val map = mapOf(key to value)
-        metadata[section]?.putAll(map.toSafeMetadata())
+        val sectionObject = getMetadataSection(section)
+        sectionObject[key] = value.toSafeMetadata()
     }
 
     public actual fun addMetadata(section: String, data: Map<String, Any>) {
-        metadata[section]?.putAll(data.toSafeMetadata())
+        val sectionObject = getMetadataSection(section)
+        data.forEach { (key, value) ->
+            sectionObject[key] = value.toSafeMetadata()
+        }
     }
 }
