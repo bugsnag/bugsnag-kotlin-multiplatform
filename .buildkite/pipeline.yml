@@ -15,7 +15,7 @@ steps:
       - "build/test-fixture.ipa"
       - "build/ipa_url_bb_release.txt"
       - "build/ipa_url_bs_release.txt"
-      - "build/web/*"
+      - "build/web.zip"
       - "build/fixture/*"
     commands:
       - bundle install
