@@ -33,7 +33,7 @@ object MazeRunner {
 
             if (scenario == null) {
                 logError(
-                    "scenario not found '${command}'",
+                    "scenario not found '$command'",
                     NullPointerException(command.scenarioName),
                 )
 
