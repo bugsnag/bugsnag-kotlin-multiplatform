@@ -36,6 +36,6 @@ pushd features/fixtures/mazerunner/iosApp
     -exportOptionsPlist exportOptions.plist
 
   pushd output
-    mv iosApp.ipa iosApp_$BUILD_CONFIGURATION.ipa
+    mv Mazerunner.ipa Mazerunner_$BUILD_CONFIGURATION.ipa
   popd
 popd
