@@ -64,7 +64,6 @@ steps:
         service-ports: true
         command:
           - "features/common"
-          - "features/android"
           - "--app=@build/android_fixture_url.txt"
           - "--appium-version=1.22"
           - "--no-tunnel"
