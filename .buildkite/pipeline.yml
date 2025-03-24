@@ -46,7 +46,7 @@ steps:
     env:
       JAVA_VERSION: 17
 
-  - label: ':bitbar: Android 15 end-to-end tests'
+  - label: ':bitbar: :kotlin: Android 15 KMP end-to-end tests'
     depends_on: "fixtures"
     timeout_in_minutes: 60
     plugins:
