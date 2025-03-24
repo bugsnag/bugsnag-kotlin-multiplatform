@@ -33,4 +33,12 @@ public actual class Configuration(
         set(value) {
             native.autoTrackSessions = value
         }
+
+    public actual fun clearMetadata(section: String) {
+        native.clearMetadataFromSection(section)
+    }
+
+    public actual fun clearMetadata(section: String, key: String) {
+        native.clearMetadataFromSection(section, key)
+    }
 }

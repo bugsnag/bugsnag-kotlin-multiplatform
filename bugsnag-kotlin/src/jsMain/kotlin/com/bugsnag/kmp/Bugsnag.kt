@@ -14,4 +14,12 @@ public actual object Bugsnag {
     }
 
     public actual fun resumeSession(): Boolean = JsBugsnag.resumeSession()
+
+    public actual fun clearMetadata(section: String) {
+        JsBugsnag.clearMetadata(section)
+    }
+
+    public actual fun clearMetadata(section: String, key: String) {
+        JsBugsnag.clearMetadata(section, key)
+    }
 }

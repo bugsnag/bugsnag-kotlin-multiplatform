@@ -2,6 +2,11 @@ package com.bugsnag.kmp
 
 public actual typealias PlatformConfiguration = Any
 
+private external fun delete(x: dynamic): Boolean
+
+@Suppress("NOTHING_TO_INLINE")
+private inline fun delete(thing: dynamic, section: String) = delete(thing[section])
+
 public actual class Configuration(
     public actual override val native: PlatformConfiguration,
 ) : PlatformWrapper<PlatformConfiguration> {
@@ -38,4 +43,23 @@ public actual class Configuration(
     public actual var launchDurationMillis: Long
         get() = 0
         set(_) {}
+
+    private val metadata: dynamic
+        get() {
+            var m = obj.metadata
+            if (m == null) {
+                m = Any().asDynamic()
+                obj.metadata = m
+            }
+            return m
+        }
+
+    public actual fun clearMetadata(section: String) {
+        delete(metadata, section)
+    }
+
+    public actual fun clearMetadata(section: String, key: String) {
+        val metadataSection = metadata[section] ?: return
+        delete(metadataSection, key)
+    }
 }

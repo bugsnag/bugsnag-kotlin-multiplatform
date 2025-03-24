@@ -38,4 +38,12 @@ public actual class Configuration(
         set(value) {
             native.versionCode = value
         }
+
+    public actual fun clearMetadata(section: String) {
+        native.clearMetadata(section)
+    }
+
+    public actual fun clearMetadata(section: String, key: String) {
+        native.clearMetadata(section, key)
+    }
 }

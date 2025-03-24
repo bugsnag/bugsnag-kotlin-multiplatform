@@ -9,4 +9,6 @@ public expect class Configuration : PlatformWrapper<PlatformConfiguration> {
     public var appVersion: String?
     public var launchDurationMillis: Long
     public var autoTrackSessions: Boolean
+    public fun clearMetadata(section: String)
+    public fun clearMetadata(section: String, key: String)
 }
