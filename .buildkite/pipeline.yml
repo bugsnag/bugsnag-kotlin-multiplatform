@@ -11,19 +11,15 @@ steps:
     artifact_paths:
       - "build/test-fixture.apk"
       - "build/android_fixture_url.txt"
-      - "build/android_bs_fixture_url.txt"
       - "build/test-fixture.ipa"
       - "build/ipa_url_bb_release.txt"
-      - "build/ipa_url_bs_release.txt"
       - "build/web.zip"
       - "build/fixture/*"
     commands:
       - bundle install
       - make test-fixture
       - bundle exec upload-app --farm=bb --app=./build/test-fixture.apk --app-id-file=build/android_fixture_url.txt
-      - bundle exec upload-app --farm=bs --app=./build/test-fixture.apk --app-id-file=build/android_bs_fixture_url.txt
       - bundle exec upload-app --farm=bb --app=./build/test-fixture.ipa --app-id-file=build/ipa_url_bb_release.txt
-      - bundle exec upload-app --farm=bs --app=./build/test-fixture.ipa --app-id-file=build/ipa_url_bs_release.txt
     env:
       JAVA_VERSION: 17
 
@@ -46,7 +42,7 @@ steps:
     env:
       JAVA_VERSION: 17
 
-  - label: ':bitbar: :kotlin: Android 15 KMP end-to-end tests'
+  - label: ':bitbar: :kotlin: Android 14 KMP E2E tests'
     depends_on: "fixtures"
     timeout_in_minutes: 60
     plugins:
@@ -54,7 +50,6 @@ steps:
         download:
           - "build/test-fixture.apk"
           - "build/android_fixture_url.txt"
-          - "build/android_bs_fixture_url.txt"
         upload:
           - "maze_output/failed/**/*"
           - "maze_output/metrics.csv"
@@ -69,7 +64,7 @@ steps:
           - "--no-tunnel"
           - "--aws-public-ip"
           - "--farm=bb"
-          - "--device=ANDROID_15"
+          - "--device=ANDROID_14"
       test-collector#v1.10.2:
         files: "reports/TEST-*.xml"
         format: "junit"
@@ -77,3 +72,36 @@ steps:
     concurrency: 25
     concurrency_group: 'bitbar'
     concurrency_method: eager
+
+  - label: ':bitbar: :kotlin: iOS 16 KMP E2E tests'
+    depends_on: "fixtures"
+    timeout_in_minutes: 60
+    agents:
+      queue: opensource
+    plugins:
+      artifacts#v1.9.3:
+        download: "build/ipa_url_bb_release.txt"
+        upload: "maze_output/failed/**/*"
+      docker-compose#v4.7.0:
+        pull: cocoa-maze-runner-bitbar
+        run: cocoa-maze-runner-bitbar
+        service-ports: true
+        command:
+          - "features/common"
+          - "--app=@/app/build/ipa_url_bb_release.txt"
+          - "--farm=bb"
+          - "--device=IOS_16"
+          - "--no-tunnel"
+          - "--aws-public-ip"
+          - "--fail-fast"
+      test-collector#v1.10.2:
+        files: "reports/TEST-*.xml"
+        format: "junit"
+        branch: "^master|next$$"
+    concurrency: 25
+    concurrency_group: 'bitbar'
+    concurrency_method: eager
+    retry:
+      automatic:
+        - exit_status: -1  # Agent was lost
+          limit: 2
