@@ -28,7 +28,7 @@ actual object Platform {
         val session = NSURLSession.sharedSession()
 
         try {
-            val request = NSURLRequest(NSURL.URLWithString(endpoint)!!)
+            val request = NSURLRequest(NSURL.URLWithString("$endpoint/command")!!)
             val (_, data) = session.request(request)
 
             if (data == null) {
