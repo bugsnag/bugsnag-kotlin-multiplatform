@@ -11,4 +11,5 @@ public expect class Configuration : PlatformWrapper<PlatformConfiguration> {
     public var autoTrackSessions: Boolean
     public fun clearFeatureFlag(name: String)
     public fun clearFeatureFlags()
+    public fun addFeatureFlag(name: String, variant: String? = null)
 }

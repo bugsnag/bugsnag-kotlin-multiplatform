@@ -52,4 +52,30 @@ public actual class Configuration(
     public actual fun clearFeatureFlags() {
         featureFlags = null
     }
+
+    internal fun createFeatureFlag(name: String, variant: String? = null): FeatureFlag {
+        val flag = Any().unsafeCast<FeatureFlag>()
+        flag.name = name
+
+        if (variant != null) {
+            flag.variant = variant
+        }
+
+        return flag
+    }
+
+    public actual fun addFeatureFlag(name: String, variant: String?) {
+        val flagArray = featureFlags
+        val index = flagArray?.indexOfFirst { it.name == name }
+
+        featureFlags = when {
+            index == -1 -> flagArray + createFeatureFlag(name, variant)
+            index?.let { flagArray.get(it).variant } != variant -> flagArray?.copyOf().also {
+                if (index != null) {
+                    it?.set(index, createFeatureFlag(name, variant))
+                }
+            }
+            else -> return
+        }
+    }
 }

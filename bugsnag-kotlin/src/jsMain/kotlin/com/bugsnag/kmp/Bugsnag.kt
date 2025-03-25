@@ -22,4 +22,8 @@ public actual object Bugsnag {
     public actual fun clearFeatureFlags() {
         JsBugsnag.clearFeatureFlags()
     }
+
+    public actual fun addFeatureFlag(name: String, variant: String?) {
+        JsBugsnag.addFeatureFlag(name, variant)
+    }
 }

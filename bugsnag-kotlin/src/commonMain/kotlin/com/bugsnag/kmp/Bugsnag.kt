@@ -8,4 +8,5 @@ public expect object Bugsnag {
     public fun resumeSession(): Boolean
     public fun clearFeatureFlag(name: String)
     public fun clearFeatureFlags()
+    public fun addFeatureFlag(name: String, variant: String? = null)
 }

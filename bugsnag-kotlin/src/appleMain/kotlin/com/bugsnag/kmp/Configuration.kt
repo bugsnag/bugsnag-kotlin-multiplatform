@@ -41,4 +41,8 @@ public actual class Configuration(
     public actual fun clearFeatureFlags() {
         native.clearFeatureFlags()
     }
+
+    public actual fun addFeatureFlag(name: String, variant: String?) {
+        native.addFeatureFlagWithName(name, variant)
+    }
 }
