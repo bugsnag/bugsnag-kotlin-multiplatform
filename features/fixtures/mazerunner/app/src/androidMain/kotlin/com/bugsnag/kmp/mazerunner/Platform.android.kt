@@ -63,7 +63,7 @@ actual object Platform {
     actual suspend fun nextCommand(): Command? = withContext(Dispatchers.IO) {
         val endpoint = mazeRunnerConfig?.endpointURL ?: return@withContext null
         try {
-            return@withContext URL(endpoint).openStream().use {
+            return@withContext URL("$endpoint/command").openStream().use {
                 Json.decodeFromStream<Command>(it)
             }
         } catch (ex: Exception) {
