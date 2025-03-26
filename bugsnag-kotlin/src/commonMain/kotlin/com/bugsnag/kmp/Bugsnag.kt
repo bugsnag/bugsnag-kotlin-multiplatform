@@ -9,4 +9,7 @@ public expect object Bugsnag {
     public fun resumeSession(): Boolean
     public fun clearMetadata(section: String)
     public fun clearMetadata(section: String, key: String)
+    public fun clearFeatureFlag(name: String)
+    public fun clearFeatureFlags()
+    public fun addFeatureFlag(name: String, variant: String? = null)
 }

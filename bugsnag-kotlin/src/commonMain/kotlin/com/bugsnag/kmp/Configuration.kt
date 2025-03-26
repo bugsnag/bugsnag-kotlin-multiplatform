@@ -13,4 +13,7 @@ public expect class Configuration : PlatformWrapper<PlatformConfiguration> {
     public fun addMetadata(section: String, data: Map<String, Any>)
     public fun clearMetadata(section: String)
     public fun clearMetadata(section: String, key: String)
+    public fun clearFeatureFlag(name: String)
+    public fun clearFeatureFlags()
+    public fun addFeatureFlag(name: String, variant: String? = null)
 }

@@ -74,7 +74,7 @@ public actual class Configuration(
             sectionObject[key] = value.toSafeMetadata()
         }
     }
-    
+
     public actual fun clearMetadata(section: String) {
         delete(metadata, section)
     }
@@ -82,5 +82,33 @@ public actual class Configuration(
     public actual fun clearMetadata(section: String, key: String) {
         val metadataSection = metadata[section] ?: return
         delete(metadataSection, key)
+    }
+
+    private var featureFlags: Array<FeatureFlag>?
+        get() = obj.featureFlags
+        set(value) {
+            obj.featureFlags = value
+        }
+
+    public actual fun clearFeatureFlag(name: String) {
+        featureFlags?.removeFirst { it.name == name }
+    }
+
+    public actual fun clearFeatureFlags() {
+        featureFlags = null
+    }
+
+    public actual fun addFeatureFlag(name: String, variant: String?) {
+        featureFlags?.removeFirst { it.name == name }
+        featureFlags?.add(createFeatureFlag(name, variant))
+    }
+
+    private fun createFeatureFlag(name: String, variant: String? = null): FeatureFlag {
+        val flag = Any().unsafeCast<FeatureFlag>()
+        flag.name = name
+        if (variant != null) {
+            flag.variant = variant
+        }
+        return flag
     }
 }
