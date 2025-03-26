@@ -5,7 +5,23 @@ import kotlinx.browser.window
 import org.w3c.dom.url.URL
 
 actual object Platform {
-    actual fun createBaseConfiguration(apiKey: String): Configuration = Configuration(apiKey)
+    private var notifyEndpoint: String? = null
+    private var sessionEndpoint: String? = null
+
+    actual fun configureEndpoints(notify: String, sessions: String) {
+        notifyEndpoint = notify
+        sessionEndpoint = sessions
+    }
+
+    actual fun createBaseConfiguration(apiKey: String): Configuration =
+        Configuration(apiKey).apply {
+            if (!notifyEndpoint.isNullOrEmpty() && !sessionEndpoint.isNullOrEmpty()) {
+                val endpoints = Any().asDynamic()
+                endpoints.notify = notifyEndpoint
+                endpoints.sessions = sessionEndpoint
+                native.asDynamic().endpoints = endpoints
+            }
+        }
 
     actual suspend fun nextCommand(): Command? {
         val pageUrl = URL(window.location.href)
