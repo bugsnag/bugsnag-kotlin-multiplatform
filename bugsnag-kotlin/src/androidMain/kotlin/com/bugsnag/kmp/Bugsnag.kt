@@ -25,6 +25,14 @@ public actual object Bugsnag {
 
     public actual fun resumeSession(): Boolean = PlatformBugsnag.resumeSession()
 
+    public actual fun clearMetadata(section: String) {
+        PlatformBugsnag.clearMetadata(section)
+    }
+
+    public actual fun clearMetadata(section: String, key: String) {
+        PlatformBugsnag.clearMetadata(section, key)
+    }
+
     public actual fun clearFeatureFlag(name: String) {
         PlatformBugsnag.clearFeatureFlag(name)
     }
