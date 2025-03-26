@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class Command(
     @SerialName("action") val action: String,
     @SerialName("scenario_name") val scenarioName: String = "",
-    @SerialName("scenario_config") val scenarioConfig: String = "",
+    @SerialName("scenario_mode") val scenarioConfig: String = "",
     @SerialName("message") val message: String? = null,
 ) {
     companion object {
