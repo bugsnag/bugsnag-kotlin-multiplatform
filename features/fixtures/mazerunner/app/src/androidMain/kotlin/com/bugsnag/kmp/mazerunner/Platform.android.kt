@@ -32,7 +32,7 @@ actual object Platform {
         withContext(Dispatchers.IO) {
             val externalFilesDir = application.getExternalFilesDir(null)
             val configFile = File(externalFilesDir, "fixture_config.json")
-            log("attempting to load fixture config: '$configFile'")
+            MazeLogger.log("attempting to load fixture config: '$configFile'")
 
             val timeout = System.currentTimeMillis() + CONFIG_READ_TIMEOUT
             while (System.currentTimeMillis() < timeout) {
@@ -41,7 +41,7 @@ actual object Platform {
                         mazeRunnerConfig = Json.decodeFromString(configFile.readText())
                         break
                     } catch (ex: Exception) {
-                        logError("failed to load ${configFile.name}", ex)
+                        MazeLogger.log("failed to load ${configFile.name}", ex)
                     }
                 }
 
@@ -50,7 +50,7 @@ actual object Platform {
         }
 
         if (mazeRunnerConfig == null) {
-            log("Failed to read Maze Runner address from config file, defaulting to legacy BrowserStack address")
+            MazeLogger.log("Failed to read Maze Runner address from config file, defaulting to legacy BrowserStack address")
             mazeRunnerConfig = MazeRunnerConfig("bs-local.com:9339")
         }
     }
@@ -85,7 +85,7 @@ actual object Platform {
                 Json.decodeFromStream<Command>(it)
             }
         } catch (ex: Exception) {
-            logError("could not retrieve next command from $endpoint", ex)
+            MazeLogger.log("could not retrieve next command from $endpoint", ex)
             return@withContext null
         }
     }
