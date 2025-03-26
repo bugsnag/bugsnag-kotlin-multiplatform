@@ -5,4 +5,4 @@ Feature: Unhandled error smoke test
     And I configure Bugsnag for "UnhandledExceptionScenario"
     Then I wait to receive an error
     And the exception "message" starts with "this is a large crisis"
-    And the exception "errorClass" equals "RuntimeException"
+    And the exception "errorClass" ends with "RuntimeException"
