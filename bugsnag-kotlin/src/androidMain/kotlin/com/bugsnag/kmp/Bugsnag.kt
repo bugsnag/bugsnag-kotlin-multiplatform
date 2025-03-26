@@ -7,6 +7,14 @@ public actual object Bugsnag {
         PlatformBugsnag.start(configuration.androidContext, configuration.native)
     }
 
+    public actual fun addMetadata(section: String, key: String, value: Any?) {
+        PlatformBugsnag.addMetadata(section, key, value)
+    }
+
+    public actual fun addMetadata(section: String, data: Map<String, Any>) {
+        PlatformBugsnag.addMetadata(section, data)
+    }
+
     public actual fun startSession() {
         PlatformBugsnag.startSession()
     }

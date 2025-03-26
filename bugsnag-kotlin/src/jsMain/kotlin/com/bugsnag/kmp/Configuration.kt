@@ -39,6 +39,37 @@ public actual class Configuration(
         get() = 0
         set(_) {}
 
+    private val metadata: dynamic
+        get() {
+            var m = obj.metadata
+            if (m == null) {
+                m = Any().asDynamic()
+                obj.metadata = m
+            }
+            return m
+        }
+
+    private fun getMetadataSection(section: String): dynamic {
+        var sectionObject = metadata[section]
+        if (sectionObject == null) {
+            sectionObject = Any().asDynamic()
+            metadata[section] = sectionObject
+        }
+        return sectionObject
+    }
+
+    public actual fun addMetadata(section: String, key: String, value: Any?) {
+        val sectionObject = getMetadataSection(section)
+        sectionObject[key] = value.toSafeMetadata()
+    }
+
+    public actual fun addMetadata(section: String, data: Map<String, Any>) {
+        val sectionObject = getMetadataSection(section)
+        data.forEach { (key, value) ->
+            sectionObject[key] = value.toSafeMetadata()
+        }
+    }
+    
     private var featureFlags: Array<FeatureFlag>?
         get() = obj.featureFlags
         set(value) {

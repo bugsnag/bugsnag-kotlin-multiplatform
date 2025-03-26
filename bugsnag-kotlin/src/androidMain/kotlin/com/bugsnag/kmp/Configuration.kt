@@ -39,6 +39,14 @@ public actual class Configuration(
             native.versionCode = value
         }
 
+    public actual fun addMetadata(section: String, key: String, value: Any?) {
+        native.addMetadata(section, key, value)
+    }
+
+    public actual fun addMetadata(section: String, data: Map<String, Any>) {
+        native.addMetadata(section, data)
+    }
+
     public actual fun clearFeatureFlag(name: String) {
         native.clearFeatureFlag(name)
     }

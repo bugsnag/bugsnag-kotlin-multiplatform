@@ -5,6 +5,15 @@ public actual object Bugsnag {
         JsBugsnag.start(configuration.native)
     }
 
+    public actual fun addMetadata(section: String, key: String, value: Any?) {
+        JsBugsnag.addMetadata(section, key, value)
+    }
+
+    public actual fun addMetadata(section: String, data: Map<String, Any>) {
+        val dynamicData = data.convertToDynamic()
+        JsBugsnag.addMetadata(section, dynamicData)
+    }
+
     public actual fun startSession() {
         JsBugsnag.startSession()
     }
