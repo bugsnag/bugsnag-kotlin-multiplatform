@@ -2,7 +2,9 @@ package com.bugsnag.kmp.mazerunner
 
 import android.app.Application
 import android.util.Log
+import com.bugsnag.android.EndpointConfiguration
 import com.bugsnag.kmp.Configuration
+import com.bugsnag.kmp.PlatformConfiguration
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -17,6 +19,14 @@ actual object Platform {
     lateinit var application: Application
 
     private var mazeRunnerConfig: MazeRunnerConfig? = null
+
+    private var notifyEndpoint: String? = null
+    private var sessionEndpoint: String? = null
+
+    actual fun configureEndpoints(notify: String, sessions: String) {
+        notifyEndpoint = notify
+        sessionEndpoint = sessions
+    }
 
     actual suspend fun loadFixtureConfiguration() {
         withContext(Dispatchers.IO) {
@@ -46,9 +56,17 @@ actual object Platform {
     }
 
     actual fun createBaseConfiguration(apiKey: String): Configuration {
-        val configuration = Configuration(application)
-        configuration.apiKey = apiKey
-        return configuration
+        val platformConfiguration = PlatformConfiguration(apiKey)
+        if (!notifyEndpoint.isNullOrEmpty() && !sessionEndpoint.isNullOrEmpty()) {
+            platformConfiguration.endpoints = EndpointConfiguration(
+                notifyEndpoint!!,
+                sessionEndpoint!!,
+            )
+        }
+
+        platformConfiguration.logger = AndroidLogger
+
+        return Configuration(application, platformConfiguration)
     }
 
     actual suspend fun log(message: String) {
