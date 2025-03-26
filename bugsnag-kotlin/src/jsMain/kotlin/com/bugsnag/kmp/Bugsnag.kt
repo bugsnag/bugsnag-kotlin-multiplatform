@@ -31,4 +31,7 @@ public actual object Bugsnag {
     public actual fun clearMetadata(section: String, key: String) {
         JsBugsnag.clearMetadata(section, key)
     }
+
+    public actual val lastRunInfo: LastRunInfo?
+        get() = null
 }

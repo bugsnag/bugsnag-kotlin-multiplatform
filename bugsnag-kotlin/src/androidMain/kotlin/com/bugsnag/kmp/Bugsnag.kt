@@ -32,4 +32,18 @@ public actual object Bugsnag {
     public actual fun clearMetadata(section: String, key: String) {
         PlatformBugsnag.clearMetadata(section, key)
     }
+
+    public actual val lastRunInfo: LastRunInfo?
+        get() {
+            val lastRunInfoAndroid = PlatformBugsnag.getLastRunInfo()
+            if (lastRunInfoAndroid != null) {
+                return LastRunInfo(
+                    lastRunInfoAndroid.consecutiveLaunchCrashes.toLong(),
+                    lastRunInfoAndroid.crashed,
+                    lastRunInfoAndroid.crashed,
+                )
+            } else {
+                return null
+            }
+        }
 }
