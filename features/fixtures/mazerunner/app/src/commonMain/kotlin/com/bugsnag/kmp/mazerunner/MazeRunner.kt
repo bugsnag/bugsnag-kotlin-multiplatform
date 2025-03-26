@@ -1,18 +1,20 @@
 package com.bugsnag.kmp.mazerunner
 
 import com.bugsnag.kmp.mazerunner.Platform.loadFixtureConfiguration
-import com.bugsnag.kmp.mazerunner.Platform.log
 import com.bugsnag.kmp.mazerunner.Platform.logError
 import com.bugsnag.kmp.mazerunner.Platform.nextCommand
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.time.Duration.Companion.milliseconds
 
 object MazeRunner {
+    val logChannel = Channel<String>()
+
     fun start() {
         @OptIn(DelicateCoroutinesApi::class)
         GlobalScope.launch {
@@ -21,9 +23,9 @@ object MazeRunner {
     }
 
     private suspend fun startImpl() {
-        log("loadFixtureConfiguration()")
+        MazeLogger.log("loadFixtureConfiguration()")
         loadFixtureConfiguration()
-        log("waiting for commands...")
+        MazeLogger.log("waiting for commands...")
 
         while (true) {
             val command = nextCommand()
@@ -32,7 +34,7 @@ object MazeRunner {
                 continue
             }
 
-            log("received command: $command")
+            MazeLogger.log("received command: $command")
 
             when (command.action) {
                 Command.ACTION_NOOP -> {
@@ -41,7 +43,7 @@ object MazeRunner {
                 }
             }
 
-            log("configureEndpoints(\"${command.notifyEndpoint}\", \"${command.sessionsEndpoint}\")")
+            MazeLogger.log("configureEndpoints(\"${command.notifyEndpoint}\", \"${command.sessionsEndpoint}\")")
             Platform.configureEndpoints(command.notifyEndpoint, command.sessionsEndpoint)
 
             val scenario = Scenario[command.scenarioName]
@@ -58,14 +60,14 @@ object MazeRunner {
             when (command.action) {
                 Command.ACTION_RUN_SCENARIO -> {
                     withContext(Dispatchers.Main) {
-                        log("running scenario: $scenario")
+                        MazeLogger.log("running scenario: $scenario")
                         scenario.runScenario(command.scenarioConfig)
                     }
                 }
 
                 Command.ACTION_START_BUGSNAG -> {
                     withContext(Dispatchers.Main) {
-                        log("starting bugsnag for: $scenario")
+                        MazeLogger.log("starting bugsnag for: $scenario")
                         scenario.startBugsnag(command.scenarioConfig)
                     }
                 }
