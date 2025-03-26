@@ -41,4 +41,12 @@ public actual class Configuration(
     public actual fun addMetadata(section: String, data: Map<String, Any>) {
         native.addMetadata(data as Map<Any?, *>, section)
     }
+    
+    public actual fun clearMetadata(section: String) {
+        native.clearMetadataFromSection(section)
+    }
+
+    public actual fun clearMetadata(section: String, key: String) {
+        native.clearMetadataFromSection(section, key)
+    }
 }

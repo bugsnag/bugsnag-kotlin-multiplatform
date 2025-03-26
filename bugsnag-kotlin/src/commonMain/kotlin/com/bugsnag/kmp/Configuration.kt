@@ -11,4 +11,6 @@ public expect class Configuration : PlatformWrapper<PlatformConfiguration> {
     public var autoTrackSessions: Boolean
     public fun addMetadata(section: String, key: String, value: Any?)
     public fun addMetadata(section: String, data: Map<String, Any>)
+    public fun clearMetadata(section: String)
+    public fun clearMetadata(section: String, key: String)
 }
