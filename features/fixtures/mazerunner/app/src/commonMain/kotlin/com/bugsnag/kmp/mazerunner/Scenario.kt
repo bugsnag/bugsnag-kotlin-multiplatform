@@ -25,8 +25,10 @@ abstract class Scenario(val name: String) : CoroutineScope by MainScope() {
             Bugsnag.start(configuration)
         }
 
+    override fun toString(): String = name
+
     companion object {
-        const val DEFAULT_API_KEY = "decafbad"
+        const val DEFAULT_API_KEY = "decafbaddecafbaddecafbaddecafbad"
 
         operator fun get(name: String): Scenario? = scenarios.firstOrNull { it.name == name }
     }
