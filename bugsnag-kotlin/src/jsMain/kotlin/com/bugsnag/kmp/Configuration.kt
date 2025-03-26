@@ -39,6 +39,37 @@ public actual class Configuration(
         get() = 0
         set(_) {}
 
+    private val metadata: dynamic
+        get() {
+            var m = obj.metadata
+            if (m == null) {
+                m = Any().asDynamic()
+                obj.metadata = m
+            }
+            return m
+        }
+
+    private fun getMetadataSection(section: String): dynamic {
+        var sectionObject = metadata[section]
+        if (sectionObject == null) {
+            sectionObject = Any().asDynamic()
+            metadata[section] = sectionObject
+        }
+        return sectionObject
+    }
+
+    public actual fun addMetadata(section: String, key: String, value: Any?) {
+        val sectionObject = getMetadataSection(section)
+        sectionObject[key] = value.toSafeMetadata()
+    }
+
+    public actual fun addMetadata(section: String, data: Map<String, Any>) {
+        val sectionObject = getMetadataSection(section)
+        data.forEach { (key, value) ->
+            sectionObject[key] = value.toSafeMetadata()
+        }
+    }
+
     private var featureFlags: Array<FeatureFlag>?
         get() = obj.featureFlags
         set(value) {
@@ -53,29 +84,17 @@ public actual class Configuration(
         featureFlags = null
     }
 
-    internal fun createFeatureFlag(name: String, variant: String? = null): FeatureFlag {
+    private fun createFeatureFlag(name: String, variant: String? = null): FeatureFlag {
         val flag = Any().unsafeCast<FeatureFlag>()
         flag.name = name
-
         if (variant != null) {
             flag.variant = variant
         }
-
         return flag
     }
 
     public actual fun addFeatureFlag(name: String, variant: String?) {
-        val flagArray = featureFlags
-        val index = flagArray?.indexOfFirst { it.name == name }
-
-        featureFlags = when {
-            index == -1 -> flagArray + createFeatureFlag(name, variant)
-            index?.let { flagArray.get(it).variant } != variant -> flagArray?.copyOf().also {
-                if (index != null) {
-                    it?.set(index, createFeatureFlag(name, variant))
-                }
-            }
-            else -> return
-        }
+        featureFlags?.removeFirst { it.name == name }
+        featureFlags?.add(createFeatureFlag(name, variant))
     }
 }
