@@ -42,7 +42,7 @@ actual object Platform {
         val configUrl = NSURL.fileURLWithPath("fixture_config", relativeToURL = documentsUrl)
             .URLByAppendingPathExtension("json")!!
 
-        log("attempting to load fixture config: '$configUrl'")
+        MazeLogger.log("attempting to load fixture config: '$configUrl'")
 
         repeat(60) { attempt ->
             try {
@@ -52,7 +52,7 @@ actual object Platform {
                 fixtureConfig = Json.decodeFromString(json)
                 return@withContext
             } catch (ex: Exception) {
-                logError("couldn't load config (attempt $attempt)", ex)
+                MazeLogger.log("couldn't load config (attempt $attempt)", ex)
             }
 
             delay(1.seconds)
@@ -87,18 +87,18 @@ actual object Platform {
             val jsonString = data.readAsString() ?: return null
             return Json.decodeFromString<Command>(jsonString)
         } catch (ex: Exception) {
-            logError("could not fetch command from $endpoint", ex)
+            MazeLogger.log("could not fetch command from $endpoint", ex)
         }
 
         return null
     }
 
     actual suspend fun log(message: String) {
-        NSLog("%s", message)
+        NSLog("Bugsnag MazeRunner: %s", message)
     }
 
     actual suspend fun logError(message: String, ex: Exception?) {
-        NSLog("%s", message)
+        NSLog("Bugsnag MazeRunner: %s", message)
         ex?.let { NSLog("%s", it.stackTraceToString()) }
     }
 }
