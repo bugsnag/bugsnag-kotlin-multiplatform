@@ -37,17 +37,25 @@ public actual object Bugsnag {
         PlatformBugsnag.clearMetadataFromSection(section, key)
     }
 
+    public actual fun clearFeatureFlag(name: String) {
+        PlatformBugsnag.clearFeatureFlagWithName(name)
+    }
+
+    public actual fun clearFeatureFlags() {
+        PlatformBugsnag.clearFeatureFlags()
+    }
+
+    public actual fun addFeatureFlag(name: String, variant: String?) {
+        PlatformBugsnag.addFeatureFlagWithName(name, variant)
+    }
+
     public actual val lastRunInfo: LastRunInfo?
         get() {
-            val lastRunInfoAndroid = PlatformBugsnag.lastRunInfo
-            if (lastRunInfoAndroid != null) {
-                return LastRunInfo(
-                    lastRunInfoAndroid.consecutiveLaunchCrashes.toLong(),
-                    lastRunInfoAndroid.crashed,
-                    lastRunInfoAndroid.crashed,
-                )
-            } else {
-                return null
-            }
+            val lastRunInfoAndroid = PlatformBugsnag.lastRunInfo ?: return null
+            return LastRunInfo(
+                lastRunInfoAndroid.consecutiveLaunchCrashes.toLong(),
+                lastRunInfoAndroid.crashed,
+                lastRunInfoAndroid.crashedDuringLaunch,
+            )
         }
 }

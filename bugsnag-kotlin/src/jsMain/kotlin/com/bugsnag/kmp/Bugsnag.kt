@@ -32,6 +32,18 @@ public actual object Bugsnag {
         JsBugsnag.clearMetadata(section, key)
     }
 
+    public actual fun clearFeatureFlag(name: String) {
+        JsBugsnag.clearFeatureFlag(name)
+    }
+
+    public actual fun clearFeatureFlags() {
+        JsBugsnag.clearFeatureFlags()
+    }
+
+    public actual fun addFeatureFlag(name: String, variant: String?) {
+        JsBugsnag.addFeatureFlag(name, variant)
+    }
+
     public actual val lastRunInfo: LastRunInfo?
         get() = null
 }
