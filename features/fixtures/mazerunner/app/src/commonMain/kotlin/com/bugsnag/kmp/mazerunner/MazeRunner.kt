@@ -1,6 +1,7 @@
 package com.bugsnag.kmp.mazerunner
 
 import com.bugsnag.kmp.mazerunner.Platform.loadFixtureConfiguration
+import com.bugsnag.kmp.mazerunner.Platform.log
 import com.bugsnag.kmp.mazerunner.Platform.logError
 import com.bugsnag.kmp.mazerunner.Platform.nextCommand
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -20,13 +21,24 @@ object MazeRunner {
     }
 
     private suspend fun startImpl() {
+        log("loadFixtureConfiguration()")
         loadFixtureConfiguration()
+        log("waiting for commands...")
 
         while (true) {
             val command = nextCommand()
             if (command == null) {
                 delay(500.milliseconds)
                 continue
+            }
+
+            log("received command: $command")
+
+            when (command.action) {
+                Command.ACTION_NOOP -> {
+                    delay(500.milliseconds)
+                    continue
+                }
             }
 
             val scenario = Scenario[command.scenarioName]

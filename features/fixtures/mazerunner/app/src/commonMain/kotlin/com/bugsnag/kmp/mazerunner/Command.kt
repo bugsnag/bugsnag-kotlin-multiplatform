@@ -11,6 +11,7 @@ data class Command(
     @SerialName("message") val message: String? = null,
 ) {
     companion object {
+        const val ACTION_NOOP = "noop"
         const val ACTION_RUN_SCENARIO = "runScenario"
         const val ACTION_START_BUGSNAG = "startBugsnag"
     }
