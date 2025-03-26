@@ -41,6 +41,9 @@ object MazeRunner {
                 }
             }
 
+            log("configureEndpoints(\"${command.notifyEndpoint}\", \"${command.sessionsEndpoint}\")")
+            Platform.configureEndpoints(command.notifyEndpoint, command.sessionsEndpoint)
+
             val scenario = Scenario[command.scenarioName]
 
             if (scenario == null) {
@@ -55,12 +58,14 @@ object MazeRunner {
             when (command.action) {
                 Command.ACTION_RUN_SCENARIO -> {
                     withContext(Dispatchers.Main) {
+                        log("running scenario: $scenario")
                         scenario.runScenario(command.scenarioConfig)
                     }
                 }
 
                 Command.ACTION_START_BUGSNAG -> {
                     withContext(Dispatchers.Main) {
+                        log("starting bugsnag for: $scenario")
                         scenario.startBugsnag(command.scenarioConfig)
                     }
                 }
