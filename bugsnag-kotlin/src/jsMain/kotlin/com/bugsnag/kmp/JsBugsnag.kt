@@ -8,6 +8,8 @@ internal external object JsBugsnag {
     fun startSession()
     fun pauseSession()
     fun resumeSession(): Boolean
+    fun clearMetadata(section: String)
+    fun clearMetadata(section: String, key: String)
     fun clearFeatureFlag(name: String)
     fun clearFeatureFlags()
     fun addFeatureFlag(name: String, variant: String?)
@@ -35,4 +37,4 @@ internal fun Any?.toSafeMetadata(): Any? = when (this) {
     is String -> this
     is Byte -> this
     else -> this.toString()
-}
+    }

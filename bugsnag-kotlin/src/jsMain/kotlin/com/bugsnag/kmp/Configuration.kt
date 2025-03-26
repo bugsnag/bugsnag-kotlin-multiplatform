@@ -2,6 +2,11 @@ package com.bugsnag.kmp
 
 public actual typealias PlatformConfiguration = Any
 
+private external fun delete(x: dynamic): Boolean
+
+@Suppress("NOTHING_TO_INLINE")
+private inline fun delete(thing: dynamic, section: String) = delete(thing[section])
+
 public actual class Configuration(
     public actual override val native: PlatformConfiguration,
 ) : PlatformWrapper<PlatformConfiguration> {
@@ -70,6 +75,15 @@ public actual class Configuration(
         }
     }
 
+    public actual fun clearMetadata(section: String) {
+        delete(metadata, section)
+    }
+
+    public actual fun clearMetadata(section: String, key: String) {
+        val metadataSection = metadata[section] ?: return
+        delete(metadataSection, key)
+    }
+
     private var featureFlags: Array<FeatureFlag>?
         get() = obj.featureFlags
         set(value) {
@@ -77,11 +91,16 @@ public actual class Configuration(
         }
 
     public actual fun clearFeatureFlag(name: String) {
-        featureFlags = featureFlags?.filter { it.name != name }?.toTypedArray()
+        featureFlags?.removeFirst { it.name == name }
     }
 
     public actual fun clearFeatureFlags() {
         featureFlags = null
+    }
+
+    public actual fun addFeatureFlag(name: String, variant: String?) {
+        featureFlags?.removeFirst { it.name == name }
+        featureFlags?.add(createFeatureFlag(name, variant))
     }
 
     private fun createFeatureFlag(name: String, variant: String? = null): FeatureFlag {
@@ -91,10 +110,5 @@ public actual class Configuration(
             flag.variant = variant
         }
         return flag
-    }
-
-    public actual fun addFeatureFlag(name: String, variant: String?) {
-        featureFlags?.removeFirst { it.name == name }
-        featureFlags?.add(createFeatureFlag(name, variant))
     }
 }
