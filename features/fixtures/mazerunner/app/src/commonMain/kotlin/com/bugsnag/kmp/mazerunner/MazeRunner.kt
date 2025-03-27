@@ -3,9 +3,7 @@ package com.bugsnag.kmp.mazerunner
 import com.bugsnag.kmp.mazerunner.Platform.loadFixtureConfiguration
 import com.bugsnag.kmp.mazerunner.Platform.logError
 import com.bugsnag.kmp.mazerunner.Platform.nextCommand
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -16,9 +14,14 @@ object MazeRunner {
     val logChannel = Channel<String>()
 
     fun start() {
-        @OptIn(DelicateCoroutinesApi::class)
-        GlobalScope.launch {
+        Platform.coroutineScope.launch {
             startImpl()
+        }
+    }
+
+    internal fun runScenario(scenario: Scenario, config: String = "") {
+        Platform.coroutineScope.launch {
+            scenario.runScenario(config)
         }
     }
 
@@ -61,7 +64,7 @@ object MazeRunner {
                 Command.ACTION_RUN_SCENARIO -> {
                     withContext(Dispatchers.Main) {
                         MazeLogger.log("running scenario: $scenario")
-                        scenario.runScenario(command.scenarioConfig)
+                        runScenario(scenario, command.scenarioConfig)
                     }
                 }
 
