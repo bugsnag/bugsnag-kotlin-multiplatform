@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalForeignApi::class)
-
 package com.bugsnag.kmp.mazerunner
 
 import com.bugsnag.cocoa.BugsnagEndpointConfiguration
@@ -22,6 +20,7 @@ import platform.Foundation.NSUserDomainMask
 import platform.Foundation.dataWithContentsOfURL
 import kotlin.time.Duration.Companion.seconds
 
+@OptIn(ExperimentalForeignApi::class)
 actual object Platform {
     private var fixtureConfig: MazeRunnerConfig? = null
 
@@ -77,15 +76,22 @@ actual object Platform {
         val session = NSURLSession.sharedSession()
 
         try {
-            val request = NSURLRequest(NSURL.URLWithString("$endpoint/command")!!)
+            val url = NSURL.URLWithString("$endpoint/command")!!
+            MazeLogger.log("attempt to fetch command from: $url")
+            val request = NSURLRequest(url)
             val (_, data) = session.request(request)
 
             if (data == null) {
+                MazeLogger.log("no result returned from $url")
                 return null
             }
 
             val jsonString = data.readAsString() ?: return null
-            return Json.decodeFromString<Command>(jsonString)
+            try {
+                return Json.decodeFromString<Command>(jsonString)
+            } catch (jsone: Exception) {
+                MazeLogger.log("could not parse command '$jsonString'", jsone)
+            }
         } catch (ex: Exception) {
             MazeLogger.log("could not fetch command from $endpoint", ex)
         }
