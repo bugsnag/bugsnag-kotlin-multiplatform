@@ -43,4 +43,17 @@ public actual object Bugsnag {
     public actual fun addFeatureFlag(name: String, variant: String?) {
         JsBugsnag.addFeatureFlag(name, variant)
     }
+
+    public actual var user: User
+        get() {
+            val jsUser = JsBugsnag.user
+            return User(
+                jsUser.id,
+                jsUser.email,
+                jsUser.name,
+            )
+        }
+        set(value) {
+            JsBugsnag.user = User(value.id, value.email, value.name)
+        }
 }

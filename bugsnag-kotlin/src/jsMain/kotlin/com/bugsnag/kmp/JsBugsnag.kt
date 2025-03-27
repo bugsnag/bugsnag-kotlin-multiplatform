@@ -13,6 +13,7 @@ internal external object JsBugsnag {
     fun clearFeatureFlag(name: String)
     fun clearFeatureFlags()
     fun addFeatureFlag(name: String, variant: String?)
+    var user: User
 }
 
 internal fun <V> Map<*, V>.convertToDynamic(): dynamic {
@@ -37,4 +38,4 @@ internal fun Any?.toSafeMetadata(): Any? = when (this) {
     is String -> this
     is Byte -> this
     else -> this.toString()
-    }
+}

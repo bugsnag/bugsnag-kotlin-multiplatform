@@ -48,4 +48,17 @@ public actual object Bugsnag {
     public actual fun addFeatureFlag(name: String, variant: String?) {
         PlatformBugsnag.addFeatureFlagWithName(name, variant)
     }
+
+    public actual var user: User
+        get() {
+            val appleUser = PlatformBugsnag.user()
+            return User(
+                appleUser.id,
+                appleUser.email,
+                appleUser.name,
+            )
+        }
+        set(value) {
+            PlatformBugsnag.setUser(value.id, value.email, value.name)
+        }
 }
