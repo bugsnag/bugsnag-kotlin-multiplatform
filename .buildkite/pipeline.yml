@@ -65,10 +65,6 @@ steps:
           - "--aws-public-ip"
           - "--farm=bb"
           - "--device=ANDROID_14"
-      test-collector#v1.10.2:
-        files: "reports/TEST-*.xml"
-        format: "junit"
-        branch: "^main|next$$"
     concurrency: 25
     concurrency_group: 'bitbar'
     concurrency_method: eager
@@ -94,10 +90,6 @@ steps:
           - "--no-tunnel"
           - "--aws-public-ip"
           - "--fail-fast"
-      test-collector#v1.10.2:
-        files: "reports/TEST-*.xml"
-        format: "junit"
-        branch: "^master|next$$"
     concurrency: 25
     concurrency_group: 'bitbar'
     concurrency_method: eager
