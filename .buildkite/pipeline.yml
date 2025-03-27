@@ -58,7 +58,7 @@ steps:
         run: android-maze-runner
         service-ports: true
         command:
-          - "features/common"
+          - "features/android"
           - "--app=@build/android_fixture_url.txt"
           - "--appium-version=1.22"
           - "--no-tunnel"
@@ -83,7 +83,7 @@ steps:
         run: cocoa-maze-runner-bitbar
         service-ports: true
         command:
-          - "features/common"
+          - "features/ios"
           - "--app=@/app/build/ipa_url_bb_release.txt"
           - "--farm=bb"
           - "--device=IOS_16"
