@@ -27,9 +27,10 @@ abstract class Scenario(val name: String) : CoroutineScope by MainScope() {
 
     override fun toString(): String = name
 
-    companion object {
+    companion object : Iterable<Scenario> {
         const val DEFAULT_API_KEY = "decafbaddecafbaddecafbaddecafbad"
 
         operator fun get(name: String): Scenario? = scenarios.firstOrNull { it.name == name }
+        override fun iterator(): Iterator<Scenario> = scenarios.iterator()
     }
 }
