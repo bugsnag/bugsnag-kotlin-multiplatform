@@ -41,6 +41,7 @@ public actual class Configuration(
     }
 
     public actual fun addMetadata(section: String, data: Map<String, Any>) {
+        @Suppress("UNCHECKED_CAST")
         native.addMetadata(data as Map<Any?, *>, section)
     }
 
