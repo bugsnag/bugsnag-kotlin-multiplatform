@@ -58,4 +58,10 @@ public actual object Bugsnag {
                 lastRunInfoAndroid.crashedDuringLaunch,
             )
         }
+
+    public actual var context: String?
+        get() = PlatformBugsnag.context()
+        set(value) {
+            PlatformBugsnag.setContext(value)
+        }
 }
