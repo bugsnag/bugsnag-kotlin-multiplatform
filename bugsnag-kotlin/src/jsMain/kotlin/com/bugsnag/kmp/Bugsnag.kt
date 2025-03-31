@@ -44,6 +44,9 @@ public actual object Bugsnag {
         JsBugsnag.addFeatureFlag(name, variant)
     }
 
+    public actual val lastRunInfo: LastRunInfo?
+        get() = null
+
     public actual var context: String?
         get() = JsBugsnag.context
         set(value) {
@@ -60,6 +63,10 @@ public actual object Bugsnag {
             )
         }
         set(value) {
-            JsBugsnag.user = User(id = value.id, email = value.email, name = value.name)
+            val user = Any().unsafeCast<JsUser>()
+            user.id = value.id
+            user.email = value.email
+            user.name = value.name
+            JsBugsnag.user = user
         }
 }
