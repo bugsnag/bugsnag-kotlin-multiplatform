@@ -14,8 +14,8 @@ public actual object Bugsnag {
         PlatformBugsnag.addMetadata(value, key, section)
     }
 
-    @Suppress("UNCHECKED", "UNCHECKED_CAST")
     public actual fun addMetadata(section: String, data: Map<String, Any>) {
+        @Suppress("UNCHECKED_CAST")
         PlatformBugsnag.addMetadata(data as Map<Any?, *>, section)
     }
 
