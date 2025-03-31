@@ -44,6 +44,12 @@ public actual object Bugsnag {
         JsBugsnag.addFeatureFlag(name, variant)
     }
 
+    public actual var context: String?
+        get() = JsBugsnag.context
+        set(value) {
+            JsBugsnag.context = value
+        }
+
     public actual var user: User
         get() {
             val jsUser = JsBugsnag.user
@@ -54,6 +60,6 @@ public actual object Bugsnag {
             )
         }
         set(value) {
-            JsBugsnag.user = User(value.id, value.email, value.name)
+            JsBugsnag.user = User(id = value.id, email = value.email, name = value.name)
         }
 }

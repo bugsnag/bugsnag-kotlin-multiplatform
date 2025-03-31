@@ -49,13 +49,19 @@ public actual object Bugsnag {
         PlatformBugsnag.addFeatureFlagWithName(name, variant)
     }
 
+    public actual var context: String?
+        get() = PlatformBugsnag.context()
+        set(value) {
+            PlatformBugsnag.setContext(value)
+        }
+
     public actual var user: User
         get() {
             val appleUser = PlatformBugsnag.user()
             return User(
-                appleUser.id,
-                appleUser.email,
-                appleUser.name,
+                id = appleUser.id,
+                email = appleUser.email,
+                name = appleUser.name,
             )
         }
         set(value) {
