@@ -40,3 +40,4 @@ internal fun Any?.toSafeMetadata(): Any? = when (this) {
     is Byte -> this
     else -> this.toString()
 }
+

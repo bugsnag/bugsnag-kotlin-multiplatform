@@ -63,10 +63,6 @@ public actual object Bugsnag {
             )
         }
         set(value) {
-            val user = Any().unsafeCast<JsUser>()
-            user.id = value.id
-            user.email = value.email
-            user.name = value.name
-            JsBugsnag.user = user
+            JsBugsnag.user = JsUser(value.id, value.email, value.name)
         }
 }
