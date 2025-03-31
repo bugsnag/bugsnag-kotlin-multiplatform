@@ -43,4 +43,10 @@ public actual object Bugsnag {
     public actual fun addFeatureFlag(name: String, variant: String?) {
         JsBugsnag.addFeatureFlag(name, variant)
     }
+
+    public actual var context: String?
+        get() = JsBugsnag.context
+        set(value) {
+            JsBugsnag.context = value
+        }
 }

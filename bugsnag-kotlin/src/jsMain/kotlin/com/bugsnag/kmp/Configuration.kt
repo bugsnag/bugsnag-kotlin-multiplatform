@@ -111,4 +111,10 @@ public actual class Configuration(
         }
         return flag
     }
+
+    public actual var context: String?
+        get() = obj.context as? String
+        set(value) {
+            obj.context = value
+        }
 }

@@ -61,4 +61,10 @@ public actual class Configuration(
     public actual fun addFeatureFlag(name: String, variant: String?) {
         native.addFeatureFlagWithName(name, variant)
     }
+
+    public actual var context: String?
+        get() = native.context()
+        set(value) {
+            native.setContext(value)
+        }
 }

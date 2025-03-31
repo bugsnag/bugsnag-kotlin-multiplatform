@@ -13,6 +13,7 @@ internal external object JsBugsnag {
     fun clearFeatureFlag(name: String)
     fun clearFeatureFlags()
     fun addFeatureFlag(name: String, variant: String?)
+    var context: String?
 }
 
 internal fun <V> Map<*, V>.convertToDynamic(): dynamic {

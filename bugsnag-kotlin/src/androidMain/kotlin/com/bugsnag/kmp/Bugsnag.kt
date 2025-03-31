@@ -44,4 +44,10 @@ public actual object Bugsnag {
     public actual fun addFeatureFlag(name: String, variant: String?) {
         PlatformBugsnag.addFeatureFlag(name, variant)
     }
+
+    public actual var context: String?
+        get() = PlatformBugsnag.getContext()
+        set(value) {
+            PlatformBugsnag.setContext(value)
+        }
 }
