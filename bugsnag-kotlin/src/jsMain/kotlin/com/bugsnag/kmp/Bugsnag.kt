@@ -44,6 +44,9 @@ public actual object Bugsnag {
         JsBugsnag.addFeatureFlag(name, variant)
     }
 
+    public actual val lastRunInfo: LastRunInfo?
+        get() = null
+
     public actual var context: String?
         get() = JsBugsnag.context
         set(value) {

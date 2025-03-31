@@ -49,6 +49,16 @@ public actual object Bugsnag {
         PlatformBugsnag.addFeatureFlagWithName(name, variant)
     }
 
+    public actual val lastRunInfo: LastRunInfo?
+        get() {
+            val lastRunInfoAndroid = PlatformBugsnag.lastRunInfo ?: return null
+            return LastRunInfo(
+                lastRunInfoAndroid.consecutiveLaunchCrashes.toLong(),
+                lastRunInfoAndroid.crashed,
+                lastRunInfoAndroid.crashedDuringLaunch,
+            )
+        }
+
     public actual var context: String?
         get() = PlatformBugsnag.context()
         set(value) {
