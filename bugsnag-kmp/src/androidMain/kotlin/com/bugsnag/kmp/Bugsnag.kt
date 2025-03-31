@@ -45,7 +45,7 @@ public actual object Bugsnag {
         PlatformBugsnag.addFeatureFlag(name, variant)
     }
 
-   public actual val lastRunInfo: LastRunInfo?
+    public actual val lastRunInfo: LastRunInfo?
         get() {
             val lastRunInfoAndroid = PlatformBugsnag.getLastRunInfo() ?: return null
             return LastRunInfo(
