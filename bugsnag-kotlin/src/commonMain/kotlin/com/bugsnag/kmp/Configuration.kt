@@ -11,8 +11,8 @@ public expect class Configuration : PlatformWrapper<PlatformConfiguration> {
     public var apiKey: String
 
     /**
-     * Set the application version sent to Bugsnag. We'll automatically pull your app version
-     * from the versionName field in your AndroidManifest.xml file.
+     * Set the application version sent to Bugsnag. This is typically detected in a platform-specific way, but
+     * can be overwritten here if required.
      */
     public var appVersion: String?
 
@@ -27,8 +27,8 @@ public expect class Configuration : PlatformWrapper<PlatformConfiguration> {
     public var launchDurationMillis: Long
 
     /**
-     * Sets whether or not Bugsnag should automatically capture and report User sessions whenever
-     * the app enters the foreground.
+     * Sets whether or not Bugsnag should automatically capture and report User sessions (typically whenever
+     * the app enters the foreground).
      *
      * By default this behavior is enabled.
      */
@@ -79,5 +79,13 @@ public expect class Configuration : PlatformWrapper<PlatformConfiguration> {
      *                flag with no variant
      */
     public fun addFeatureFlag(name: String, variant: String? = null)
+
+    /**
+     * Bugsnag uses the concept of "contexts" to help display and group your errors. Contexts
+     * represent what was happening in your application at the time an error occurs.
+     *
+     * Typically the `context` is automatically set based on the platform.
+     * If you would like to set this value manually, you should alter this property.
+     */
     public var context: String?
 }

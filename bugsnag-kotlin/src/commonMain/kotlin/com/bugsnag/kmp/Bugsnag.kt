@@ -21,8 +21,7 @@ public expect object Bugsnag {
 
     /**
      * Starts tracking a new session. You should disable automatic session tracking via
-     * {@link Configuration#setAutoTrackSessions(boolean)} if you call this method.
-     * <p/>
+     *
      * You should call this at the appropriate time in your application when you wish to start a
      * session. Any subsequent errors which occur in your application will still be reported to
      * Bugsnag but will not count towards your application's
@@ -40,7 +39,7 @@ public expect object Bugsnag {
     /**
      * Pauses tracking of a session. You should disable automatic session tracking via
      * {@link Configuration#setAutoTrackSessions(boolean)} if you call this method.
-     * <p/>
+     *
      * You should call this at the appropriate time in your application when you wish to pause a
      * session. Any subsequent errors which occur in your application will still be reported to
      * Bugsnag but will not count towards your application's
@@ -59,11 +58,11 @@ public expect object Bugsnag {
      * If a session has already been resumed or started and has not been paused, calling this
      * method will have no effect. You should disable automatic session tracking via
      * {@link Configuration#setAutoTrackSessions(boolean)} if you call this method.
-     * <p/>
+     *
      * It's important to note that sessions are stored in memory for the lifetime of the
      * application process and are not persisted on disk. Therefore calling this method on app
      * startup would start a new session, rather than continuing any previous session.
-     * <p/>
+     *
      * You should call this at the appropriate time in your application when you wish to resume
      * a previously started session. Any subsequent errors which occur in your application will
      * still be reported to Bugsnag but will not count towards your application's
@@ -111,6 +110,25 @@ public expect object Bugsnag {
      *                flag with no variant
      */
     public fun addFeatureFlag(name: String, variant: String? = null)
-    public val lastRunInfo: LastRunInfo?
+
+    /**
+     * Bugsnag uses the concept of "contexts" to help display and group your errors. Contexts
+     * represent what was happening in your application at the time an error occurs.
+     *
+     * In an android app the "context" is automatically set as the foreground Activity.
+     * If you would like to set this value manually, you should alter this property.
+     */
     public var context: String?
+
+    /**
+     * Retrieves information about the last launch of the application, if it has been run before.
+     *
+     * For example, this allows checking whether the app crashed on its last launch, which could
+     * be used to perform conditional behaviour to recover from crashes, such as clearing the
+     * app data cache.
+     *
+     * This will be `null` if the platform does not support reporting the `LastRunInfo` (for example in
+     * browser JavaScript).
+     */
+    public val lastRunInfo: LastRunInfo?
 }
