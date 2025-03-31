@@ -1,3 +1,30 @@
 headers = Bugsnag/Bugsnag.h
 package = com.bugsnag.cocoa
 language = Objective-C
+
+---
+
+static void (*__kmp_previousCrashReportCallback)(const struct BSG_KSCrashReportWriter *);
+static volatile bool __kmp_kotlinCrashed = false;
+
+static void __KMP_BSG_KSCrashReportWriter(const struct BSG_KSCrashReportWriter *writer) {
+    if (__kmp_kotlinCrashed) {
+        writer->beginObject(writer, "bugsnagKotlinMultiplatform");
+        writer->addBooleanElement(writer, "kotlinCrashed", true);
+        writer->endContainer(writer);
+    }
+
+    void (*_previousCrashReportCallback)(const BSG_KSCrashReportWriter *) = __kmp_previousCrashReportCallback;
+    if (_previousCrashReportCallback != NULL) {
+        _previousCrashReportCallback(writer);
+    }
+}
+
+static void __KMP_configureCrashReportCallback(BugsnagConfiguration *configuration) {
+    __kmp_previousCrashReportCallback = configuration.onCrashHandler;
+    configuration.onCrashHandler = &__KMP_BSG_KSCrashReportWriter;
+
+    [configuration addOnSendErrorBlock:^BOOL (BugsnagEvent *event) {
+        return [event getMetadataFromSection:@"bugsnagKotlinMultiplatform" withKey:@"kotlinCrashed"] != YES;
+    }];
+}
