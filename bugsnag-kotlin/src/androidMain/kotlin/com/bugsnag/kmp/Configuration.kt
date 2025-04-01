@@ -1,6 +1,7 @@
 package com.bugsnag.kmp
 
 import android.content.Context
+import com.bugsnag.android.ErrorTypes
 
 public actual typealias PlatformConfiguration = com.bugsnag.android.Configuration
 
@@ -71,5 +72,23 @@ public actual class Configuration(
         get() = native.context
         set(value) {
             native.context = value
+        }
+    public actual var enabledErrorTypes: EnabledErrorTypes
+        get() {
+            val errorTypes = native.enabledErrorTypes
+            return EnabledErrorTypes(
+                androidAnrs = errorTypes.anrs,
+                androidNdkCrashes = errorTypes.ndkCrashes,
+                androidUnhandledExceptions = errorTypes.unhandledExceptions,
+                androidUnhandledRejections = errorTypes.unhandledRejections,
+            )
+        }
+        set(value) {
+            native.enabledErrorTypes = ErrorTypes(
+                anrs = value.androidAnrs,
+                ndkCrashes = value.androidNdkCrashes,
+                unhandledExceptions = value.androidUnhandledExceptions,
+                unhandledRejections = value.androidUnhandledRejections,
+            )
         }
 }
