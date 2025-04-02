@@ -1,4 +1,4 @@
-rootProject.name = "bugsnag-kotlin-multiplatform"
+rootProject.name = "mazerunner"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
@@ -17,6 +17,7 @@ pluginManagement {
 
 dependencyResolutionManagement {
     repositories {
+        mavenLocal()
         google {
             mavenContent {
                 includeGroupAndSubgroups("androidx")
@@ -28,4 +29,4 @@ dependencyResolutionManagement {
     }
 }
 
-include(":bugsnag-kmp")
+include(":app")
