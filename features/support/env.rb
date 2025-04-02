@@ -6,7 +6,7 @@ BeforeAll do
   Maze.config.receive_requests_wait = 60
 
   # TODO: Add some kind of mechanism to allow skipping of this locally, when the files already exist
-  #`unzip -d #{Maze.config.document_server_root} build/web.zip`.chomp
+  `unzip -d #{Maze.config.document_server_root} build/web.zip`.chomp
 end
 
 Before do
