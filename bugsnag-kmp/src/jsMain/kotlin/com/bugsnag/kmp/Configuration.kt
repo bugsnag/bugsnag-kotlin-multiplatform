@@ -108,4 +108,15 @@ public actual class Configuration(
         set(value) {
             obj.context = value
         }
+
+    public actual var user: User?
+        get() {
+            val jsUser = obj.user
+            return User(jsUser.id, jsUser.email, jsUser.name)
+        }
+        set(value) {
+            if (value != null) {
+                obj.user = JsUser(value.id, value.email, value.name)
+            }
+        }
 }

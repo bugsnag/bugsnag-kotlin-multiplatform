@@ -72,4 +72,15 @@ public actual class Configuration(
         set(value) {
             native.context = value
         }
+
+    public actual var user: User?
+        get() {
+            val androidUser = native.getUser()
+            return User(androidUser.id, androidUser.name, androidUser.email)
+        }
+        set(value) {
+            if (value != null) {
+                native.setUser(value.id, value.name, value.email)
+            }
+        }
 }

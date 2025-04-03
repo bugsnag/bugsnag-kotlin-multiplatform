@@ -19,7 +19,7 @@ public class User @JvmOverloads public constructor(
     /**
      * @return the user's email, if available
      */
-    public val email: String? = null
+    public val email: String? = null,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
