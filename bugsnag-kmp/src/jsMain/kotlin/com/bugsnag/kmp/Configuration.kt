@@ -117,4 +117,16 @@ public actual class Configuration(
         set(value) {
             obj.context = value
         }
+
+    public actual var enabledErrorTypes: EnabledErrorTypes
+        get() {
+            val errorTypes = obj.enabledErrorTypes
+            return EnabledErrorTypes(
+                jsUnhandledExceptions = errorTypes.unhandledExceptions,
+                jsUnhandledRejections = errorTypes.unhandledRejections,
+            )
+        }
+        set(value) {
+            obj.enabledErrorTypes = value
+        }
 }

@@ -3,6 +3,7 @@
 package com.bugsnag.kmp
 
 import com.bugsnag.cocoa.BugsnagConfiguration
+import com.bugsnag.cocoa.BugsnagErrorTypes
 import kotlinx.cinterop.ExperimentalForeignApi
 
 public actual typealias PlatformConfiguration = BugsnagConfiguration
@@ -67,5 +68,33 @@ public actual class Configuration(
         get() = native.context()
         set(value) {
             native.setContext(value)
+        }
+
+    public actual var enabledErrorTypes: EnabledErrorTypes
+        get() {
+            val errorTypes = native.enabledErrorTypes
+            return EnabledErrorTypes(
+                iosAppHangs = errorTypes.appHangs,
+                iosOoms = errorTypes.ooms,
+                iosThermalKills = errorTypes.thermalKills,
+                iosUnhandledExceptions = errorTypes.unhandledExceptions,
+                iosSignals = errorTypes.signals,
+                iosCppExceptions = errorTypes.cppExceptions,
+                iosMachExceptions = errorTypes.machExceptions,
+                iosUnhandledRejections = errorTypes.unhandledRejections,
+            )
+        }
+        set(value) {
+            val errorTypes = BugsnagErrorTypes().also {
+                it.setAppHangs(value.iosAppHangs)
+                it.setOoms(value.iosOoms)
+                it.setThermalKills(value.iosThermalKills)
+                it.setUnhandledExceptions(value.iosUnhandledExceptions)
+                it.setSignals(value.iosSignals)
+                it.setCppExceptions(value.iosCppExceptions)
+                it.setMachExceptions(value.iosMachExceptions)
+                it.setUnhandledRejections(value.iosUnhandledRejections)
+            }
+            native.enabledErrorTypes = errorTypes
         }
 }
