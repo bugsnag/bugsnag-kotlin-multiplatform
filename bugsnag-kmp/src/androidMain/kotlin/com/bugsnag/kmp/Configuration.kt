@@ -73,22 +73,24 @@ public actual class Configuration(
         set(value) {
             native.context = value
         }
-    public actual var enabledErrorTypes: EnabledErrorTypes
+
+    public actual var user: User?
         get() {
-            val errorTypes = native.enabledErrorTypes
-            return EnabledErrorTypes(
-                androidAnrs = errorTypes.anrs,
-                androidNdkCrashes = errorTypes.ndkCrashes,
-                androidUnhandledExceptions = errorTypes.unhandledExceptions,
-                androidUnhandledRejections = errorTypes.unhandledRejections,
-            )
+            val androidUser = native.getUser()
+            return User(androidUser.id, androidUser.name, androidUser.email)
         }
         set(value) {
-            native.enabledErrorTypes = ErrorTypes(
-                anrs = value.androidAnrs,
-                ndkCrashes = value.androidNdkCrashes,
-                unhandledExceptions = value.androidUnhandledExceptions,
-                unhandledRejections = value.androidUnhandledRejections,
-            )
+            if (value != null) {
+                native.setUser(value.id, value.name, value.email)
+            }
         }
+
+    public actual fun setEnabledErrorTypes(types: EnabledErrorTypes) {
+        native.enabledErrorTypes = ErrorTypes(
+            anrs = types.androidAnrs,
+            ndkCrashes = types.androidNdkCrashes,
+            unhandledExceptions = types.androidUnhandledExceptions,
+            unhandledRejections = types.androidUnhandledRejections,
+        )
+    }
 }

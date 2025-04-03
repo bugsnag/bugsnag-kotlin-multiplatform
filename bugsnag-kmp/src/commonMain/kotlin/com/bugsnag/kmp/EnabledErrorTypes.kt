@@ -18,11 +18,27 @@ public data class EnabledErrorTypes(
     val jsUnhandledExceptions: Boolean = true,
     val jsUnhandledRejections: Boolean = true,
 ) {
-
     public constructor(
         unhandledExceptions: Boolean = true,
         unhandledRejections: Boolean = true,
-        nativeCrashes: Boolean = true,
-        appHangs: Boolean = true,
-    ) : this(unhandledExceptions, unhandledRejections, nativeCrashes, appHangs, appHangs)
+        nativeCrashes: Boolean = true, // ndkCrashes, iosSignals, machExceptions
+        appHangs: Boolean = true, // ANRs + AppHangs
+    ) : this(
+        androidAnrs = appHangs,
+        androidNdkCrashes = nativeCrashes,
+        androidUnhandledExceptions = unhandledExceptions,
+        androidUnhandledRejections = unhandledRejections,
+
+        iosAppHangs = appHangs,
+        iosOoms = nativeCrashes,
+        iosThermalKills = nativeCrashes,
+        iosUnhandledExceptions = unhandledExceptions,
+        iosSignals = nativeCrashes,
+        iosCppExceptions = unhandledExceptions,
+        iosMachExceptions = nativeCrashes,
+        iosUnhandledRejections = unhandledRejections,
+
+        jsUnhandledExceptions = unhandledExceptions,
+        jsUnhandledRejections = unhandledRejections,
+    )
 }

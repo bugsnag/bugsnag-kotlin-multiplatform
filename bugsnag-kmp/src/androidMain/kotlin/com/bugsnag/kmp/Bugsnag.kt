@@ -60,4 +60,17 @@ public actual object Bugsnag {
         set(value) {
             PlatformBugsnag.setContext(value)
         }
+
+    public actual var user: User
+        get() {
+            val androidUser = PlatformBugsnag.getUser()
+            return User(
+                id = androidUser.id,
+                email = androidUser.email,
+                name = androidUser.name,
+            )
+        }
+        set(value) {
+            PlatformBugsnag.setUser(value.id, value.email, value.name)
+        }
 }

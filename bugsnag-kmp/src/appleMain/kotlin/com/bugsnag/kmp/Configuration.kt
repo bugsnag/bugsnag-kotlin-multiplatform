@@ -70,31 +70,32 @@ public actual class Configuration(
             native.setContext(value)
         }
 
-    public actual var enabledErrorTypes: EnabledErrorTypes
+    public actual var user: User?
         get() {
-            val errorTypes = native.enabledErrorTypes
-            return EnabledErrorTypes(
-                iosAppHangs = errorTypes.appHangs,
-                iosOoms = errorTypes.ooms,
-                iosThermalKills = errorTypes.thermalKills,
-                iosUnhandledExceptions = errorTypes.unhandledExceptions,
-                iosSignals = errorTypes.signals,
-                iosCppExceptions = errorTypes.cppExceptions,
-                iosMachExceptions = errorTypes.machExceptions,
-                iosUnhandledRejections = errorTypes.unhandledRejections,
+            val appleUser = native.user()
+            return User(
+                id = appleUser.id,
+                email = appleUser.email,
+                name = appleUser.name,
             )
         }
         set(value) {
-            val errorTypes = BugsnagErrorTypes().also {
-                it.setAppHangs(value.iosAppHangs)
-                it.setOoms(value.iosOoms)
-                it.setThermalKills(value.iosThermalKills)
-                it.setUnhandledExceptions(value.iosUnhandledExceptions)
-                it.setSignals(value.iosSignals)
-                it.setCppExceptions(value.iosCppExceptions)
-                it.setMachExceptions(value.iosMachExceptions)
-                it.setUnhandledRejections(value.iosUnhandledRejections)
+            if (value != null) {
+                native.setUser(value.id, value.email, value.name)
             }
-            native.enabledErrorTypes = errorTypes
         }
+
+    public actual fun setEnabledErrorTypes(types: EnabledErrorTypes) {
+        val errorTypes = BugsnagErrorTypes().apply {
+            this.setAppHangs(types.iosAppHangs)
+            this.setOoms(types.iosOoms)
+            this.setThermalKills(types.iosThermalKills)
+            this.setUnhandledExceptions(types.iosUnhandledExceptions)
+            this.setSignals(types.iosSignals)
+            this.setCppExceptions(types.iosCppExceptions)
+            this.setMachExceptions(types.iosMachExceptions)
+            this.setUnhandledRejections(types.iosUnhandledRejections)
+        }
+        native.enabledErrorTypes = errorTypes
+    }
 }
