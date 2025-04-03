@@ -14,4 +14,5 @@ public expect object Bugsnag {
     public fun addFeatureFlag(name: String, variant: String? = null)
     public val lastRunInfo: LastRunInfo?
     public var context: String?
+    public var user: User
 }

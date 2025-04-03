@@ -84,7 +84,7 @@ public actual class Configuration(
         delete(metadataSection, key)
     }
 
-    private var featureFlags: Array<FeatureFlag>?
+    private var featureFlags: Array<JsFeatureFlag>?
         get() = obj.featureFlags
         set(value) {
             obj.featureFlags = value
@@ -100,21 +100,23 @@ public actual class Configuration(
 
     public actual fun addFeatureFlag(name: String, variant: String?) {
         featureFlags?.removeFirst { it.name == name }
-        featureFlags?.add(createFeatureFlag(name, variant))
-    }
-
-    private fun createFeatureFlag(name: String, variant: String? = null): FeatureFlag {
-        val flag = Any().unsafeCast<FeatureFlag>()
-        flag.name = name
-        if (variant != null) {
-            flag.variant = variant
-        }
-        return flag
+        featureFlags?.add(JsFeatureFlag(name, variant))
     }
 
     public actual var context: String?
         get() = obj.context as? String
         set(value) {
             obj.context = value
+        }
+
+    public actual var user: User?
+        get() {
+            val jsUser = obj.user
+            return User(jsUser.id, jsUser.email, jsUser.name)
+        }
+        set(value) {
+            if (value != null) {
+                obj.user = JsUser(value.id, value.email, value.name)
+            }
         }
 }

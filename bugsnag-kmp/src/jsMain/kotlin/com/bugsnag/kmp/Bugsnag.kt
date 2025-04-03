@@ -52,4 +52,17 @@ public actual object Bugsnag {
         set(value) {
             JsBugsnag.context = value
         }
+
+    public actual var user: User
+        get() {
+            val jsUser = JsBugsnag.user
+            return User(
+                jsUser.id,
+                jsUser.email,
+                jsUser.name,
+            )
+        }
+        set(value) {
+            JsBugsnag.user = JsUser(value.id, value.email, value.name)
+        }
 }

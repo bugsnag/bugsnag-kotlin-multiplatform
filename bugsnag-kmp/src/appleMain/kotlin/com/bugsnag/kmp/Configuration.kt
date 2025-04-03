@@ -68,4 +68,18 @@ public actual class Configuration(
         set(value) {
             native.setContext(value)
         }
+    public actual var user: User?
+        get() {
+            val appleUser = native.user()
+            return User(
+                id = appleUser.id,
+                email = appleUser.email,
+                name = appleUser.name,
+            )
+        }
+        set(value) {
+            if (value != null) {
+                native.setUser(value.id, value.email, value.name)
+            }
+        }
 }

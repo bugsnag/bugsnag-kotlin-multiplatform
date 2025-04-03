@@ -17,4 +17,5 @@ public expect class Configuration : PlatformWrapper<PlatformConfiguration> {
     public fun clearFeatureFlags()
     public fun addFeatureFlag(name: String, variant: String? = null)
     public var context: String?
+    public var user: User?
 }
