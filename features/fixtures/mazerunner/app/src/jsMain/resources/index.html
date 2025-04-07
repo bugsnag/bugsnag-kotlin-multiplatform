@@ -5,13 +5,15 @@
 </head>
 <body>
 <div id="compose-content">
-
+    <h1>Loading...</h1>
 </div>
 <script src="app.js"></script>
 <script>
-    window.onload = (event) => {
+    document.getElementById('compose-content').innerHTML = '<h1>Loading Mazerunner...</h1><pre>' + (window ? 'window' : 'no window') + ' ' + (window.setTimeout ? 'setTimout' : 'no setTimeout') + '</pre>';
+    window.setTimeout(function() {
+        document.getElementById('compose-content').innerHTML = '<h1>Starting Mazerunner</h1>';
         Mazerunner.StartMazerunner('compose-content');
-    }
+    }, 100);
 </script>
 </body>
 </html>
