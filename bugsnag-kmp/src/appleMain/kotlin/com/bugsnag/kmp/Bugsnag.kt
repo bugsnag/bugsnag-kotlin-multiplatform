@@ -10,6 +10,8 @@ public actual object Bugsnag {
         PlatformBugsnag.startWithConfiguration(configuration.native)
     }
 
+    public actual fun isStarted(): Boolean = PlatformBugsnag.isStarted()
+
     public actual fun addMetadata(section: String, key: String, value: Any?) {
         PlatformBugsnag.addMetadata(value, key, section)
     }
