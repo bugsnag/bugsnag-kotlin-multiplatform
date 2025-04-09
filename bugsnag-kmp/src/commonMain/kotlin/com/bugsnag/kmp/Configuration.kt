@@ -1,4 +1,8 @@
+@file:JvmName("CommonConfigurationKt")
+
 package com.bugsnag.kmp
+
+import kotlin.jvm.JvmName
 
 public expect class PlatformConfiguration
 
@@ -18,4 +22,11 @@ public expect class Configuration : PlatformWrapper<PlatformConfiguration> {
     public fun addFeatureFlag(name: String, variant: String? = null)
     public var context: String?
     public var user: User?
+    public fun setEnabledErrorTypes(types: EnabledErrorTypes)
+}
+
+public fun Configuration.setEnabledErrorTypes(configure: EnabledErrorTypes.() -> Unit) {
+    val enabledErrorTypes = EnabledErrorTypes()
+    enabledErrorTypes.configure()
+    setEnabledErrorTypes(enabledErrorTypes)
 }

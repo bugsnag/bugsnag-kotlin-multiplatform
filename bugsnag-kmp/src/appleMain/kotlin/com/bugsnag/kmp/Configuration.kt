@@ -3,6 +3,7 @@
 package com.bugsnag.kmp
 
 import com.bugsnag.cocoa.BugsnagConfiguration
+import com.bugsnag.cocoa.BugsnagErrorTypes
 import kotlinx.cinterop.ExperimentalForeignApi
 
 public actual typealias PlatformConfiguration = BugsnagConfiguration
@@ -68,6 +69,7 @@ public actual class Configuration(
         set(value) {
             native.setContext(value)
         }
+
     public actual var user: User?
         get() {
             val appleUser = native.user()
@@ -82,4 +84,18 @@ public actual class Configuration(
                 native.setUser(value.id, value.email, value.name)
             }
         }
+
+    public actual fun setEnabledErrorTypes(types: EnabledErrorTypes) {
+        val errorTypes = BugsnagErrorTypes().apply {
+            this.setAppHangs(types.iosAppHangs)
+            this.setOoms(types.iosOoms)
+            this.setThermalKills(types.iosThermalKills)
+            this.setUnhandledExceptions(types.iosUnhandledExceptions)
+            this.setSignals(types.iosSignals)
+            this.setCppExceptions(types.iosCppExceptions)
+            this.setMachExceptions(types.iosMachExceptions)
+            this.setUnhandledRejections(types.iosUnhandledRejections)
+        }
+        native.enabledErrorTypes = errorTypes
+    }
 }

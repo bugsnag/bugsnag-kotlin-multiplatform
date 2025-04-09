@@ -119,4 +119,8 @@ public actual class Configuration(
                 obj.user = JsUser(value.id, value.email, value.name)
             }
         }
+
+    public actual fun setEnabledErrorTypes(types: EnabledErrorTypes) {
+        obj.enabledErrorTypes = types
+    }
 }

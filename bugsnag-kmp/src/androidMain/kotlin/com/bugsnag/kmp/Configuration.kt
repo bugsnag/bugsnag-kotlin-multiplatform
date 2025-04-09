@@ -1,6 +1,7 @@
 package com.bugsnag.kmp
 
 import android.content.Context
+import com.bugsnag.android.ErrorTypes
 
 public actual typealias PlatformConfiguration = com.bugsnag.android.Configuration
 
@@ -83,4 +84,13 @@ public actual class Configuration(
                 native.setUser(value.id, value.name, value.email)
             }
         }
+
+    public actual fun setEnabledErrorTypes(types: EnabledErrorTypes) {
+        native.enabledErrorTypes = ErrorTypes(
+            anrs = types.androidAnrs,
+            ndkCrashes = types.androidNdkCrashes,
+            unhandledExceptions = types.androidUnhandledExceptions,
+            unhandledRejections = types.androidUnhandledRejections,
+        )
+    }
 }
