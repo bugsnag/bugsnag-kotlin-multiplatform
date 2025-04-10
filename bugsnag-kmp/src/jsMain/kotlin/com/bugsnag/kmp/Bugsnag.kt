@@ -5,6 +5,8 @@ public actual object Bugsnag {
         JsBugsnag.start(configuration.native)
     }
 
+    public actual fun isStarted(): Boolean = JsBugsnag.isStarted()
+
     public actual fun addMetadata(section: String, key: String, value: Any?) {
         JsBugsnag.addMetadata(section, key, value)
     }

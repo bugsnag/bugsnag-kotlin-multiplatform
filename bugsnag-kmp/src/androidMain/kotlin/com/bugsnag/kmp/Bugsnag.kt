@@ -7,6 +7,8 @@ public actual object Bugsnag {
         PlatformBugsnag.start(configuration.androidContext, configuration.native)
     }
 
+    public actual fun isStarted(): Boolean = PlatformBugsnag.isStarted()
+
     public actual fun addMetadata(section: String, key: String, value: Any?) {
         PlatformBugsnag.addMetadata(section, key, value)
     }
