@@ -12,6 +12,8 @@ public actual typealias PlatformConfiguration = BugsnagConfiguration
 public actual class Configuration(
     public actual override val native: PlatformConfiguration = PlatformConfiguration.loadConfig(),
 ) : PlatformWrapper<PlatformConfiguration> {
+    public constructor(apiKey: String) : this(PlatformConfiguration(apiKey))
+
     public actual var apiKey: String
         get() = native.apiKey
         set(value) {

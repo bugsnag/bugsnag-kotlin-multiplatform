@@ -11,6 +11,9 @@ public actual class Configuration(
     public actual override val native: PlatformConfiguration =
         PlatformConfiguration.load(androidContext),
 ) : PlatformWrapper<PlatformConfiguration> {
+    public constructor(androidContext: Context, apiKey: String) :
+            this(androidContext, PlatformConfiguration(apiKey))
+
     public actual var apiKey: String
         get() = native.apiKey
         set(value) {
