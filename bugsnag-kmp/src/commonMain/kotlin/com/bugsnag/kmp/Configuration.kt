@@ -23,6 +23,10 @@ public expect class Configuration : PlatformWrapper<PlatformConfiguration> {
     public var context: String?
     public var user: User?
     public fun setEnabledErrorTypes(types: EnabledErrorTypes)
+    public fun setEndpoints(
+        notify: String = "https://notify.bugsnag.com",
+        sessions: String = "https://sessions.bugsnag.com",
+    )
 }
 
 public fun Configuration.setEnabledErrorTypes(configure: EnabledErrorTypes.() -> Unit) {

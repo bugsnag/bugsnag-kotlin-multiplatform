@@ -99,8 +99,13 @@ public actual class Configuration(
     }
 
     public actual fun addFeatureFlag(name: String, variant: String?) {
-        featureFlags?.removeFirst { it.name == name }
-        featureFlags?.add(JsFeatureFlag(name, variant))
+        val featureFlagArray = featureFlags
+        if (featureFlagArray == null) {
+            featureFlags = arrayOf(JsFeatureFlag(name, variant))
+        } else {
+            featureFlagArray.removeFirst { it.name == name }
+            featureFlagArray.add(JsFeatureFlag(name, variant))
+        }
     }
 
     public actual var context: String?
@@ -109,6 +114,7 @@ public actual class Configuration(
             obj.context = value
         }
 
+    @Suppress("UnsafeCastFromDynamic")
     public actual var user: User?
         get() {
             val jsUser = obj.user
@@ -121,6 +127,13 @@ public actual class Configuration(
         }
 
     public actual fun setEnabledErrorTypes(types: EnabledErrorTypes) {
-        obj.enabledErrorTypes = types
+        obj.enabledErrorTypes = JsErrorTypes(
+            unhandledExceptions = types.jsUnhandledExceptions,
+            unhandledRejections = types.jsUnhandledRejections,
+        )
+    }
+
+    public actual fun setEndpoints(notify: String, sessions: String) {
+        obj.endpoints = JsEndpointConfigurations(notify, sessions)
     }
 }

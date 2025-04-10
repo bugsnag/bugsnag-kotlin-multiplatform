@@ -1,6 +1,7 @@
 package com.bugsnag.kmp
 
 import android.content.Context
+import com.bugsnag.android.EndpointConfiguration
 import com.bugsnag.android.ErrorTypes
 
 public actual typealias PlatformConfiguration = com.bugsnag.android.Configuration
@@ -92,5 +93,9 @@ public actual class Configuration(
             unhandledExceptions = types.androidUnhandledExceptions,
             unhandledRejections = types.androidUnhandledRejections,
         )
+    }
+
+    public actual fun setEndpoints(notify: String, sessions: String) {
+        native.endpoints = EndpointConfiguration(notify, sessions)
     }
 }

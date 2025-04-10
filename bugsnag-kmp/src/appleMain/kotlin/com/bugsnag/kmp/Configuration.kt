@@ -3,6 +3,7 @@
 package com.bugsnag.kmp
 
 import com.bugsnag.cocoa.BugsnagConfiguration
+import com.bugsnag.cocoa.BugsnagEndpointConfiguration
 import com.bugsnag.cocoa.BugsnagErrorTypes
 import kotlinx.cinterop.ExperimentalForeignApi
 
@@ -97,5 +98,9 @@ public actual class Configuration(
             this.setUnhandledRejections(types.iosUnhandledRejections)
         }
         native.enabledErrorTypes = errorTypes
+    }
+
+    public actual fun setEndpoints(notify: String, sessions: String) {
+        native.endpoints = BugsnagEndpointConfiguration(notify, sessions)
     }
 }
