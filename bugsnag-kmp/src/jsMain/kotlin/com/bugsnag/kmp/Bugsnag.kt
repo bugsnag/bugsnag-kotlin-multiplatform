@@ -5,6 +5,12 @@ public actual object Bugsnag {
         JsBugsnag.start(configuration.native)
     }
 
+    public inline fun start(configure: Configuration.() -> Unit) {
+        val configuration = Configuration(Any())
+        configuration.configure()
+        start(configuration)
+    }
+
     public actual fun isStarted(): Boolean = JsBugsnag.isStarted()
 
     public actual fun addMetadata(section: String, key: String, value: Any?) {
