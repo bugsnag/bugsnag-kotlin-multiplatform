@@ -12,7 +12,7 @@ public actual class Configuration(
         PlatformConfiguration.load(androidContext),
 ) : PlatformWrapper<PlatformConfiguration> {
     public constructor(androidContext: Context, apiKey: String) :
-            this(androidContext, PlatformConfiguration(apiKey))
+        this(androidContext, PlatformConfiguration(apiKey))
 
     public actual var apiKey: String
         get() = native.apiKey

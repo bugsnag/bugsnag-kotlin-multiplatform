@@ -1,10 +1,17 @@
 package com.bugsnag.kmp
 
+import android.content.Context
 import com.bugsnag.android.Bugsnag as PlatformBugsnag
 
 public actual object Bugsnag {
     public actual fun start(configuration: Configuration) {
         PlatformBugsnag.start(configuration.androidContext, configuration.native)
+    }
+
+    public inline fun start(androidContext: Context, configure: Configuration.() -> Unit) {
+        val configuration = Configuration(androidContext)
+        configuration.configure()
+        start(configuration)
     }
 
     public actual fun isStarted(): Boolean = PlatformBugsnag.isStarted()
