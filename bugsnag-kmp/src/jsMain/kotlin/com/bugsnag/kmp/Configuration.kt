@@ -38,6 +38,14 @@ public actual class Configuration(
             obj.context = value
         }
 
+    public actual var enabledReleaseStages: Set<String>?
+        get() {
+            return obj.enabledReleaseStages.unsafeCast<Array<String>?>()?.toSet()
+        }
+        set(value) {
+            obj.enabledReleaseStages = value?.toTypedArray()
+        }
+
     /**
      * Not supported on JS and will always appear to have a value of `0`
      */
@@ -45,10 +53,16 @@ public actual class Configuration(
         get() = 0
         set(_) {}
 
-    @Suppress("UnsafeCastFromDynamic")
+    public actual var releaseStage: String?
+        @Suppress("UnsafeCastFromDynamic")
+        get() = obj.releaseStage
+        set(value) {
+            obj.releaseStage = value
+        }
+
     public actual var user: User?
         get() {
-            val jsUser = obj.user
+            val jsUser = obj.user.unsafeCast<JsUser?>() ?: return null
             return User(jsUser.id, jsUser.email, jsUser.name)
         }
         set(value) {
@@ -95,6 +109,7 @@ public actual class Configuration(
         val metadataSection = metadata[section] ?: return
         delete(metadataSection, key)
     }
+
     public actual fun setEnabledErrorTypes(types: EnabledErrorTypes) {
         obj.enabledErrorTypes = JsErrorTypes(
             unhandledExceptions = types.jsUnhandledExceptions,

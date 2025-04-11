@@ -35,10 +35,22 @@ public actual class Configuration(
             native.context = value
         }
 
+    public actual var enabledReleaseStages: Set<String>?
+        get() = native.enabledReleaseStages
+        set(value) {
+            native.enabledReleaseStages = value
+        }
+
     public actual var launchDurationMillis: Long
         get() = native.launchDurationMillis
         set(value) {
             native.launchDurationMillis = value
+        }
+
+    public actual var releaseStage: String?
+        get() = native.releaseStage
+        set(value) {
+            native.releaseStage = value
         }
 
     public actual var user: User?

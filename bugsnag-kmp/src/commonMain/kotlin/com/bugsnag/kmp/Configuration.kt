@@ -14,7 +14,9 @@ public expect class Configuration : PlatformWrapper<PlatformConfiguration> {
     public var appVersion: String?
     public var autoTrackSessions: Boolean
     public var context: String?
+    public var enabledReleaseStages: Set<String>?
     public var launchDurationMillis: Long
+    public var releaseStage: String?
     public var user: User?
 
     public fun addFeatureFlag(name: String, variant: String? = null)

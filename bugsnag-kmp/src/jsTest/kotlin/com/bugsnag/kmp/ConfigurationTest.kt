@@ -10,6 +10,10 @@ internal class ConfigurationTest {
         configuration.appVersion = APP_VERSION
         configuration.autoTrackSessions = false
         configuration.launchDurationMillis = 987654321
+        configuration.context = CONTEXT
+        configuration.user = User(id = USER_ID, name = USER_NAME)
+        configuration.releaseStage = "unit-testing"
+        configuration.enabledReleaseStages = setOf("unit-testing", "staging")
 
         configuration.addMetadata(
             "section",
@@ -31,8 +35,6 @@ internal class ConfigurationTest {
         configuration.addFeatureFlag("roast_level", "medium")
         configuration.clearFeatureFlag("feature")
 
-        configuration.context = CONTEXT
-        configuration.user = User(id = USER_ID, name = USER_NAME)
         configuration.setEnabledErrorTypes(EnabledErrorTypes())
         configuration.setEndpoints(
             notify = NOTIFY_ENDPOINT,
@@ -58,6 +60,16 @@ internal class ConfigurationTest {
                 "apiKey": "$API_KEY",
                 "appVersion": "$APP_VERSION",
                 "autoTrackSessions": false,
+                "context": "$CONTEXT",
+                "user": {
+                    "id": "$USER_ID",
+                    "name": "$USER_NAME"
+                },
+                "releaseStage": "unit-testing",
+                "enabledReleaseStages": [
+                    "unit-testing",
+                    "staging"
+                ],
                 "metadata": {
                     "section": {
                         "integer": 123,
@@ -88,11 +100,6 @@ internal class ConfigurationTest {
                         "variant": "medium"
                     }
                 ],
-                "context": "$CONTEXT",
-                "user": {
-                    "id": "$USER_ID",
-                    "name": "$USER_NAME"
-                },
                 "enabledErrorTypes": {
                     "unhandledExceptions": true,
                     "unhandledRejections": true

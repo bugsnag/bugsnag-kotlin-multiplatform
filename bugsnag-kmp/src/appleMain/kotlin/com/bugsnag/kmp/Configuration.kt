@@ -36,10 +36,25 @@ public actual class Configuration(
             native.setContext(value)
         }
 
+    public actual var enabledReleaseStages: Set<String>?
+        get() {
+            @Suppress("UNCHECKED_CAST")
+            return native.enabledReleaseStages as? Set<String>
+        }
+        set(value) {
+            native.enabledReleaseStages = value as Set<*>
+        }
+
     public actual var launchDurationMillis: Long
         get() = native.launchDurationMillis.toLong()
         set(value) {
             native.launchDurationMillis = value.toULong()
+        }
+
+    public actual var releaseStage: String?
+        get() = native.releaseStage
+        set(value) {
+            native.releaseStage = value
         }
 
     public actual var user: User?
