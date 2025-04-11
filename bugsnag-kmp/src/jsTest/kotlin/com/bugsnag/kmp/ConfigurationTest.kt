@@ -10,6 +10,7 @@ internal class ConfigurationTest {
         configuration.appVersion = APP_VERSION
         configuration.autoTrackSessions = false
         configuration.launchDurationMillis = 987654321
+        configuration.maxBreadcrumbs = MAX_BREADCRUMBS
         configuration.context = CONTEXT
         configuration.user = User(id = USER_ID, name = USER_NAME)
         configuration.releaseStage = "unit-testing"
@@ -49,6 +50,7 @@ internal class ConfigurationTest {
     companion object {
         const val API_KEY = "decafbad"
         const val APP_VERSION = "9.99.999"
+        const val MAX_BREADCRUMBS = 99
         const val CONTEXT = "coffee shop"
         const val USER_ID = "435897634876"
         const val USER_NAME = "Hames"
@@ -60,6 +62,7 @@ internal class ConfigurationTest {
                 "apiKey": "$API_KEY",
                 "appVersion": "$APP_VERSION",
                 "autoTrackSessions": false,
+                "maxBreadcrumbs": $MAX_BREADCRUMBS,
                 "context": "$CONTEXT",
                 "user": {
                     "id": "$USER_ID",

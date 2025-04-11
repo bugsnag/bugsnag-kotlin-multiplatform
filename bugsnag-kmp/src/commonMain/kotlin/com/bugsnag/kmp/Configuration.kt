@@ -16,6 +16,7 @@ public expect class Configuration : PlatformWrapper<PlatformConfiguration> {
     public var context: String?
     public var enabledReleaseStages: Set<String>?
     public var launchDurationMillis: Long
+    public var maxBreadcrumbs: Int
     public var releaseStage: String?
     public var user: User?
 

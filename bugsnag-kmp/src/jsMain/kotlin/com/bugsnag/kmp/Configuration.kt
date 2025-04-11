@@ -53,6 +53,12 @@ public actual class Configuration(
         get() = 0
         set(_) {}
 
+    public actual var maxBreadcrumbs: Int
+        get() = obj.maxBreadcrumbs.unsafeCast<Int>()
+        set(value) {
+            obj.maxBreadcrumbs = value
+        }
+
     public actual var releaseStage: String?
         @Suppress("UnsafeCastFromDynamic")
         get() = obj.releaseStage

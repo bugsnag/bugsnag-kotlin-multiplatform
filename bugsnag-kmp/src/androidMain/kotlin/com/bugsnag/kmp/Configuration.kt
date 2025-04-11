@@ -47,6 +47,12 @@ public actual class Configuration(
             native.launchDurationMillis = value
         }
 
+    public actual var maxBreadcrumbs: Int
+        get() = native.maxBreadcrumbs
+        set(value) {
+            native.maxBreadcrumbs = value
+        }
+
     public actual var releaseStage: String?
         get() = native.releaseStage
         set(value) {
