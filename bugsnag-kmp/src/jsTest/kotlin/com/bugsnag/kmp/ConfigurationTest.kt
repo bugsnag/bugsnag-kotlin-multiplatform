@@ -17,9 +17,7 @@ internal class ConfigurationTest {
                 "integer" to 123,
                 "number" to 99.876,
                 "bool" to false,
-                "list" to listOf(
-                    "1", "2", 3, false,
-                ),
+                "list" to listOf("1", "2", 3, false),
                 "map" to mapOf("nested" to "value"),
             ),
         )

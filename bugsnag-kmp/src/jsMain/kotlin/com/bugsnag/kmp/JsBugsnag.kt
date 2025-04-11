@@ -67,7 +67,7 @@ internal external interface JsErrorTypes {
 
 internal fun JsErrorTypes(
     unhandledExceptions: Boolean?,
-    unhandledRejections: Boolean?
+    unhandledRejections: Boolean?,
 ): JsErrorTypes {
     val errorTypes = Any().unsafeCast<JsErrorTypes>()
     errorTypes.unhandledExceptions = unhandledExceptions
