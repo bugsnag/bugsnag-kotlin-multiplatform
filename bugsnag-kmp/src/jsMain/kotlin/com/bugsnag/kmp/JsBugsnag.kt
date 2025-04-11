@@ -2,20 +2,21 @@ package com.bugsnag.kmp
 
 @JsModule("@bugsnag/browser")
 internal external object JsBugsnag {
-    fun start(apiOrConfig: dynamic)
-    fun isStarted(): Boolean
-    fun addMetadata(section: String, key: String, value: Any?)
-    fun addMetadata(section: String, data: dynamic)
-    fun startSession()
-    fun pauseSession()
-    fun resumeSession(): Boolean
-    fun clearMetadata(section: String)
-    fun clearMetadata(section: String, key: String)
-    fun clearFeatureFlag(name: String)
-    fun clearFeatureFlags()
-    fun addFeatureFlag(name: String, variant: String?)
     var context: String?
     var user: JsUser
+
+    fun start(apiOrConfig: dynamic)
+    fun addFeatureFlag(name: String, variant: String?)
+    fun addMetadata(section: String, data: dynamic)
+    fun addMetadata(section: String, key: String, value: Any?)
+    fun clearFeatureFlag(name: String)
+    fun clearFeatureFlags()
+    fun clearMetadata(section: String)
+    fun clearMetadata(section: String, key: String)
+    fun isStarted(): Boolean
+    fun pauseSession()
+    fun resumeSession(): Boolean
+    fun startSession()
 }
 
 internal external interface JsEndpointConfigurations {

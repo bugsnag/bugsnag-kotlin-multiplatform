@@ -14,11 +14,6 @@ public actual class Configuration(
         this.apiKey = apiKey
     }
 
-    /**
-     * Convenient access to our wrapped "config" object as `dynamic`
-     */
-    private inline val obj get() = native.asDynamic()
-
     public actual var apiKey: String
         get() = obj.apiKey as String
         set(value) {
@@ -37,82 +32,18 @@ public actual class Configuration(
             obj.autoTrackSessions = value
         }
 
+    public actual var context: String?
+        get() = obj.context as? String
+        set(value) {
+            obj.context = value
+        }
+
     /**
      * Not supported on JS and will always appear to have a value of `0`
      */
     public actual var launchDurationMillis: Long
         get() = 0
         set(_) {}
-
-    private val metadata: dynamic
-        get() {
-            var m = obj.metadata
-            if (m == null) {
-                m = Any().asDynamic()
-                obj.metadata = m
-            }
-            return m
-        }
-
-    private fun getMetadataSection(section: String): dynamic {
-        var sectionObject = metadata[section]
-        if (sectionObject == null) {
-            sectionObject = Any().asDynamic()
-            metadata[section] = sectionObject
-        }
-        return sectionObject
-    }
-
-    public actual fun addMetadata(section: String, key: String, value: Any?) {
-        val sectionObject = getMetadataSection(section)
-        sectionObject[key] = value.toSafeMetadata()
-    }
-
-    public actual fun addMetadata(section: String, data: Map<String, Any>) {
-        val sectionObject = getMetadataSection(section)
-        data.forEach { (key, value) ->
-            sectionObject[key] = value.toSafeMetadata()
-        }
-    }
-
-    public actual fun clearMetadata(section: String) {
-        delete(metadata, section)
-    }
-
-    public actual fun clearMetadata(section: String, key: String) {
-        val metadataSection = metadata[section] ?: return
-        delete(metadataSection, key)
-    }
-
-    private var featureFlags: Array<JsFeatureFlag>?
-        get() = obj.featureFlags
-        set(value) {
-            obj.featureFlags = value
-        }
-
-    public actual fun clearFeatureFlag(name: String) {
-        featureFlags?.removeFirst { it.name == name }
-    }
-
-    public actual fun clearFeatureFlags() {
-        featureFlags = null
-    }
-
-    public actual fun addFeatureFlag(name: String, variant: String?) {
-        val featureFlagArray = featureFlags
-        if (featureFlagArray == null) {
-            featureFlags = arrayOf(JsFeatureFlag(name, variant))
-        } else {
-            featureFlagArray.removeFirst { it.name == name }
-            featureFlagArray.add(JsFeatureFlag(name, variant))
-        }
-    }
-
-    public actual var context: String?
-        get() = obj.context as? String
-        set(value) {
-            obj.context = value
-        }
 
     @Suppress("UnsafeCastFromDynamic")
     public actual var user: User?
@@ -126,6 +57,44 @@ public actual class Configuration(
             }
         }
 
+    public actual fun addFeatureFlag(name: String, variant: String?) {
+        val featureFlagArray = featureFlags
+        if (featureFlagArray == null) {
+            featureFlags = arrayOf(JsFeatureFlag(name, variant))
+        } else {
+            featureFlagArray.removeFirst { it.name == name }
+            featureFlagArray.add(JsFeatureFlag(name, variant))
+        }
+    }
+
+    public actual fun addMetadata(section: String, data: Map<String, Any>) {
+        val sectionObject = getMetadataSection(section)
+        data.forEach { (key, value) ->
+            sectionObject[key] = value.toSafeMetadata()
+        }
+    }
+
+    public actual fun addMetadata(section: String, key: String, value: Any?) {
+        val sectionObject = getMetadataSection(section)
+        sectionObject[key] = value.toSafeMetadata()
+    }
+
+    public actual fun clearFeatureFlag(name: String) {
+        featureFlags?.removeFirst { it.name == name }
+    }
+
+    public actual fun clearFeatureFlags() {
+        featureFlags = null
+    }
+
+    public actual fun clearMetadata(section: String) {
+        delete(metadata, section)
+    }
+
+    public actual fun clearMetadata(section: String, key: String) {
+        val metadataSection = metadata[section] ?: return
+        delete(metadataSection, key)
+    }
     public actual fun setEnabledErrorTypes(types: EnabledErrorTypes) {
         obj.enabledErrorTypes = JsErrorTypes(
             unhandledExceptions = types.jsUnhandledExceptions,
@@ -136,4 +105,35 @@ public actual class Configuration(
     public actual fun setEndpoints(notify: String, sessions: String) {
         obj.endpoints = JsEndpointConfigurations(notify, sessions)
     }
+
+    /**
+     * Convenient access to our wrapped "config" object as `dynamic`
+     */
+    private inline val obj get() = native.asDynamic()
+
+    private fun getMetadataSection(section: String): dynamic {
+        var sectionObject = metadata[section]
+        if (sectionObject == null) {
+            sectionObject = Any().asDynamic()
+            metadata[section] = sectionObject
+        }
+        return sectionObject
+    }
+
+    private val metadata: dynamic
+        get() {
+            var m = obj.metadata
+            if (m == null) {
+                m = Any().asDynamic()
+                obj.metadata = m
+            }
+            return m
+        }
+
+    @Suppress("UnsafeCastFromDynamic")
+    private var featureFlags: Array<JsFeatureFlag>?
+        get() = obj.featureFlags
+        set(value) {
+            obj.featureFlags = value
+        }
 }
