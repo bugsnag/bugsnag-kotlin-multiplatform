@@ -2,12 +2,16 @@
 
 package com.bugsnag.kmp
 
+import com.bugsnag.cocoa.__KMP_configureCrashReportCallback
 import kotlinx.cinterop.ExperimentalForeignApi
 import com.bugsnag.cocoa.Bugsnag as PlatformBugsnag
 
 public actual object Bugsnag {
     public actual fun start(configuration: Configuration) {
+        __KMP_configureCrashReportCallback(configuration.native)
+
         PlatformBugsnag.startWithConfiguration(configuration.native)
+        installUncaughtExceptionHandler()
     }
 
     public actual fun isStarted(): Boolean = PlatformBugsnag.isStarted()
