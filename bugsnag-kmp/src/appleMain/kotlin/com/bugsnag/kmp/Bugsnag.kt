@@ -14,6 +14,12 @@ public actual object Bugsnag {
         installUncaughtExceptionHandler()
     }
 
+    public inline fun start(configure: Configuration.() -> Unit) {
+        val configuration = Configuration()
+        configuration.configure()
+        start(configuration)
+    }
+
     public actual fun isStarted(): Boolean = PlatformBugsnag.isStarted()
 
     public actual fun addMetadata(section: String, key: String, value: Any?) {
