@@ -8,6 +8,12 @@ public expect object Bugsnag {
     public fun startSession()
     public fun pauseSession()
     public fun resumeSession(): Boolean
+    public fun leaveBreadcrumb(
+        message: String,
+        metadata: Map<String, Any>? = null,
+        type: BreadcrumbType = BreadcrumbType.MANUAL,
+    )
+
     public fun clearMetadata(section: String)
     public fun clearMetadata(section: String, key: String)
     public fun clearFeatureFlag(name: String)
