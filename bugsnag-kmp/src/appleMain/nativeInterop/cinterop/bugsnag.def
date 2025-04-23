@@ -4,25 +4,25 @@ language = Objective-C
 
 ---
 
-static void (*__kmp_previousCrashReportCallback)(const struct BSG_KSCrashReportWriter *);
-static volatile bool __kmp_kotlinCrashed = false;
+static void (*__bsg_previousCrashReportCallback)(const struct BSG_KSCrashReportWriter *);
+static volatile bool __bsg_kotlinCrashed = false;
 
-static void __KMP_BSG_KSCrashReportWriter(const struct BSG_KSCrashReportWriter *writer) {
-    if (__kmp_kotlinCrashed) {
+static void __BSG_KMP_KSCrashReportWriter(const struct BSG_KSCrashReportWriter *writer) {
+    if (__bsg_kotlinCrashed) {
         writer->beginObject(writer, "bugsnagKotlinMultiplatform");
         writer->addBooleanElement(writer, "kotlinCrashed", true);
         writer->endContainer(writer);
     }
 
-    void (*_previousCrashReportCallback)(const BSG_KSCrashReportWriter *) = __kmp_previousCrashReportCallback;
+    void (*_previousCrashReportCallback)(const BSG_KSCrashReportWriter *) = __bsg_previousCrashReportCallback;
     if (_previousCrashReportCallback != NULL) {
         _previousCrashReportCallback(writer);
     }
 }
 
-static void __KMP_configureCrashReportCallback(BugsnagConfiguration *configuration) {
-    __kmp_previousCrashReportCallback = configuration.onCrashHandler;
-    configuration.onCrashHandler = &__KMP_BSG_KSCrashReportWriter;
+static void __BSG_KMP_configureCrashReportCallback(BugsnagConfiguration *configuration) {
+    __bsg_previousCrashReportCallback = configuration.onCrashHandler;
+    configuration.onCrashHandler = &__BSG_KMP_KSCrashReportWriter;
 
     [configuration addOnSendErrorBlock:^BOOL (BugsnagEvent *event) {
         return [event getMetadataFromSection:@"bugsnagKotlinMultiplatform" withKey:@"kotlinCrashed"] != YES;

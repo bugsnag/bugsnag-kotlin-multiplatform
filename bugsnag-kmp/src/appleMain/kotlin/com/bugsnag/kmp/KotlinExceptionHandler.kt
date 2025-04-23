@@ -2,7 +2,7 @@
 
 package com.bugsnag.kmp
 
-import com.bugsnag.cocoa.__kmp_kotlinCrashed
+import com.bugsnag.cocoa.__bsg_kotlinCrashed
 import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.convert
@@ -63,7 +63,7 @@ internal fun installUncaughtExceptionHandler() {
     val previousHook = setUnhandledExceptionHook { throwable ->
         // We only handle a single Kotlin crash in order to avoid swizzling issues
         if (unhandledExceptionCrashed.compareAndSet(0, 1)) {
-            __kmp_kotlinCrashed = true
+            __bsg_kotlinCrashed = true
 
             overrideUnhandled()
             PlatformBugsnag.notify(BugsnagNSException(throwable)) { event ->
