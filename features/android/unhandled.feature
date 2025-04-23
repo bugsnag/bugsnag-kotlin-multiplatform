@@ -6,3 +6,4 @@ Feature: Unhandled error smoke test
     Then I wait to receive an error
     And the exception "message" starts with "this is a large crisis"
     And the exception "errorClass" ends with "RuntimeException"
+    And the event "metaData.custom_data_1.key" equals "something_else"
