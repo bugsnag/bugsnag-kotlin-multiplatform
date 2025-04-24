@@ -65,11 +65,11 @@ public actual class Configuration(
     public actual var user: User?
         get() {
             val androidUser = native.getUser()
-            return User(androidUser.id, androidUser.name, androidUser.email)
+            return User(id = androidUser.id, name = androidUser.name, email = androidUser.email)
         }
         set(value) {
             if (value != null) {
-                native.setUser(value.id, value.name, value.email)
+                native.setUser(id = value.id, email = value.email, name = value.name)
             }
         }
 
