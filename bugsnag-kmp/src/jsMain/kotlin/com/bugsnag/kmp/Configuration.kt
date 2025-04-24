@@ -78,18 +78,22 @@ public actual class Configuration(
         }
 
     public actual fun addRedactedKeys(redactedKeys: Collection<String>) {
-        val existingRedactedKeys = this.redactedKeys.orEmpty()
-        val newKeys = HashSet<String>(existingRedactedKeys.size + redactedKeys.size)
-        newKeys.addAll(existingRedactedKeys)
-        newKeys.addAll(redactedKeys)
-        this.redactedKeys = newKeys.toTypedArray()
+        addRedactedKeysImpl(redactedKeys.size) {
+            addAll(redactedKeys)
+        }
     }
 
     public actual fun addRedactedKeys(vararg redactedKeys: String) {
+        addRedactedKeysImpl(redactedKeys.size) {
+            addAll(redactedKeys)
+        }
+    }
+
+    private inline fun addRedactedKeysImpl(count: Int, addNewKeys: MutableSet<String>.() -> Unit) {
         val existingRedactedKeys = this.redactedKeys.orEmpty()
-        val newKeys = HashSet<String>(existingRedactedKeys.size + redactedKeys.size)
+        val newKeys = HashSet<String>(existingRedactedKeys.size + count)
         newKeys.addAll(existingRedactedKeys)
-        newKeys.addAll(redactedKeys)
+        addNewKeys(newKeys)
         this.redactedKeys = newKeys.toTypedArray()
     }
 
