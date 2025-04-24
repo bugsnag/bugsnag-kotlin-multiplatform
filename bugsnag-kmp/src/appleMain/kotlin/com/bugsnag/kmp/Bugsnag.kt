@@ -31,6 +31,16 @@ public actual object Bugsnag {
         PlatformBugsnag.addMetadata(data as Map<Any?, *>, section)
     }
 
+    public actual fun leaveBreadcrumb(
+        message: String,
+        metadata: Map<String, Any>?,
+        type: BreadcrumbType,
+    ) {
+        @Suppress("UNCHECKED_CAST")
+        val metadataMap = metadata?.let { it as Map<Any?, *> }
+        PlatformBugsnag.leaveBreadcrumbWithMessage(message, metadataMap, type.toPlatformType())
+    }
+
     public actual fun startSession() {
         PlatformBugsnag.startSession()
     }

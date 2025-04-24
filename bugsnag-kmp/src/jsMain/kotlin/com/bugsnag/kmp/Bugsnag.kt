@@ -32,6 +32,15 @@ public actual object Bugsnag {
 
     public actual fun resumeSession(): Boolean = JsBugsnag.resumeSession()
 
+    public actual fun leaveBreadcrumb(
+        message: String,
+        metadata: Map<String, Any>?,
+        type: BreadcrumbType,
+    ) {
+        val dynamicMetadata = metadata?.convertToDynamic()
+        JsBugsnag.leaveBreadcrumb(message, dynamicMetadata, type.toPlatformType())
+    }
+
     public actual fun clearMetadata(section: String) {
         JsBugsnag.clearMetadata(section)
     }

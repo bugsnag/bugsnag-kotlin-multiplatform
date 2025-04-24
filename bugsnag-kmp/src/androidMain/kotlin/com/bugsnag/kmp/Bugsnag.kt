@@ -16,6 +16,14 @@ public actual object Bugsnag {
 
     public actual fun isStarted(): Boolean = PlatformBugsnag.isStarted()
 
+    public actual fun leaveBreadcrumb(
+        message: String,
+        metadata: Map<String, Any>?,
+        type: BreadcrumbType,
+    ) {
+        PlatformBugsnag.leaveBreadcrumb(message, metadata.orEmpty(), type.toPlatformType())
+    }
+
     public actual fun addMetadata(section: String, key: String, value: Any?) {
         PlatformBugsnag.addMetadata(section, key, value)
     }
