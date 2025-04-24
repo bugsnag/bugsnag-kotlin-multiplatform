@@ -5,6 +5,14 @@ public actual object Bugsnag {
         JsBugsnag.start(configuration.native)
     }
 
+    public inline fun start(configure: Configuration.() -> Unit) {
+        val configuration = Configuration(Any())
+        configuration.configure()
+        start(configuration)
+    }
+
+    public actual fun isStarted(): Boolean = JsBugsnag.isStarted()
+
     public actual fun addMetadata(section: String, key: String, value: Any?) {
         JsBugsnag.addMetadata(section, key, value)
     }
@@ -23,6 +31,15 @@ public actual object Bugsnag {
     }
 
     public actual fun resumeSession(): Boolean = JsBugsnag.resumeSession()
+
+    public actual fun leaveBreadcrumb(
+        message: String,
+        metadata: Map<String, Any>?,
+        type: BreadcrumbType,
+    ) {
+        val dynamicMetadata = metadata?.convertToDynamic()
+        JsBugsnag.leaveBreadcrumb(message, dynamicMetadata, type.toPlatformType())
+    }
 
     public actual fun clearMetadata(section: String) {
         JsBugsnag.clearMetadata(section)
@@ -51,5 +68,18 @@ public actual object Bugsnag {
         get() = JsBugsnag.context
         set(value) {
             JsBugsnag.context = value
+        }
+
+    public actual var user: User
+        get() {
+            val jsUser = JsBugsnag.user
+            return User(
+                jsUser.id,
+                jsUser.email,
+                jsUser.name,
+            )
+        }
+        set(value) {
+            JsBugsnag.user = JsUser(value.id, value.email, value.name)
         }
 }

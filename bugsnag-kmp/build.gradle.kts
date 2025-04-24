@@ -58,6 +58,13 @@ kotlin {
             commonWebpackConfig {
                 mode = KotlinWebpackConfig.Mode.PRODUCTION
             }
+
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                    useFirefox()
+                }
+            }
         }
         binaries.library()
     }

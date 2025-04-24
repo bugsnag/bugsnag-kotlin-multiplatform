@@ -1,10 +1,27 @@
 package com.bugsnag.kmp
 
+import android.content.Context
 import com.bugsnag.android.Bugsnag as PlatformBugsnag
 
 public actual object Bugsnag {
     public actual fun start(configuration: Configuration) {
         PlatformBugsnag.start(configuration.androidContext, configuration.native)
+    }
+
+    public inline fun start(androidContext: Context, configure: Configuration.() -> Unit) {
+        val configuration = Configuration(androidContext)
+        configuration.configure()
+        start(configuration)
+    }
+
+    public actual fun isStarted(): Boolean = PlatformBugsnag.isStarted()
+
+    public actual fun leaveBreadcrumb(
+        message: String,
+        metadata: Map<String, Any>?,
+        type: BreadcrumbType,
+    ) {
+        PlatformBugsnag.leaveBreadcrumb(message, metadata.orEmpty(), type.toPlatformType())
     }
 
     public actual fun addMetadata(section: String, key: String, value: Any?) {
@@ -59,5 +76,18 @@ public actual object Bugsnag {
         get() = PlatformBugsnag.getContext()
         set(value) {
             PlatformBugsnag.setContext(value)
+        }
+
+    public actual var user: User
+        get() {
+            val androidUser = PlatformBugsnag.getUser()
+            return User(
+                id = androidUser.id,
+                email = androidUser.email,
+                name = androidUser.name,
+            )
+        }
+        set(value) {
+            PlatformBugsnag.setUser(value.id, value.email, value.name)
         }
 }

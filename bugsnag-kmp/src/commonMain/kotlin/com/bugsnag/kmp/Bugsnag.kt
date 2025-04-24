@@ -8,6 +8,8 @@ public expect object Bugsnag {
      */
     public fun start(configuration: Configuration)
 
+    public fun isStarted(): Boolean
+
     /**
      * Adds the specified key and value in the specified section. The value can be of
      * any primitive type or a collection such as a map, set or array.
@@ -76,6 +78,12 @@ public expect object Bugsnag {
      */
     public fun resumeSession(): Boolean
 
+    public fun leaveBreadcrumb(
+        message: String,
+        metadata: Map<String, Any>? = null,
+        type: BreadcrumbType = BreadcrumbType.MANUAL,
+    )
+
     /**
      * Removes all the data from the specified section.
      */
@@ -131,4 +139,5 @@ public expect object Bugsnag {
      * If you would like to set this value manually, you should alter this property.
      */
     public var context: String?
+    public var user: User
 }

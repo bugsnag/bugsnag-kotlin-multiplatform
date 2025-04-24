@@ -52,7 +52,7 @@ actual object Platform {
         repeat(60) { attempt ->
             try {
                 val data = NSData.dataWithContentsOfURL(configUrl)!!
-                val json = data.readAsString()!!
+                val json = data.readAsString()
 
                 fixtureConfig = Json.decodeFromString(json)
                 return@withContext

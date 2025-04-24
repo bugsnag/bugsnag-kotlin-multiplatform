@@ -2,13 +2,25 @@
 
 package com.bugsnag.kmp
 
+import com.bugsnag.cocoa.__BSG_KMP_configureCrashReportCallback
 import kotlinx.cinterop.ExperimentalForeignApi
 import com.bugsnag.cocoa.Bugsnag as PlatformBugsnag
 
 public actual object Bugsnag {
     public actual fun start(configuration: Configuration) {
+        __BSG_KMP_configureCrashReportCallback(configuration.native)
+
         PlatformBugsnag.startWithConfiguration(configuration.native)
+        installUncaughtExceptionHandler()
     }
+
+    public inline fun start(configure: Configuration.() -> Unit) {
+        val configuration = Configuration()
+        configuration.configure()
+        start(configuration)
+    }
+
+    public actual fun isStarted(): Boolean = PlatformBugsnag.isStarted()
 
     public actual fun addMetadata(section: String, key: String, value: Any?) {
         PlatformBugsnag.addMetadata(value, key, section)
@@ -17,6 +29,16 @@ public actual object Bugsnag {
     public actual fun addMetadata(section: String, data: Map<String, Any>) {
         @Suppress("UNCHECKED_CAST")
         PlatformBugsnag.addMetadata(data as Map<Any?, *>, section)
+    }
+
+    public actual fun leaveBreadcrumb(
+        message: String,
+        metadata: Map<String, Any>?,
+        type: BreadcrumbType,
+    ) {
+        @Suppress("UNCHECKED_CAST")
+        val metadataMap = metadata?.let { it as Map<Any?, *> }
+        PlatformBugsnag.leaveBreadcrumbWithMessage(message, metadataMap, type.toPlatformType())
     }
 
     public actual fun startSession() {
@@ -63,5 +85,18 @@ public actual object Bugsnag {
         get() = PlatformBugsnag.context()
         set(value) {
             PlatformBugsnag.setContext(value)
+        }
+
+    public actual var user: User
+        get() {
+            val appleUser = PlatformBugsnag.user()
+            return User(
+                id = appleUser.id,
+                email = appleUser.email,
+                name = appleUser.name,
+            )
+        }
+        set(value) {
+            PlatformBugsnag.setUser(value.id, value.email, value.name)
         }
 }

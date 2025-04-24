@@ -1,6 +1,8 @@
 package com.bugsnag.kmp
 
 import android.content.Context
+import com.bugsnag.android.EndpointConfiguration
+import com.bugsnag.android.ErrorTypes
 
 public actual typealias PlatformConfiguration = com.bugsnag.android.Configuration
 
@@ -9,6 +11,9 @@ public actual class Configuration(
     public actual override val native: PlatformConfiguration =
         PlatformConfiguration.load(androidContext),
 ) : PlatformWrapper<PlatformConfiguration> {
+    public constructor(androidContext: Context, apiKey: String) :
+        this(androidContext, PlatformConfiguration(apiKey))
+
     public actual var apiKey: String
         get() = native.apiKey
         set(value) {
@@ -21,16 +26,51 @@ public actual class Configuration(
             native.appVersion = value
         }
 
+    public actual var autoTrackSessions: Boolean
+        get() = native.autoTrackSessions
+        set(value) {
+            native.autoTrackSessions = value
+        }
+
+    public actual var context: String?
+        get() = native.context
+        set(value) {
+            native.context = value
+        }
+
+    public actual var enabledReleaseStages: Set<String>?
+        get() = native.enabledReleaseStages
+        set(value) {
+            native.enabledReleaseStages = value
+        }
+
     public actual var launchDurationMillis: Long
         get() = native.launchDurationMillis
         set(value) {
             native.launchDurationMillis = value
         }
 
-    public actual var autoTrackSessions: Boolean
-        get() = native.autoTrackSessions
+    public actual var maxBreadcrumbs: Int
+        get() = native.maxBreadcrumbs
         set(value) {
-            native.autoTrackSessions = value
+            native.maxBreadcrumbs = value
+        }
+
+    public actual var releaseStage: String?
+        get() = native.releaseStage
+        set(value) {
+            native.releaseStage = value
+        }
+
+    public actual var user: User?
+        get() {
+            val androidUser = native.getUser()
+            return User(id = androidUser.id, name = androidUser.name, email = androidUser.email)
+        }
+        set(value) {
+            if (value != null) {
+                native.setUser(id = value.id, email = value.email, name = value.name)
+            }
         }
 
     public var versionCode: Int?
@@ -39,20 +79,16 @@ public actual class Configuration(
             native.versionCode = value
         }
 
-    public actual fun addMetadata(section: String, key: String, value: Any?) {
-        native.addMetadata(section, key, value)
+    public actual fun addFeatureFlag(name: String, variant: String?) {
+        native.addFeatureFlag(name, variant)
     }
 
     public actual fun addMetadata(section: String, data: Map<String, Any>) {
         native.addMetadata(section, data)
     }
 
-    public actual fun clearMetadata(section: String) {
-        native.clearMetadata(section)
-    }
-
-    public actual fun clearMetadata(section: String, key: String) {
-        native.clearMetadata(section, key)
+    public actual fun addMetadata(section: String, key: String, value: Any?) {
+        native.addMetadata(section, key, value)
     }
 
     public actual fun clearFeatureFlag(name: String) {
@@ -63,13 +99,24 @@ public actual class Configuration(
         native.clearFeatureFlags()
     }
 
-    public actual fun addFeatureFlag(name: String, variant: String?) {
-        native.addFeatureFlag(name, variant)
+    public actual fun clearMetadata(section: String) {
+        native.clearMetadata(section)
     }
 
-    public actual var context: String?
-        get() = native.context
-        set(value) {
-            native.context = value
-        }
+    public actual fun clearMetadata(section: String, key: String) {
+        native.clearMetadata(section, key)
+    }
+
+    public actual fun setEnabledErrorTypes(types: EnabledErrorTypes) {
+        native.enabledErrorTypes = ErrorTypes(
+            anrs = types.androidAnrs,
+            ndkCrashes = types.androidNdkCrashes,
+            unhandledExceptions = types.androidUnhandledExceptions,
+            unhandledRejections = types.androidUnhandledRejections,
+        )
+    }
+
+    public actual fun setEndpoints(notify: String, sessions: String) {
+        native.endpoints = EndpointConfiguration(notify, sessions)
+    }
 }
