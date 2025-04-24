@@ -9,11 +9,11 @@ object UnhandledExceptionScenario : Scenario("UnhandledExceptionScenario") {
     override suspend fun runScenario(config: String) {
         startBugsnag {
             setEnabledErrorTypes(EnabledErrorTypes(iosOoms = false))
-            apiKey = "test"
+            apiKey = "f005ba11abacaf005ba11abacaf005ba"
             appVersion = "test_app_version"
             context = "test_context_1"
             launchDurationMillis = 1234
-            user = User("123", "user@example.com")
+            user = User(id = "123", name = "Adam", email = "user@example.com")
 
             addMetadata("custom_data_1", "data", "hello")
             addMetadata("custom_data_1", "key", "something_else")
@@ -37,7 +37,7 @@ object UnhandledExceptionScenario : Scenario("UnhandledExceptionScenario") {
         Bugsnag.clearFeatureFlag("feature_flag_5")
         Bugsnag.addFeatureFlag("feature_flag_6", "6")
 
-        Bugsnag.user = User("456", "user_test@example.com")
+        Bugsnag.user = User(id = "456", name = "Amy", email = "user_amy@example.com")
         Bugsnag.context = "test_context_2"
 
         throw RuntimeException("this is a large crisis")
