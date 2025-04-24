@@ -3,6 +3,7 @@ package com.bugsnag.kmp
 import android.content.Context
 import com.bugsnag.android.EndpointConfiguration
 import com.bugsnag.android.ErrorTypes
+import java.util.regex.Pattern
 
 public actual typealias PlatformConfiguration = com.bugsnag.android.Configuration
 
@@ -78,6 +79,16 @@ public actual class Configuration(
         set(value) {
             native.versionCode = value
         }
+
+    public actual fun addRedactedKeys(redactedKeys: Collection<String>) {
+        redactedKeys.mapTo(native.redactedKeys) { Pattern.compile(it, Pattern.LITERAL) }
+    }
+
+    public actual fun addRedactedKeys(vararg redactedKeys: String) {
+        for (key in redactedKeys) {
+            native.redactedKeys.add(Pattern.compile(key, Pattern.LITERAL))
+        }
+    }
 
     public actual fun addFeatureFlag(name: String, variant: String?) {
         native.addFeatureFlag(name, variant)
