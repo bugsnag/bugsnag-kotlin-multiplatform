@@ -6,6 +6,7 @@ internal external object JsBugsnag {
     var user: JsUser
 
     fun start(apiOrConfig: dynamic)
+    fun notify(error: Throwable)
     fun leaveBreadcrumb(message: String, metadata: dynamic, type: String)
     fun addFeatureFlag(name: String, variant: String?)
     fun addMetadata(section: String, data: dynamic)
