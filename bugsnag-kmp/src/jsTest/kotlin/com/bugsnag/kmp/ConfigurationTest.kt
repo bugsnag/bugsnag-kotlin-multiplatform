@@ -36,6 +36,9 @@ internal class ConfigurationTest {
         configuration.addFeatureFlag("roast_level", "medium")
         configuration.clearFeatureFlag("feature")
 
+        configuration.addRedactedKeys("psaaword")
+        configuration.addRedactedKeys(listOf("hidden", "secret"))
+
         configuration.setEnabledErrorTypes(EnabledErrorTypes())
         configuration.setEndpoints(
             notify = NOTIFY_ENDPOINT,
@@ -102,6 +105,11 @@ internal class ConfigurationTest {
                         "name": "roast_level",
                         "variant": "medium"
                     }
+                ],
+                "redactedKeys": [
+                    "psaaword",
+                    "hidden",
+                    "secret"
                 ],
                 "enabledErrorTypes": {
                     "unhandledExceptions": true,

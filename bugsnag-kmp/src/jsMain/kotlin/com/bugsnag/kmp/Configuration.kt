@@ -77,6 +77,26 @@ public actual class Configuration(
             }
         }
 
+    public actual fun addRedactedKeys(redactedKeys: Collection<String>) {
+        addRedactedKeysImpl(redactedKeys.size) {
+            addAll(redactedKeys)
+        }
+    }
+
+    public actual fun addRedactedKeys(vararg redactedKeys: String) {
+        addRedactedKeysImpl(redactedKeys.size) {
+            addAll(redactedKeys)
+        }
+    }
+
+    private inline fun addRedactedKeysImpl(count: Int, addNewKeys: MutableSet<String>.() -> Unit) {
+        val existingRedactedKeys = this.redactedKeys.orEmpty()
+        val newKeys = HashSet<String>(existingRedactedKeys.size + count)
+        newKeys.addAll(existingRedactedKeys)
+        addNewKeys(newKeys)
+        this.redactedKeys = newKeys.toTypedArray()
+    }
+
     public actual fun addFeatureFlag(name: String, variant: String?) {
         val featureFlagArray = featureFlags
         if (featureFlagArray == null) {
@@ -156,5 +176,11 @@ public actual class Configuration(
         get() = obj.featureFlags
         set(value) {
             obj.featureFlags = value
+        }
+
+    private var redactedKeys: Array<String>?
+        get() = obj.redactedKeys.unsafeCast<Array<String>?>()
+        set(value) {
+            obj.redactedKeys = value
         }
 }

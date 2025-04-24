@@ -80,6 +80,21 @@ public actual class Configuration(
             }
         }
 
+    public actual fun addRedactedKeys(redactedKeys: Collection<String>) {
+        native.redactedKeys = native.redactedKeys.orEmpty() + redactedKeys
+    }
+
+    public actual fun addRedactedKeys(vararg redactedKeys: String) {
+        @Suppress("UNCHECKED_CAST")
+        val existingKeys: MutableSet<String> = when (val keys = native.redactedKeys) {
+            is HashSet<*> -> keys as MutableSet<String>
+            null -> mutableSetOf()
+            else -> keys.toMutableSet() as MutableSet<String>
+        }
+
+        existingKeys.addAll(redactedKeys)
+    }
+
     public actual fun addFeatureFlag(name: String, variant: String?) {
         native.addFeatureFlagWithName(name, variant)
     }

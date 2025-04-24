@@ -20,6 +20,9 @@ public expect class Configuration : PlatformWrapper<PlatformConfiguration> {
     public var releaseStage: String?
     public var user: User?
 
+    public fun addRedactedKeys(redactedKeys: Collection<String>)
+    public fun addRedactedKeys(vararg redactedKeys: String)
+
     public fun addFeatureFlag(name: String, variant: String? = null)
     public fun addMetadata(section: String, data: Map<String, Any>)
     public fun addMetadata(section: String, key: String, value: Any?)
