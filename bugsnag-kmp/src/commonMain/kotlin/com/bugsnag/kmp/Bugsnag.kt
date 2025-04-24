@@ -10,6 +10,8 @@ public expect object Bugsnag {
 
     public fun isStarted(): Boolean
 
+    public fun notify(error: Throwable)
+
     /**
      * Adds the specified key and value in the specified section. The value can be of
      * any primitive type or a collection such as a map, set or array.

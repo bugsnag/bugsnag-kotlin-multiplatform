@@ -16,6 +16,10 @@ public actual object Bugsnag {
 
     public actual fun isStarted(): Boolean = PlatformBugsnag.isStarted()
 
+    public actual fun notify(error: Throwable) {
+        PlatformBugsnag.notify(error)
+    }
+
     public actual fun leaveBreadcrumb(
         message: String,
         metadata: Map<String, Any>?,
