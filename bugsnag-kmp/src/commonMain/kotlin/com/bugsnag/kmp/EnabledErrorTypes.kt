@@ -1,22 +1,22 @@
 package com.bugsnag.kmp
 
 public data class EnabledErrorTypes(
-    val androidAnrs: Boolean = true,
-    val androidNdkCrashes: Boolean = true,
-    val androidUnhandledExceptions: Boolean = true,
-    val androidUnhandledRejections: Boolean = true,
+    var androidAnrs: Boolean = true,
+    var androidNdkCrashes: Boolean = true,
+    var androidUnhandledExceptions: Boolean = true,
+    var androidUnhandledRejections: Boolean = true,
 
-    val iosAppHangs: Boolean = true,
-    val iosOoms: Boolean = true,
-    val iosThermalKills: Boolean = true,
-    val iosUnhandledExceptions: Boolean = true,
-    val iosSignals: Boolean = true,
-    val iosCppExceptions: Boolean = true,
-    val iosMachExceptions: Boolean = true,
-    val iosUnhandledRejections: Boolean = true,
+    var iosAppHangs: Boolean = true,
+    var iosOoms: Boolean = true,
+    var iosThermalKills: Boolean = true,
+    var iosUnhandledExceptions: Boolean = true,
+    var iosSignals: Boolean = true,
+    var iosCppExceptions: Boolean = true,
+    var iosMachExceptions: Boolean = true,
+    var iosUnhandledRejections: Boolean = true,
 
-    val jsUnhandledExceptions: Boolean = true,
-    val jsUnhandledRejections: Boolean = true,
+    var jsUnhandledExceptions: Boolean = true,
+    var jsUnhandledRejections: Boolean = true,
 ) {
     public constructor(
         unhandledExceptions: Boolean = true,
