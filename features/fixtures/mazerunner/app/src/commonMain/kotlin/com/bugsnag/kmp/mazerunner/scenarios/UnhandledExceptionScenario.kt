@@ -6,9 +6,10 @@ import com.bugsnag.kmp.User
 import com.bugsnag.kmp.mazerunner.Scenario
 
 object UnhandledExceptionScenario : Scenario("UnhandledExceptionScenario") {
-    override suspend fun runScenario(config: String) {
+    override suspend fun startBugsnag(config: String) {
         startBugsnag {
             setEnabledErrorTypes(EnabledErrorTypes(iosOoms = false))
+
             apiKey = "f005ba11abacaf005ba11abacaf005ba"
             appVersion = "test_app_version"
             context = "test_context_1"
@@ -24,6 +25,11 @@ object UnhandledExceptionScenario : Scenario("UnhandledExceptionScenario") {
             addFeatureFlag("feature_flag_2", "2")
             addFeatureFlag("feature_flag_3")
         }
+    }
+
+    override suspend fun runScenario(config: String) {
+        startBugsnag(config)
+
         Bugsnag.addMetadata("custom_data_2", "after_start_2", "hello")
         Bugsnag.addMetadata(
             "custom_data_3",
