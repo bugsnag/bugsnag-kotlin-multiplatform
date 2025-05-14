@@ -106,32 +106,33 @@ steps:
         - exit_status: -1  # Agent was lost
           limit: 2
 
-  - label: ":bitbar: :kotlin: Browser KMP E2E tests"
+  - label: ":browserstack: :kotlin: {{matrix}} Browser KMP E2E tests"
     matrix:
       - firefox_latest
       - chrome_latest
       - edge_latest
     depends_on: "fixtures"
-    key: "browser-maze-runner-bb"
     timeout_in_minutes: 20
     plugins:
-      artifacts#v1.9.0:
-        download:
-          - "build/web.zip"
       docker-compose#v4.12.0:
-        no-cache: true
-        pull: browser-maze-runner-bitbar
-        run: browser-maze-runner-bitbar
-        service-ports: true
+        pull: browser-maze-runner-bs
+        run: browser-maze-runner-bs
+        use-aliases: true
         command:
           - "features/browser"
           - "--https"
-          - "--farm=bb"
+          - "--farm=bs"
           - "--browser={{matrix}}"
-          - "--no-tunnel"
-          - "--aws-public-ip"
-          - "--fail-fast"
-    retry:
-      automatic:
-        - exit_status: "*"
-          limit: 1
+      artifacts#v1.5.0:
+        download:
+          - "build/web.zip"
+        upload:
+          - "./test/browser/maze_output/failed/**/*"
+      test-collector#v1.10.2:
+        files: "reports/TEST-*.xml"
+        format: "junit"
+        branch: "^main|next$$"
+        api-token-env-name: "BROWSER_BUILDKITE_ANALYTICS_TOKEN"
+    concurrency: 2
+    concurrency_group: "browserstack"
+    concurrency_method: eager

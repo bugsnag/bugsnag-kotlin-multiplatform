@@ -75,6 +75,22 @@ services:
       - ./reports/:/app/reports/
       - /var/run/docker.sock:/var/run/docker.sock
 
+  browser-maze-runner-bs:
+    image: 855461928731.dkr.ecr.us-west-1.amazonaws.com/maze-runner-releases:latest-v9-cli
+    environment:
+      <<: *common-environment
+      HOST: "${HOST:-maze-runner}"
+      API_HOST: "${API_HOST:-maze-runner}"
+    networks:
+      default:
+        aliases:
+          - maze-runner
+    volumes:
+      - ./build:/app/build
+      - ./features/:/app/features/
+      - ./maze_output:/app/maze_output
+      - ./reports/:/app/reports/
+
 networks:
   default:
     name: ${BUILDKITE_JOB_ID:-android-maze-runner}
