@@ -26,11 +26,18 @@ public actual object Bugsnag {
         PlatformBugsnag.notify(BugsnagNSException(error))
     }
 
-    public actual fun addMetadata(section: String, key: String, value: Any?) {
+    public actual fun addMetadata(
+        section: String,
+        key: String,
+        value: Any?,
+    ) {
         PlatformBugsnag.addMetadata(value, key, section)
     }
 
-    public actual fun addMetadata(section: String, data: Map<String, Any>) {
+    public actual fun addMetadata(
+        section: String,
+        data: Map<String, Any>,
+    ) {
         @Suppress("UNCHECKED_CAST")
         PlatformBugsnag.addMetadata(data as Map<Any?, *>, section)
     }
@@ -59,7 +66,10 @@ public actual object Bugsnag {
         PlatformBugsnag.clearMetadataFromSection(section)
     }
 
-    public actual fun clearMetadata(section: String, key: String) {
+    public actual fun clearMetadata(
+        section: String,
+        key: String,
+    ) {
         PlatformBugsnag.clearMetadataFromSection(section, key)
     }
 
@@ -71,7 +81,10 @@ public actual object Bugsnag {
         PlatformBugsnag.clearFeatureFlags()
     }
 
-    public actual fun addFeatureFlag(name: String, variant: String?) {
+    public actual fun addFeatureFlag(
+        name: String,
+        variant: String?,
+    ) {
         PlatformBugsnag.addFeatureFlagWithName(name, variant)
     }
 

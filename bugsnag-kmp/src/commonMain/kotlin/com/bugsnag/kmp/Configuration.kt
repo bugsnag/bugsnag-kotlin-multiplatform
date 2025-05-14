@@ -21,16 +21,38 @@ public expect class Configuration : PlatformWrapper<PlatformConfiguration> {
     public var user: User?
 
     public fun addRedactedKeys(redactedKeys: Collection<String>)
+
     public fun addRedactedKeys(vararg redactedKeys: String)
 
-    public fun addFeatureFlag(name: String, variant: String? = null)
-    public fun addMetadata(section: String, data: Map<String, Any>)
-    public fun addMetadata(section: String, key: String, value: Any?)
+    public fun addFeatureFlag(
+        name: String,
+        variant: String? = null,
+    )
+
+    public fun addMetadata(
+        section: String,
+        data: Map<String, Any>,
+    )
+
+    public fun addMetadata(
+        section: String,
+        key: String,
+        value: Any?,
+    )
+
     public fun clearFeatureFlag(name: String)
+
     public fun clearFeatureFlags()
+
     public fun clearMetadata(section: String)
-    public fun clearMetadata(section: String, key: String)
+
+    public fun clearMetadata(
+        section: String,
+        key: String,
+    )
+
     public fun setEnabledErrorTypes(types: EnabledErrorTypes)
+
     public fun setEndpoints(
         notify: String = "https://notify.bugsnag.com",
         sessions: String = "https://sessions.bugsnag.com",

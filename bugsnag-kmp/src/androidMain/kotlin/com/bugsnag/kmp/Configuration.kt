@@ -90,15 +90,25 @@ public actual class Configuration(
         }
     }
 
-    public actual fun addFeatureFlag(name: String, variant: String?) {
+    public actual fun addFeatureFlag(
+        name: String,
+        variant: String?,
+    ) {
         native.addFeatureFlag(name, variant)
     }
 
-    public actual fun addMetadata(section: String, data: Map<String, Any>) {
+    public actual fun addMetadata(
+        section: String,
+        data: Map<String, Any>,
+    ) {
         native.addMetadata(section, data)
     }
 
-    public actual fun addMetadata(section: String, key: String, value: Any?) {
+    public actual fun addMetadata(
+        section: String,
+        key: String,
+        value: Any?,
+    ) {
         native.addMetadata(section, key, value)
     }
 
@@ -114,20 +124,27 @@ public actual class Configuration(
         native.clearMetadata(section)
     }
 
-    public actual fun clearMetadata(section: String, key: String) {
+    public actual fun clearMetadata(
+        section: String,
+        key: String,
+    ) {
         native.clearMetadata(section, key)
     }
 
     public actual fun setEnabledErrorTypes(types: EnabledErrorTypes) {
-        native.enabledErrorTypes = ErrorTypes(
-            anrs = types.androidAnrs,
-            ndkCrashes = types.androidNdkCrashes,
-            unhandledExceptions = types.androidUnhandledExceptions,
-            unhandledRejections = types.androidUnhandledRejections,
-        )
+        native.enabledErrorTypes =
+            ErrorTypes(
+                anrs = types.androidAnrs,
+                ndkCrashes = types.androidNdkCrashes,
+                unhandledExceptions = types.androidUnhandledExceptions,
+                unhandledRejections = types.androidUnhandledRejections,
+            )
     }
 
-    public actual fun setEndpoints(notify: String, sessions: String) {
+    public actual fun setEndpoints(
+        notify: String,
+        sessions: String,
+    ) {
         native.endpoints = EndpointConfiguration(notify, sessions)
     }
 }

@@ -44,14 +44,18 @@ private fun overrideUnhandled() {
     // This function is a work-around and will be removed in a future release, once we have a
     // mechanism to affect the delivery strategy directly
     val handledState = NSClassFromString("BugsnagHandledState") ?: return
-    val originalUnhandledSelector = NSSelectorFromString("originalUnhandledValue")
-        ?: return
-    val unhandledSelector = NSSelectorFromString("unhandled")
-        ?: return
-    val originalUnhandled = class_getInstanceMethod(handledState, originalUnhandledSelector)
-        ?: return
-    val unhandled = class_getInstanceMethod(handledState, unhandledSelector)
-        ?: return
+    val originalUnhandledSelector =
+        NSSelectorFromString("originalUnhandledValue")
+            ?: return
+    val unhandledSelector =
+        NSSelectorFromString("unhandled")
+            ?: return
+    val originalUnhandled =
+        class_getInstanceMethod(handledState, originalUnhandledSelector)
+            ?: return
+    val unhandled =
+        class_getInstanceMethod(handledState, unhandledSelector)
+            ?: return
 
     method_setImplementation(originalUnhandled, method_getImplementation(unhandled))
 }
@@ -60,20 +64,21 @@ private fun overrideUnhandled() {
 internal fun installUncaughtExceptionHandler() {
     val unhandledExceptionCrashed = AtomicInt(0)
     var previousHookRef: ReportUnhandledExceptionHook? = null
-    val previousHook = setUnhandledExceptionHook { throwable ->
-        // We only handle a single Kotlin crash in order to avoid swizzling issues
-        if (unhandledExceptionCrashed.compareAndSet(0, 1)) {
-            __bsg_kotlinCrashed = true
+    val previousHook =
+        setUnhandledExceptionHook { throwable ->
+            // We only handle a single Kotlin crash in order to avoid swizzling issues
+            if (unhandledExceptionCrashed.compareAndSet(0, 1)) {
+                __bsg_kotlinCrashed = true
 
-            overrideUnhandled()
-            PlatformBugsnag.notify(BugsnagNSException(throwable)) { event ->
-                if (event == null) return@notify true
-                event.setUnhandled(true)
-                true
+                overrideUnhandled()
+                PlatformBugsnag.notify(BugsnagNSException(throwable)) { event ->
+                    if (event == null) return@notify true
+                    event.setUnhandled(true)
+                    true
+                }
             }
-        }
 
-        previousHookRef?.invoke(throwable)
-    }
+            previousHookRef?.invoke(throwable)
+        }
     previousHookRef = previousHook
 }

@@ -17,11 +17,18 @@ public actual object Bugsnag {
         JsBugsnag.notify(error)
     }
 
-    public actual fun addMetadata(section: String, key: String, value: Any?) {
+    public actual fun addMetadata(
+        section: String,
+        key: String,
+        value: Any?,
+    ) {
         JsBugsnag.addMetadata(section, key, value)
     }
 
-    public actual fun addMetadata(section: String, data: Map<String, Any>) {
+    public actual fun addMetadata(
+        section: String,
+        data: Map<String, Any>,
+    ) {
         val dynamicData = data.convertToDynamic()
         JsBugsnag.addMetadata(section, dynamicData)
     }
@@ -49,7 +56,10 @@ public actual object Bugsnag {
         JsBugsnag.clearMetadata(section)
     }
 
-    public actual fun clearMetadata(section: String, key: String) {
+    public actual fun clearMetadata(
+        section: String,
+        key: String,
+    ) {
         JsBugsnag.clearMetadata(section, key)
     }
 
@@ -61,7 +71,10 @@ public actual object Bugsnag {
         JsBugsnag.clearFeatureFlags()
     }
 
-    public actual fun addFeatureFlag(name: String, variant: String?) {
+    public actual fun addFeatureFlag(
+        name: String,
+        variant: String?,
+    ) {
         JsBugsnag.addFeatureFlag(name, variant)
     }
 

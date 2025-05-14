@@ -5,7 +5,10 @@ public actual typealias PlatformConfiguration = Any
 private external fun delete(x: dynamic): Boolean
 
 @Suppress("NOTHING_TO_INLINE")
-private inline fun delete(thing: dynamic, section: String) = delete(thing[section])
+private inline fun delete(
+    thing: dynamic,
+    section: String,
+) = delete(thing[section])
 
 public actual class Configuration(
     public actual override val native: PlatformConfiguration,
@@ -89,7 +92,10 @@ public actual class Configuration(
         }
     }
 
-    private inline fun addRedactedKeysImpl(count: Int, addNewKeys: MutableSet<String>.() -> Unit) {
+    private inline fun addRedactedKeysImpl(
+        count: Int,
+        addNewKeys: MutableSet<String>.() -> Unit,
+    ) {
         val existingRedactedKeys = this.redactedKeys.orEmpty()
         val newKeys = HashSet<String>(existingRedactedKeys.size + count)
         newKeys.addAll(existingRedactedKeys)
@@ -97,7 +103,10 @@ public actual class Configuration(
         this.redactedKeys = newKeys.toTypedArray()
     }
 
-    public actual fun addFeatureFlag(name: String, variant: String?) {
+    public actual fun addFeatureFlag(
+        name: String,
+        variant: String?,
+    ) {
         val featureFlagArray = featureFlags
         if (featureFlagArray == null) {
             featureFlags = arrayOf(JsFeatureFlag(name, variant))
@@ -107,14 +116,21 @@ public actual class Configuration(
         }
     }
 
-    public actual fun addMetadata(section: String, data: Map<String, Any>) {
+    public actual fun addMetadata(
+        section: String,
+        data: Map<String, Any>,
+    ) {
         val sectionObject = getMetadataSection(section)
         data.forEach { (key, value) ->
             sectionObject[key] = value.toSafeMetadata()
         }
     }
 
-    public actual fun addMetadata(section: String, key: String, value: Any?) {
+    public actual fun addMetadata(
+        section: String,
+        key: String,
+        value: Any?,
+    ) {
         val sectionObject = getMetadataSection(section)
         sectionObject[key] = value.toSafeMetadata()
     }
@@ -131,19 +147,26 @@ public actual class Configuration(
         delete(metadata, section)
     }
 
-    public actual fun clearMetadata(section: String, key: String) {
+    public actual fun clearMetadata(
+        section: String,
+        key: String,
+    ) {
         val metadataSection = metadata[section] ?: return
         delete(metadataSection, key)
     }
 
     public actual fun setEnabledErrorTypes(types: EnabledErrorTypes) {
-        obj.enabledErrorTypes = JsErrorTypes(
-            unhandledExceptions = types.jsUnhandledExceptions,
-            unhandledRejections = types.jsUnhandledRejections,
-        )
+        obj.enabledErrorTypes =
+            JsErrorTypes(
+                unhandledExceptions = types.jsUnhandledExceptions,
+                unhandledRejections = types.jsUnhandledRejections,
+            )
     }
 
-    public actual fun setEndpoints(notify: String, sessions: String) {
+    public actual fun setEndpoints(
+        notify: String,
+        sessions: String,
+    ) {
         obj.endpoints = JsEndpointConfigurations(notify, sessions)
     }
 

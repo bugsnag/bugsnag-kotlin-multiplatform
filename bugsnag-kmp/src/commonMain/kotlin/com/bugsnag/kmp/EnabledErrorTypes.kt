@@ -5,7 +5,6 @@ public data class EnabledErrorTypes(
     var androidNdkCrashes: Boolean = true,
     var androidUnhandledExceptions: Boolean = true,
     var androidUnhandledRejections: Boolean = true,
-
     var iosAppHangs: Boolean = true,
     var iosOoms: Boolean = true,
     var iosThermalKills: Boolean = true,
@@ -14,21 +13,27 @@ public data class EnabledErrorTypes(
     var iosCppExceptions: Boolean = true,
     var iosMachExceptions: Boolean = true,
     var iosUnhandledRejections: Boolean = true,
-
     var jsUnhandledExceptions: Boolean = true,
     var jsUnhandledRejections: Boolean = true,
 ) {
     public constructor(
         unhandledExceptions: Boolean = true,
         unhandledRejections: Boolean = true,
-        nativeCrashes: Boolean = true, // ndkCrashes, iosSignals, machExceptions
-        appHangs: Boolean = true, // ANRs + AppHangs
+        /**
+         * Whether to enable detection and reporting of native crashes. Equivalent to setting
+         * [androidNdkCrashes], [iosSignals], [iosOoms], [iosThermalKills], and [iosMachExceptions].
+         */
+        nativeCrashes: Boolean = true,
+        /**
+         * Whether to enable detection and reporting of app hangs/ANRs.
+         * Equivalent to setting both [androidAnrs] and [iosAppHangs].
+         */
+        appHangs: Boolean = true,
     ) : this(
         androidAnrs = appHangs,
         androidNdkCrashes = nativeCrashes,
         androidUnhandledExceptions = unhandledExceptions,
         androidUnhandledRejections = unhandledRejections,
-
         iosAppHangs = appHangs,
         iosOoms = nativeCrashes,
         iosThermalKills = nativeCrashes,
@@ -37,7 +42,6 @@ public data class EnabledErrorTypes(
         iosCppExceptions = unhandledExceptions,
         iosMachExceptions = nativeCrashes,
         iosUnhandledRejections = unhandledRejections,
-
         jsUnhandledExceptions = unhandledExceptions,
         jsUnhandledRejections = unhandledRejections,
     )

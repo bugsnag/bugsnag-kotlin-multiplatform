@@ -60,7 +60,8 @@ internal class ConfigurationTest {
         const val NOTIFY_ENDPOINT = "https://example.com/notify"
         const val SESSIONS_ENDPOINT = "https://example.com/sessions"
 
-        val EXPECTED_JSON = """
+        val EXPECTED_JSON =
+            """
             {
                 "apiKey": "$API_KEY",
                 "appVersion": "$APP_VERSION",
@@ -120,6 +121,6 @@ internal class ConfigurationTest {
                     "sessions": "$SESSIONS_ENDPOINT"
                 }
             }
-        """.trimIndent()
+            """.trimIndent()
     }
 }

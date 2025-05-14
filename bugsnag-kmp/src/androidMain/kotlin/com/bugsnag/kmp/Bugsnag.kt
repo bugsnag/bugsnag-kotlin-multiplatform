@@ -8,7 +8,10 @@ public actual object Bugsnag {
         PlatformBugsnag.start(configuration.androidContext, configuration.native)
     }
 
-    public inline fun start(androidContext: Context, configure: Configuration.() -> Unit) {
+    public inline fun start(
+        androidContext: Context,
+        configure: Configuration.() -> Unit,
+    ) {
         val configuration = Configuration(androidContext)
         configuration.configure()
         start(configuration)
@@ -28,11 +31,18 @@ public actual object Bugsnag {
         PlatformBugsnag.leaveBreadcrumb(message, metadata.orEmpty(), type.toPlatformType())
     }
 
-    public actual fun addMetadata(section: String, key: String, value: Any?) {
+    public actual fun addMetadata(
+        section: String,
+        key: String,
+        value: Any?,
+    ) {
         PlatformBugsnag.addMetadata(section, key, value)
     }
 
-    public actual fun addMetadata(section: String, data: Map<String, Any>) {
+    public actual fun addMetadata(
+        section: String,
+        data: Map<String, Any>,
+    ) {
         PlatformBugsnag.addMetadata(section, data)
     }
 
@@ -50,7 +60,10 @@ public actual object Bugsnag {
         PlatformBugsnag.clearMetadata(section)
     }
 
-    public actual fun clearMetadata(section: String, key: String) {
+    public actual fun clearMetadata(
+        section: String,
+        key: String,
+    ) {
         PlatformBugsnag.clearMetadata(section, key)
     }
 
@@ -62,7 +75,10 @@ public actual object Bugsnag {
         PlatformBugsnag.clearFeatureFlags()
     }
 
-    public actual fun addFeatureFlag(name: String, variant: String?) {
+    public actual fun addFeatureFlag(
+        name: String,
+        variant: String?,
+    ) {
         PlatformBugsnag.addFeatureFlag(name, variant)
     }
 

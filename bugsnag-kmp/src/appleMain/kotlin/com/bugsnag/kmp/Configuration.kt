@@ -86,25 +86,36 @@ public actual class Configuration(
 
     public actual fun addRedactedKeys(vararg redactedKeys: String) {
         @Suppress("UNCHECKED_CAST")
-        val existingKeys: MutableSet<String> = when (val keys = native.redactedKeys) {
-            is HashSet<*> -> keys as MutableSet<String>
-            null -> mutableSetOf()
-            else -> keys.toMutableSet() as MutableSet<String>
-        }
+        val existingKeys: MutableSet<String> =
+            when (val keys = native.redactedKeys) {
+                is HashSet<*> -> keys as MutableSet<String>
+                null -> mutableSetOf()
+                else -> keys.toMutableSet() as MutableSet<String>
+            }
 
         existingKeys.addAll(redactedKeys)
     }
 
-    public actual fun addFeatureFlag(name: String, variant: String?) {
+    public actual fun addFeatureFlag(
+        name: String,
+        variant: String?,
+    ) {
         native.addFeatureFlagWithName(name, variant)
     }
 
-    public actual fun addMetadata(section: String, data: Map<String, Any>) {
+    public actual fun addMetadata(
+        section: String,
+        data: Map<String, Any>,
+    ) {
         @Suppress("UNCHECKED_CAST")
         native.addMetadata(data as Map<Any?, *>, section)
     }
 
-    public actual fun addMetadata(section: String, key: String, value: Any?) {
+    public actual fun addMetadata(
+        section: String,
+        key: String,
+        value: Any?,
+    ) {
         native.addMetadata(value, key, section)
     }
 
@@ -120,25 +131,32 @@ public actual class Configuration(
         native.clearMetadataFromSection(section)
     }
 
-    public actual fun clearMetadata(section: String, key: String) {
+    public actual fun clearMetadata(
+        section: String,
+        key: String,
+    ) {
         native.clearMetadataFromSection(section, key)
     }
 
     public actual fun setEnabledErrorTypes(types: EnabledErrorTypes) {
-        val errorTypes = BugsnagErrorTypes().apply {
-            this.setAppHangs(types.iosAppHangs)
-            this.setOoms(types.iosOoms)
-            this.setThermalKills(types.iosThermalKills)
-            this.setUnhandledExceptions(types.iosUnhandledExceptions)
-            this.setSignals(types.iosSignals)
-            this.setCppExceptions(types.iosCppExceptions)
-            this.setMachExceptions(types.iosMachExceptions)
-            this.setUnhandledRejections(types.iosUnhandledRejections)
-        }
+        val errorTypes =
+            BugsnagErrorTypes().apply {
+                this.setAppHangs(types.iosAppHangs)
+                this.setOoms(types.iosOoms)
+                this.setThermalKills(types.iosThermalKills)
+                this.setUnhandledExceptions(types.iosUnhandledExceptions)
+                this.setSignals(types.iosSignals)
+                this.setCppExceptions(types.iosCppExceptions)
+                this.setMachExceptions(types.iosMachExceptions)
+                this.setUnhandledRejections(types.iosUnhandledRejections)
+            }
         native.enabledErrorTypes = errorTypes
     }
 
-    public actual fun setEndpoints(notify: String, sessions: String) {
+    public actual fun setEndpoints(
+        notify: String,
+        sessions: String,
+    ) {
         native.endpoints = BugsnagEndpointConfiguration(notify, sessions)
     }
 }
