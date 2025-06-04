@@ -76,7 +76,7 @@ public actual class Configuration(
         }
         set(value) {
             if (value != null) {
-                native.setUser(value.id, value.email, value.name)
+                native.setUser(andName = value.name, userId = value.id, withEmail = value.email)
             }
         }
 
