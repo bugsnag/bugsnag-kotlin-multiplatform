@@ -7,6 +7,7 @@ internal external object JsBugsnag {
 
     fun start(apiOrConfig: dynamic)
     fun notify(error: Throwable)
+    fun notify(error: Throwable, onErrorCallback: (dynamic) -> Boolean)
     fun leaveBreadcrumb(message: String, metadata: dynamic, type: String)
     fun addFeatureFlag(name: String, variant: String?)
     fun addMetadata(section: String, data: dynamic)
@@ -100,4 +101,19 @@ internal fun Any?.toSafeMetadata(): Any? = when (this) {
     is String -> this
     is Byte -> this
     else -> this.toString()
+}
+
+public external class JsEvent {
+    public var apiKey: String
+    public var context: String?
+    public var groupingHash: String?
+    public var severity: Severity
+    public var user: User
+    public fun addFeatureFlag(name: String, variant: String?)
+    public fun clearFeatureFlag(name: String)
+    public fun clearFeatureFlags()
+    public fun addMetadata(section: String, data: Map<String, Any>)
+    public fun addMetadata(section: String, key: String, value: Any?)
+    public fun clearMetadata(section: String)
+    public fun clearMetadata(section: String, key: String)
 }
