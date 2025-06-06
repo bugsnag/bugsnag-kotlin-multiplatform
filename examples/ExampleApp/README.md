@@ -3,15 +3,17 @@
 This repository demonstrates how to integrate [Bugsnag KMP](https://github.com/bugsnag/bugsnag-kotlin-multiplatform) into a Kotlin Multiplatform (KMP) application across **Android**, **iOS**, and **JavaScript Web** platforms.
 
 ## Project Structure
+```plaintext
 examples/ExampleApp/
 ├── androidApp/ # Android app with Jetpack Compose UI
 ├── iosExampleApp/ # iOS app with SwiftUI
 ├── webApp/ # Web app using Kotlin/JS and HTML
 ├── shared/ # Shared KMP module with Bugsnag integration
 └── build.gradle.kts # Root build configuration
+```
 ---
 
-## 🤖 Android App
+## Android App
 
 ### Build & Run
 
