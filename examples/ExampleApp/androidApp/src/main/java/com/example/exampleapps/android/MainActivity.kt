@@ -1,4 +1,4 @@
-package com.example.ExampleApps.android
+package com.example.bugsnag.kmp.android
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

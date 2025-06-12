@@ -40,7 +40,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 //put your multiplatform dependencies here
-                implementation("com.bugsnag:bugsnag-kmp:1.11.0")
+                implementation(libs.bugsnag.kmp)
             }
         }
         val commonTest by getting {

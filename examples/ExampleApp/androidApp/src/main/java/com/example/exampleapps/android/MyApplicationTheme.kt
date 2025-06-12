@@ -1,4 +1,4 @@
-package com.example.ExampleApps.android
+package com.example.bugsnag.kmp.android
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape

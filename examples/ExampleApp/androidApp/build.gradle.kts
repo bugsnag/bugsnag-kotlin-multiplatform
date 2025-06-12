@@ -44,5 +44,5 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     debugImplementation(libs.compose.ui.tooling)
     implementation(project(":shared"))
-    implementation("com.bugsnag:bugsnag-kmp:1.11.0")
+    implementation(libs.bugsnag.kmp)
 }
