@@ -5,10 +5,10 @@ plugins {
 }
 
 android {
-    namespace = "com.example.ExampleApps.android"
+    namespace = "com.example.bugsnag.kmp.android"
     compileSdk = 35
     defaultConfig {
-        applicationId = "com.example.ExampleApps.android"
+        applicationId = "com.example.bugsnag.kmp.android"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
