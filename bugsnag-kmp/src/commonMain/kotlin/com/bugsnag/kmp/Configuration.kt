@@ -6,6 +6,11 @@ import kotlin.jvm.JvmName
 
 public expect class PlatformConfiguration
 
+/**
+ * User-specified configuration storage object, contains information specified at the client
+ * level, api-key and endpoint configuration. This class cannot be instantiated by common code,
+ * it must be provided by the platform-specific implementation.
+ */
 public expect class Configuration : PlatformWrapper<PlatformConfiguration> {
     public override val native: PlatformConfiguration
 

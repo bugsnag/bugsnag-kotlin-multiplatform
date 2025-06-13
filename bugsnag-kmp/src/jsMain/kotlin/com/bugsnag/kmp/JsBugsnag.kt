@@ -102,17 +102,3 @@ internal fun Any?.toSafeMetadata(): Any? = when (this) {
     is Byte -> this
     else -> this.toString()
 }
-
-public external class JsAppWithState {
-    public var binaryArch: String?
-    public var id: String?
-    public var releaseStage: String?
-    public var version: String?
-    public var codeBundleId: String?
-    public var type: String?
-
-    public var duration: Number?
-    public var durationInForeground: Number?
-    public var inForeground: Boolean?
-    public var isLaunching: Boolean?
-}
