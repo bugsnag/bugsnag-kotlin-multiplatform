@@ -7,7 +7,7 @@ public actual value class Event internal constructor(
 ) : PlatformWrapper<PlatformEvent> {
 
     public actual var apiKey: String
-        get() = native.apiKey
+        get() = native.apiKey ?: ""
         set(value) {
             native.apiKey = value
         }
@@ -25,9 +25,9 @@ public actual value class Event internal constructor(
         }
 
     public actual var severity: Severity
-        get() = native.severity
+        get() = Severity.getSeverity(native.severity)
         set(value) {
-            native.severity = value
+            native.severity = Severity.getSeverityName(value)
         }
 
     public actual var user: User

@@ -18,10 +18,9 @@ public actual object Bugsnag {
 
     public actual fun notify(error: Throwable, onError: OnErrorCallback?) {
         if (onError != null) {
-            val cb = com.bugsnag.android.OnErrorCallback { event ->
-                onError.onError(Event(event))
+            PlatformBugsnag.notify(error) { platformEvent ->
+                onError.onError(Event(platformEvent))
             }
-            PlatformBugsnag.notify(error, cb)
         } else {
             PlatformBugsnag.notify(error)
         }

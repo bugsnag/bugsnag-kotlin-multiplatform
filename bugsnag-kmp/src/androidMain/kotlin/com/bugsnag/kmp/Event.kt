@@ -27,10 +27,7 @@ public actual value class Event internal constructor(
         }
 
     public actual var severity: Severity
-        get() {
-            val nativeSeverity = native.severity
-            return nativeSeverity.toPlatformType()
-        }
+        get() = native.severity.toPlatformType()
         set(value) {
             native.severity = value.toNativePlatformType()
         }
