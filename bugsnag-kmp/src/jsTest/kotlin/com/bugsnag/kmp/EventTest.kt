@@ -25,7 +25,7 @@ internal class EventTest {
         assertEquals(API_KEY, jsEvent.asDynamic().apiKey)
         assertEquals(CONTEXT, jsEvent.asDynamic().context)
         assertEquals("new groupingHash", jsEvent.asDynamic().groupingHash)
-        assertEquals(Severity.WARNING, jsEvent.asDynamic().severity)
+        assertEquals("warning", jsEvent.asDynamic().severity)
         assertEquals(USER_ID, jsEvent.asDynamic()._user.id)
         assertEquals(USER_NAME, jsEvent.asDynamic()._user.name)
         assertEquals(USER_EMAIL, jsEvent.asDynamic()._user.email)

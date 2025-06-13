@@ -22,7 +22,6 @@ public actual object Bugsnag {
 
     public actual fun isStarted(): Boolean = PlatformBugsnag.isStarted()
 
-    @Suppress("UNCHECKED_CAST")
     public actual fun notify(error: Throwable, onError: OnErrorCallback?) {
         if (onError != null) {
             PlatformBugsnag.notify(BugsnagNSException(error)) { event ->

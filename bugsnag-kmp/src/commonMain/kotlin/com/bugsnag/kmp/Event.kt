@@ -1,6 +1,7 @@
 package com.bugsnag.kmp
 
 public expect class PlatformEvent
+
 public expect value class Event internal constructor(
     override val native: PlatformEvent,
 ) : PlatformWrapper<PlatformEvent> {
