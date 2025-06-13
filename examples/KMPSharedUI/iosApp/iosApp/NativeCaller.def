@@ -1,0 +1,3 @@
+language = Objective-C
+headers = NativeCaller.h
+package = org.example.project
