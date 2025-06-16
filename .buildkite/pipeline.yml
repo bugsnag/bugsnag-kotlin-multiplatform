@@ -135,3 +135,36 @@ steps:
 #      automatic:
 #        - exit_status: "*"
 #          limit: 1
+
+  # If this is the 'main' branch activate a manual publishing step
+  - block: 'Trigger package publish'
+#    if: build.branch == "main"
+    key: trigger-publish
+    blocked_state: passed
+
+  - label: ':docker: Build KMP base image'
+#    if: build.branch == "main"
+    key: 'kmp-common'
+    timeout_in_minutes: 30
+    depends_on: 'trigger-publish'
+    plugins:
+      - docker-compose#v4.7.0:
+          build:
+            - kmp-common
+          image-repository: 855461928731.dkr.ecr.us-west-1.amazonaws.com/android
+          cache-from:
+            - kmp-common:855461928731.dkr.ecr.us-west-1.amazonaws.com/android:kmp-release
+      - docker-compose#v4.7.0:
+          push:
+            - kmp-common:855461928731.dkr.ecr.us-west-1.amazonaws.com/android:kmp-release
+
+  - label: 'Publish :rocket:'
+#    if: build.branch == "main"
+    depends_on: 'kmp-common'
+    timeout_in_minutes: 30
+    env:
+      BUILDKITE_PLUGIN_S3_SECRETS_BUCKET_PREFIX: bugsnag-android-publish
+    plugins:
+      docker-compose#v4.7.0:
+        no-cache: true
+        run: kmp-publisher
