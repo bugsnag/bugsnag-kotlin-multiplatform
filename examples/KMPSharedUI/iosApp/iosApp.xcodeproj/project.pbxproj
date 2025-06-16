@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		88096EF32DD77B2600559D4F /* Bugsnag in Frameworks */ = {isa = PBXBuildFile; productRef = 88096EF22DD77B2600559D4F /* Bugsnag */; };
-		88096EF52DD77B2600559D4F /* BugsnagNetworkRequestPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 88096EF42DD77B2600559D4F /* BugsnagNetworkRequestPlugin */; };
+		8800D2F92E003D3B00703259 /* Bugsnag in Frameworks */ = {isa = PBXBuildFile; productRef = 8800D2F82E003D3B00703259 /* Bugsnag */; };
+		8800D2FB2E003D3B00703259 /* BugsnagNetworkRequestPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 8800D2FA2E003D3B00703259 /* BugsnagNetworkRequestPlugin */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,8 +46,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88096EF52DD77B2600559D4F /* BugsnagNetworkRequestPlugin in Frameworks */,
-				88096EF32DD77B2600559D4F /* Bugsnag in Frameworks */,
+				8800D2FB2E003D3B00703259 /* BugsnagNetworkRequestPlugin in Frameworks */,
+				8800D2F92E003D3B00703259 /* Bugsnag in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,8 +92,8 @@
 			);
 			name = iosApp;
 			packageProductDependencies = (
-				88096EF22DD77B2600559D4F /* Bugsnag */,
-				88096EF42DD77B2600559D4F /* BugsnagNetworkRequestPlugin */,
+				8800D2F82E003D3B00703259 /* Bugsnag */,
+				8800D2FA2E003D3B00703259 /* BugsnagNetworkRequestPlugin */,
 			);
 			productName = iosApp;
 			productReference = B9DA97B12DC1472C00A4DA20 /* KMPShared.app */;
@@ -125,7 +125,7 @@
 			mainGroup = B9DA97A82DC1472C00A4DA20;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				88096EF12DD77B2600559D4F /* XCLocalSwiftPackageReference "../../../cocoa/objc/bugsnag-cocoa" */,
+				8800D2F72E003D3B00703259 /* XCRemoteSwiftPackageReference "bugsnag-cocoa" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B9DA97B22DC1472C00A4DA20 /* Products */;
@@ -393,20 +393,26 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		88096EF12DD77B2600559D4F /* XCLocalSwiftPackageReference "../../../cocoa/objc/bugsnag-cocoa" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../../cocoa/objc/bugsnag-cocoa";
+/* Begin XCRemoteSwiftPackageReference section */
+		8800D2F72E003D3B00703259 /* XCRemoteSwiftPackageReference "bugsnag-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bugsnag/bugsnag-cocoa";
+			requirement = {
+				kind = exactVersion;
+				version = 6.32.2;
+			};
 		};
-/* End XCLocalSwiftPackageReference section */
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		88096EF22DD77B2600559D4F /* Bugsnag */ = {
+		8800D2F82E003D3B00703259 /* Bugsnag */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 8800D2F72E003D3B00703259 /* XCRemoteSwiftPackageReference "bugsnag-cocoa" */;
 			productName = Bugsnag;
 		};
-		88096EF42DD77B2600559D4F /* BugsnagNetworkRequestPlugin */ = {
+		8800D2FA2E003D3B00703259 /* BugsnagNetworkRequestPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 8800D2F72E003D3B00703259 /* XCRemoteSwiftPackageReference "bugsnag-cocoa" */;
 			productName = BugsnagNetworkRequestPlugin;
 		};
 /* End XCSwiftPackageProductDependency section */

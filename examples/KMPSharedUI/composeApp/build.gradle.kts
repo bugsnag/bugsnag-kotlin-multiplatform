@@ -66,8 +66,6 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
-            implementation(libs.kotlinx.serialization.json)
-
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -76,11 +74,11 @@ kotlin {
 }
 
 android {
-    namespace = "org.example.project"
+    namespace = "com.example.bugsnag.kmp.sharedui"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "org.example.project"
+        applicationId = "com.example.bugsnag.kmp.sharedui"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
@@ -98,7 +96,7 @@ android {
     }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
         }
     }
     compileOptions {
