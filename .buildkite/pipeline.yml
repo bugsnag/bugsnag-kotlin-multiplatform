@@ -138,12 +138,12 @@ steps:
 
   # If this is the 'main' branch activate a manual publishing step
   - block: 'Trigger package publish'
-#    if: build.branch == "main"
+    if: build.branch == "main"
     key: trigger-publish
     blocked_state: passed
 
   - label: ':docker: Build KMP base image'
-#    if: build.branch == "main"
+    if: build.branch == "main"
     key: 'kmp-common'
     timeout_in_minutes: 30
     depends_on: 'trigger-publish'
@@ -159,7 +159,7 @@ steps:
             - kmp-common:855461928731.dkr.ecr.us-west-1.amazonaws.com/android:kmp-release
 
   - label: 'Publish :rocket:'
-#    if: build.branch == "main"
+    if: build.branch == "main"
     depends_on: 'kmp-common'
     timeout_in_minutes: 30
     env:
