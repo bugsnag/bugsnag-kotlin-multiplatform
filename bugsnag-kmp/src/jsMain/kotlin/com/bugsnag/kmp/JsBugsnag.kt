@@ -7,7 +7,7 @@ internal external object JsBugsnag {
 
     fun start(apiOrConfig: dynamic)
     fun notify(error: Throwable)
-    fun notify(error: Throwable, onErrorCallback: (dynamic) -> Boolean)
+    fun notify(error: Throwable, onErrorCallback: (JsEvent) -> Boolean)
     fun leaveBreadcrumb(message: String, metadata: dynamic, type: String)
     fun addFeatureFlag(name: String, variant: String?)
     fun addMetadata(section: String, data: dynamic)
@@ -112,7 +112,7 @@ public external class JsEvent {
     public fun addFeatureFlag(name: String, variant: String?)
     public fun clearFeatureFlag(name: String)
     public fun clearFeatureFlags()
-    public fun addMetadata(section: String, data: Map<String, Any>)
+    public fun addMetadata(section: String, data: dynamic)
     public fun addMetadata(section: String, key: String, value: Any?)
     public fun clearMetadata(section: String)
     public fun clearMetadata(section: String, key: String)
