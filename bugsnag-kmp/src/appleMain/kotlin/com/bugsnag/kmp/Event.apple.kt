@@ -11,7 +11,7 @@ public actual value class Event internal constructor(
     override val native: PlatformEvent,
 ) : PlatformWrapper<PlatformEvent> {
     public actual var apiKey: String
-        get() = native.apiKey!!
+        get() = native.apiKey ?: ""
         set(value) {
             native.apiKey = value
         }

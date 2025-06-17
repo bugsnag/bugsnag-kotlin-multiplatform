@@ -103,22 +103,6 @@ internal fun Any?.toSafeMetadata(): Any? = when (this) {
     else -> this.toString()
 }
 
-public external class JsEvent {
-    public var apiKey: String
-    public var context: String?
-    public var groupingHash: String?
-    public var severity: Severity
-    public var user: User
-    public val app: AppWithState
-    public fun addFeatureFlag(name: String, variant: String?)
-    public fun clearFeatureFlag(name: String)
-    public fun clearFeatureFlags()
-    public fun addMetadata(section: String, data: dynamic)
-    public fun addMetadata(section: String, key: String, value: Any?)
-    public fun clearMetadata(section: String)
-    public fun clearMetadata(section: String, key: String)
-}
-
 public external class JsAppWithState {
     public var binaryArch: String?
     public var id: String?
