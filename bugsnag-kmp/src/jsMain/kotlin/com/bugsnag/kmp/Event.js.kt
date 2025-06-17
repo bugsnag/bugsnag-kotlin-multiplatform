@@ -2,8 +2,9 @@ package com.bugsnag.kmp
 
 public actual typealias PlatformEvent = JsEvent
 
-public actual value class Event internal constructor(override val native: PlatformEvent) :
-    PlatformWrapper<PlatformEvent> {
+public actual value class Event internal constructor(
+    override val native: PlatformEvent,
+) : PlatformWrapper<PlatformEvent> {
 
     public actual var apiKey: String
         get() = native.apiKey
@@ -31,15 +32,15 @@ public actual value class Event internal constructor(override val native: Platfo
 
     public actual var user: User
         get() {
-            val androidUser = native.user
+            val jsUser = native.getUser()
             return User(
-                id = androidUser.id,
-                email = androidUser.email,
-                name = androidUser.name,
+                id = jsUser.id,
+                email = jsUser.email,
+                name = jsUser.name,
             )
         }
         set(value) {
-            native.user = User(name = value.name, id = value.id, email = value.email)
+            native.setUser(value.id, value.email, value.name)
         }
 
     public actual fun addFeatureFlag(name: String, variant: String?) {
@@ -58,11 +59,11 @@ public actual value class Event internal constructor(override val native: Platfo
         section: String,
         data: Map<String, Any>,
     ) {
-        native.addMetadata(section, data)
+        native.addMetadata(section, data.toSafeMetadata())
     }
 
     public actual fun addMetadata(section: String, key: String, value: Any?) {
-        native.addMetadata(section, key, value)
+        native.addMetadata(section, key, value.toSafeMetadata())
     }
 
     public actual fun clearMetadata(section: String) {

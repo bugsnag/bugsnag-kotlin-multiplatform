@@ -15,9 +15,5 @@ internal fun AppleSeverity.toPlatformType(): Severity = when (this) {
     AppleSeverity.BSGSeverityError -> Severity.ERROR
     AppleSeverity.BSGSeverityInfo -> Severity.INFO
     AppleSeverity.BSGSeverityWarning -> Severity.WARNING
-
-    // TODO This is not correct
-    else -> {
-        Severity.ERROR
-    }
+    else -> Severity.ERROR
 }
