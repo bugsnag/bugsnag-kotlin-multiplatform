@@ -16,7 +16,7 @@ public actual object Bugsnag {
     public actual fun notify(error: Throwable, onError: OnErrorCallback?) {
         if (onError != null) {
             JsBugsnag.notify(error) { event ->
-                onError.onError(event)
+                onError.onError(Event(event))
             }
         } else {
             JsBugsnag.notify(error)

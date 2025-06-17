@@ -1,12 +1,15 @@
 package com.bugsnag.kmp.mazerunner.scenarios
 
 import com.bugsnag.kmp.Bugsnag
+import com.bugsnag.kmp.EnabledErrorTypes
 import com.bugsnag.kmp.User
 import com.bugsnag.kmp.mazerunner.Scenario
 
 object NotifyScenario : Scenario("NotifyScenario") {
     override suspend fun runScenario(config: String) {
         startBugsnag {
+            setEnabledErrorTypes(EnabledErrorTypes(iosOoms = false))
+
             addMetadata("test", "scenario", "NotifyScenario")
             addMetadata("test", "badValue", "I am a bad value")
             clearMetadata("test", "badValue")

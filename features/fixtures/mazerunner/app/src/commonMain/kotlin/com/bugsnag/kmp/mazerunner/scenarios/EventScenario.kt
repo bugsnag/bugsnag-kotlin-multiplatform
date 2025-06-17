@@ -1,6 +1,7 @@
 package com.bugsnag.kmp.mazerunner.scenarios
 
 import com.bugsnag.kmp.Bugsnag
+import com.bugsnag.kmp.EnabledErrorTypes
 import com.bugsnag.kmp.Severity
 import com.bugsnag.kmp.User
 import com.bugsnag.kmp.mazerunner.Scenario
@@ -8,6 +9,7 @@ import com.bugsnag.kmp.mazerunner.Scenario
 object EventScenario : Scenario("EventScenario") {
     override suspend fun runScenario(config: String) {
         startBugsnag {
+            setEnabledErrorTypes(EnabledErrorTypes(iosOoms = false))
             addMetadata("test", "scenario", "EventScenario")
             addMetadata("test", "badValue", "I am a bad value")
 

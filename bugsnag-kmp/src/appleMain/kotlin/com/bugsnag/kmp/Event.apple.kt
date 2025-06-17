@@ -1,17 +1,17 @@
+@file:OptIn(ExperimentalForeignApi::class)
+
 package com.bugsnag.kmp
 
 import com.bugsnag.cocoa.BugsnagEvent
 import kotlinx.cinterop.ExperimentalForeignApi
 
-@OptIn(ExperimentalForeignApi::class)
 public actual typealias PlatformEvent = BugsnagEvent
 
-@OptIn(ExperimentalForeignApi::class)
-public actual value class Event
-internal constructor(override val native: PlatformEvent) :
-    PlatformWrapper<PlatformEvent> {
+public actual value class Event internal constructor(
+    override val native: PlatformEvent,
+) : PlatformWrapper<PlatformEvent> {
     public actual var apiKey: String
-        get() = native.apiKey!!
+        get() = native.apiKey ?: ""
         set(value) {
             native.apiKey = value
         }
@@ -29,10 +29,7 @@ internal constructor(override val native: PlatformEvent) :
         }
 
     public actual var severity: Severity
-        get() {
-            val nativeSeverity = native.severity
-            return nativeSeverity.toPlatformType()
-        }
+        get() = native.severity.toPlatformType()
         set(value) {
             native.severity = value.toNativePlatformType()
         }
@@ -47,7 +44,7 @@ internal constructor(override val native: PlatformEvent) :
             )
         }
         set(value) {
-            native.setUser(andName = value.name, userId = value.id, withEmail = value.email)
+            native.setUser(userId = value.id, withEmail = value.email, andName = value.name)
         }
 
     public actual fun addFeatureFlag(name: String, variant: String?) {
