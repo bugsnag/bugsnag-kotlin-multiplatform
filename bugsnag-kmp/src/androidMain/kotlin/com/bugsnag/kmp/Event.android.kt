@@ -3,8 +3,9 @@ package com.bugsnag.kmp
 public actual typealias PlatformEvent = com.bugsnag.android.Event
 
 @JvmInline
-public actual value class Event internal constructor(override val native: PlatformEvent) :
-    PlatformWrapper<PlatformEvent> {
+public actual value class Event internal constructor(
+    override val native: PlatformEvent,
+) : PlatformWrapper<PlatformEvent> {
     public actual var apiKey: String
         get() = native.apiKey
         set(value) {
