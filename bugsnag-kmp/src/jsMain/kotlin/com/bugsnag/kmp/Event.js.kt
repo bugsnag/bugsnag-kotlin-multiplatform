@@ -32,15 +32,15 @@ public actual value class Event internal constructor(
 
     public actual var user: User
         get() {
-            val androidUser = native.user
+            val jsUser = native.getUser()
             return User(
-                id = androidUser.id,
-                email = androidUser.email,
-                name = androidUser.name,
+                id = jsUser.id,
+                email = jsUser.email,
+                name = jsUser.name,
             )
         }
         set(value) {
-            native.user = User(name = value.name, id = value.id, email = value.email)
+            native.setUser(value.id, value.email, value.name)
         }
 
     public actual val app: AppWithState
