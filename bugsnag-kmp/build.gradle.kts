@@ -6,7 +6,7 @@ import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    id("com.vanniktech.maven.publish") version "0.32.0"
+    alias(libs.plugins.vanniktech.mavenPublish)
     alias(libs.plugins.detekt)
     alias(libs.plugins.ktlint)
 }
