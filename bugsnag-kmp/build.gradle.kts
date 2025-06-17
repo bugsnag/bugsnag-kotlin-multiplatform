@@ -1,3 +1,4 @@
+import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
@@ -9,6 +10,9 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.ktlint)
 }
+
+version = "${project.properties["VERSION_NAME"]}"
+group = "${project.properties["GROUP"]}"
 
 kotlin {
     compilerOptions {
@@ -115,5 +119,37 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    signAllPublications()
+
+    pom {
+        name = "Bugsnag KMP"
+        description = "Kotlin Multiplatform library for Bugsnag crash reporting"
+        inceptionYear = "2025"
+        url = "https://github.com/bugsnag/bugsnag-kmp"
+        licenses {
+            license {
+                name = "The MIT License"
+                url = "https://opensource.org/licenses/MIT"
+                distribution = "repo"
+            }
+        }
+        developers {
+            developer {
+                id = "bugsnag"
+                name = "Bugsnag Team"
+                email = "support@bugsnag.com"
+            }
+        }
+        scm {
+            url = "https://github.com/bugsnag/bugsnag-kotlin-multiplatform"
+            connection = "scm:git:git://github.com/bugsnag/bugsnag-kotlin-multiplatform.git"
+            developerConnection = "scm:git:ssh://git@github.com/bugsnag/bugsnag-kotlin-multiplatform.git"
+        }
     }
 }

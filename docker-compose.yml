@@ -75,6 +75,22 @@ services:
       - ./reports/:/app/reports/
       - /var/run/docker.sock:/var/run/docker.sock
 
+  kmp-common:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.kmp-common
+
+  kmp-publisher:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.kmp-publisher
+    environment:
+      KEY:
+      KEY_ID:
+      KEY_PASS:
+      PUBLISH_USER:
+      PUBLISH_PASS:
+
 networks:
   default:
     name: ${BUILDKITE_JOB_ID:-android-maze-runner}
