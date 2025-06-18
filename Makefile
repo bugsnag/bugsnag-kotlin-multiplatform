@@ -1,4 +1,4 @@
-.PHONY: install test-fixture check
+.PHONY: install test-fixture check bump
 
 check:
 	@./gradlew --continue license detekt lint ktlintCheck test
@@ -13,3 +13,12 @@ test-fixture: install
 	@./features/scripts/export_ios_app.sh Release
 	@cp features/fixtures/mazerunner/app/build/outputs/apk/release/app-release.apk build/test-fixture.apk
 	@cp features/fixtures/mazerunner/iosApp/output/Mazerunner_Release.ipa build/test-fixture.ipa
+
+bump:
+ifneq ($(VERSION),)
+	@echo "Bumping version to $(VERSION)"
+	@./scripts/bump-version.sh $(VERSION)
+else
+	@echo "Please provide a version number"
+	@./scripts/bump-version.sh
+endif
