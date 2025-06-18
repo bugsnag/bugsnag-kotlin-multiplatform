@@ -148,7 +148,10 @@ steps:
     timeout_in_minutes: 30
     agents:
       queue: macos-15
-
+    commands:
+      - scripts/docker-publish.sh
+    env:
+      JAVA_VERSION: 17
 
 
 #  - label: ':docker: Build KMP base image'
