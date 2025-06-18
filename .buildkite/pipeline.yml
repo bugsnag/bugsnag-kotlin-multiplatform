@@ -1,0 +1,170 @@
+agents:
+  queue: 'opensource'
+
+steps:
+
+  - label: ':android: Build Fixtures'
+    key: "fixtures"
+    timeout_in_minutes: 30
+    agents:
+      queue: macos-15
+    artifact_paths:
+      - "build/test-fixture.apk"
+      - "build/android_fixture_url.txt"
+      - "build/test-fixture.ipa"
+      - "build/ipa_url_bb_release.txt"
+      - "build/web.zip"
+      - "build/fixture/*"
+    commands:
+      - bundle install
+      - make test-fixture
+      - bundle exec upload-app --farm=bb --app=./build/test-fixture.apk --app-id-file=build/android_fixture_url.txt
+      - bundle exec upload-app --farm=bb --app=./build/test-fixture.ipa --app-id-file=build/ipa_url_bb_release.txt
+    env:
+      JAVA_VERSION: 17
+
+  - label: ':android: Coding standards checks'
+    timeout_in_minutes: 20
+    agents:
+      queue: macos-15
+    command: './gradlew --continue detekt ktlintCheck'
+    env:
+      JAVA_VERSION: 17
+
+  - label: ':kotlin: :firefox: Browser unit tests'
+    timeout_in_minutes: 20
+    agents:
+      queue: macos-15
+    command: './gradlew --continue jsBrowserTest'
+    env:
+      JAVA_VERSION: 17
+
+  - label: ':android: Lint mazerunner scenarios'
+    timeout_in_minutes: 10
+    agents:
+      queue: macos-15
+    commands:
+      - make install
+      - cd features/fixtures/mazerunner
+      - ./gradlew ktlintCheck detekt
+    env:
+      JAVA_VERSION: 17
+
+  - label: ':bitbar: :kotlin: Android 14 KMP E2E tests'
+    depends_on: "fixtures"
+    timeout_in_minutes: 60
+    plugins:
+      artifacts#v1.9.0:
+        download:
+          - "build/test-fixture.apk"
+          - "build/android_fixture_url.txt"
+        upload:
+          - "maze_output/failed/**/*"
+          - "maze_output/metrics.csv"
+      docker-compose#v4.7.0:
+        pull: android-maze-runner
+        run: android-maze-runner
+        service-ports: true
+        command:
+          - "features/android"
+          - "--app=@build/android_fixture_url.txt"
+          - "--appium-version=1.22"
+          - "--no-tunnel"
+          - "--aws-public-ip"
+          - "--farm=bb"
+          - "--device=ANDROID_14"
+    concurrency: 25
+    concurrency_group: 'bitbar'
+    concurrency_method: eager
+
+  - label: ':bitbar: :kotlin: iOS 16 KMP E2E tests'
+    depends_on: "fixtures"
+    timeout_in_minutes: 60
+    agents:
+      queue: opensource
+    plugins:
+      artifacts#v1.9.3:
+        download: "build/ipa_url_bb_release.txt"
+        upload: "maze_output/failed/**/*"
+      docker-compose#v4.7.0:
+        pull: cocoa-maze-runner-bitbar
+        run: cocoa-maze-runner-bitbar
+        service-ports: true
+        command:
+          - "features/ios"
+          - "--app=@/app/build/ipa_url_bb_release.txt"
+          - "--farm=bb"
+          - "--device=IOS_16"
+          - "--no-tunnel"
+          - "--aws-public-ip"
+          - "--fail-fast"
+    concurrency: 25
+    concurrency_group: 'bitbar'
+    concurrency_method: eager
+    retry:
+      automatic:
+        - exit_status: -1  # Agent was lost
+          limit: 2
+
+#  - label: ":bitbar: :kotlin: Browser KMP E2E tests"
+#    matrix:
+#      - firefox_latest
+#      - chrome_latest
+#      - edge_latest
+#    depends_on: "fixtures"
+#    key: "browser-maze-runner-bb"
+#    timeout_in_minutes: 20
+#    plugins:
+#      artifacts#v1.9.0:
+#        download:
+#          - "build/web.zip"
+#      docker-compose#v4.12.0:
+#        no-cache: true
+#        pull: browser-maze-runner-bitbar
+#        run: browser-maze-runner-bitbar
+#        service-ports: true
+#        command:
+#          - "features/browser"
+#          - "--https"
+#          - "--farm=bb"
+#          - "--browser={{matrix}}"
+#          - "--no-tunnel"
+#          - "--aws-public-ip"
+#          - "--fail-fast"
+#    retry:
+#      automatic:
+#        - exit_status: "*"
+#          limit: 1
+
+  # If this is the 'main' branch activate a manual publishing step
+  - block: 'Trigger package publish'
+    if: build.branch == "main"
+    key: trigger-publish
+    blocked_state: passed
+
+  - label: ':docker: Build KMP base image'
+    if: build.branch == "main"
+    key: 'kmp-common'
+    timeout_in_minutes: 30
+    depends_on: 'trigger-publish'
+    plugins:
+      - docker-compose#v4.7.0:
+          build:
+            - kmp-common
+          image-repository: 855461928731.dkr.ecr.us-west-1.amazonaws.com/android
+          cache-from:
+            - kmp-common:855461928731.dkr.ecr.us-west-1.amazonaws.com/android:kmp-release
+      - docker-compose#v4.7.0:
+          push:
+            - kmp-common:855461928731.dkr.ecr.us-west-1.amazonaws.com/android:kmp-release
+
+  - label: 'Publish :rocket:'
+    if: build.branch == "main"
+    depends_on: 'kmp-common'
+    timeout_in_minutes: 30
+    env:
+      BUILDKITE_PLUGIN_S3_SECRETS_BUCKET_PREFIX: bugsnag-android-publish
+    plugins:
+      docker-compose#v4.7.0:
+        no-cache: true
+        run: kmp-publisher

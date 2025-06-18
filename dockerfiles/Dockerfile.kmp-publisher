@@ -1,0 +1,15 @@
+FROM 855461928731.dkr.ecr.us-west-1.amazonaws.com/android:kmp-release as kmp
+
+WORKDIR /app
+
+# Copy gradle files
+COPY gradlew gradle.properties /app/
+COPY gradle/ /app/gradle/
+COPY build.gradle.kts settings.gradle.kts /app/
+
+# Copy sdk source files
+COPY bugsnag-kmp/ bugsnag-kmp/
+COPY scripts/ scripts/
+COPY LICENSE LICENSE
+
+CMD "scripts/docker-publish.sh"
