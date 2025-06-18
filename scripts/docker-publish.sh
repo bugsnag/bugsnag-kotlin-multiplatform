@@ -5,12 +5,12 @@ set -euo pipefail
 # === Variables ===
 GRADLE_DIR="$HOME/.gradle"
 KEY_FILE="$HOME/temp_key"
-KEY_RING="/publishKey.gpg"
+KEY_RING="$HOME/publishKey.gpg"
 GRADLE_PROPERTIES="$GRADLE_DIR/gradle.properties"
 
 # === GPG Key Setup ===
 echo "$KEY" > "$KEY_FILE"
-base64 --decode "$KEY_FILE" > "$KEY_RING"
+base64 --decode -i "$KEY_FILE" -o "$KEY_RING"
 
 # === Gradle Configuration ===
 mkdir -p "$GRADLE_DIR"
@@ -27,6 +27,6 @@ mkdir -p "$GRADLE_DIR"
 } >> "$GRADLE_PROPERTIES"
 
 # === Build, Publish and Close===
-/app/gradlew assembleRelease publish --no-daemon --max-workers=1
+./gradlew assembleRelease publish --no-daemon --max-workers=1
 
 echo "Go to https://oss.sonatype.org/ to release the final artefact."
