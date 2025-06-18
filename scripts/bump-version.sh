@@ -20,4 +20,4 @@ fi
 
 echo Bumping the version number to $VERSION
 sed -i '' "s/VERSION_NAME=.*/VERSION_NAME=$VERSION/" gradle.properties
-
+sed -i '' "s/## [Unreleased]/## [$VERSION] - ($(date '+%Y-%m-%d'))/" CHANGELOG.md
