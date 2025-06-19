@@ -109,6 +109,7 @@ public external class JsEvent {
     public var groupingHash: String?
     public var severity: Severity
     public var user: User
+    public val app: AppWithState
     public fun addFeatureFlag(name: String, variant: String?)
     public fun clearFeatureFlag(name: String)
     public fun clearFeatureFlags()
@@ -116,4 +117,18 @@ public external class JsEvent {
     public fun addMetadata(section: String, key: String, value: Any?)
     public fun clearMetadata(section: String)
     public fun clearMetadata(section: String, key: String)
+}
+
+public external class JsAppWithState {
+    public var binaryArch: String?
+    public var id: String?
+    public var releaseStage: String?
+    public var version: String?
+    public var codeBundleId: String?
+    public var type: String?
+
+    public var duration: Number?
+    public var durationInForeground: Number?
+    public var inForeground: Boolean?
+    public var isLaunching: Boolean?
 }
