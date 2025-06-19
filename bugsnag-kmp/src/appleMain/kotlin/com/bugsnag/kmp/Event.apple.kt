@@ -47,6 +47,11 @@ public actual value class Event internal constructor(
             native.setUser(userId = value.id, withEmail = value.email, andName = value.name)
         }
 
+    public actual val app: AppWithState
+        get() {
+            return AppWithState(native = native.app())
+        }
+
     public actual fun addFeatureFlag(name: String, variant: String?) {
         native.addFeatureFlagWithName(name, variant)
     }
