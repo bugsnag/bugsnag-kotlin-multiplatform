@@ -11,7 +11,7 @@ public expect object Bugsnag {
 
     public fun isStarted(): Boolean
 
-    public fun notify(error: Throwable)
+    public fun notify(error: Throwable, onError: OnErrorCallback? = null)
 
     /**
      * Adds the specified key and value in the specified section. The value can be of
