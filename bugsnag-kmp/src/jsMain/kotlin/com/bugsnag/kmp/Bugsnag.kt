@@ -13,8 +13,14 @@ public actual object Bugsnag {
 
     public actual fun isStarted(): Boolean = JsBugsnag.isStarted()
 
-    public actual fun notify(error: Throwable) {
-        JsBugsnag.notify(error)
+    public actual fun notify(error: Throwable, onError: OnErrorCallback?) {
+        if (onError != null) {
+            JsBugsnag.notify(error) { event ->
+                onError.onError(Event(event))
+            }
+        } else {
+            JsBugsnag.notify(error)
+        }
     }
 
     public actual fun addMetadata(section: String, key: String, value: Any?) {
