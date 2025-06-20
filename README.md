@@ -90,6 +90,7 @@ bugsnag-cli upload xcode-archive iosApp --api-key=your-api-key
 ```
 
 If your API-key is defined in the `AndroidManifest.xml` and `Info.plist` files, you can omit the `--api-key` argument. The CLI will automatically find the API key in your project files. These steps are typically added to your CI/CD pipeline, so that the symbol files are uploaded automatically after each build.
+
 ## Support
 
 * [Search open and closed issues](https://github.com/bugsnag/bugsnag-kmp/issues?utf8=✓&q=is%3Aissue) for similar problems

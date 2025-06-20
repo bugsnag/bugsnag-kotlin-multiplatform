@@ -5,7 +5,7 @@ android-minSdk = "24"
 android-targetSdk = "34"
 junit = "4.13.2"
 kotlin = "2.1.10"
-dokka = "1.7.20"
+dokka = "2.0.0"
 detekt = "1.21.0"
 ktlint = "11.2.0"
 

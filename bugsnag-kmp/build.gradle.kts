@@ -1,4 +1,5 @@
 import com.vanniktech.maven.publish.SonatypeHost
+import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
@@ -9,6 +10,7 @@ plugins {
     alias(libs.plugins.vanniktech.mavenPublish)
     alias(libs.plugins.detekt)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.dokka)
 }
 
 version = "${project.properties["VERSION_NAME"]}"
@@ -119,6 +121,22 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+dokka {
+    dokkaPublications.html {
+        failOnWarning.set(true)
+    }
+}
+
+tasks.withType<DokkaTask>().configureEach {
+    // custom output directory
+    outputDirectory.set(layout.buildDirectory.dir("dokka"))
+
+    dokkaSourceSets {
+        named("commonMain") {
+        }
     }
 }
 
