@@ -7,8 +7,7 @@ public actual typealias PlatformAppWithState = AppWithState
 @JvmInline
 public actual value class AppWithState internal constructor(
     override val native: PlatformAppWithState,
-) :
-    PlatformWrapper<PlatformAppWithState> {
+) : PlatformWrapper<PlatformAppWithState> {
 
     public actual var binaryArch: String?
         get() = native.binaryArch

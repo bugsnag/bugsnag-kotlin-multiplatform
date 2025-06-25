@@ -1,15 +1,16 @@
+@file:OptIn(ExperimentalForeignApi::class)
+
 package com.bugsnag.kmp
 
+import com.bugsnag.cocoa.BugsnagAppWithState
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSNumber
 
-@OptIn(ExperimentalForeignApi::class)
-public actual typealias PlatformAppWithState = com.bugsnag.cocoa.BugsnagAppWithState
+public actual typealias PlatformAppWithState = BugsnagAppWithState
 
-@OptIn(ExperimentalForeignApi::class)
-public actual value class AppWithState
-internal constructor(override val native: PlatformAppWithState) :
-    PlatformWrapper<PlatformAppWithState> {
+public actual value class AppWithState internal constructor(
+    override val native: PlatformAppWithState,
+) : PlatformWrapper<PlatformAppWithState> {
 
     public actual var binaryArch: String?
         get() = native.binaryArch
@@ -48,30 +49,26 @@ internal constructor(override val native: PlatformAppWithState) :
         }
 
     public actual var duration: Number?
-        get() = native.duration as Number
+        get() = native.duration?.longValue
         set(value) {
-            native.duration = value as NSNumber?
+            native.duration = value?.let { NSNumber(long = it.toLong()) }
         }
 
     public actual var durationInForeground: Number?
-        get() = native.durationInForeground as Number
+        get() = native.durationInForeground?.longValue
         set(value) {
-            native.durationInForeground = value as NSNumber?
+            native.durationInForeground = value?.let { NSNumber(long = it.toLong()) }
         }
 
     public actual var inForeground: Boolean?
         get() = native.inForeground
         set(value) {
-            if (value != null) {
-                native.inForeground = value
-            }
+            native.inForeground = value == true
         }
 
     public actual var isLaunching: Boolean?
         get() = native.isLaunching
         set(value) {
-            if (value != null) {
-                native.isLaunching = value
-            }
+            native.isLaunching = value == true
         }
 }

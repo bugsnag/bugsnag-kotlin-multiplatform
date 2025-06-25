@@ -2,9 +2,9 @@ package com.bugsnag.kmp
 
 public actual typealias PlatformAppWithState = JsAppWithState
 
-public actual value class AppWithState
-internal constructor(override val native: PlatformAppWithState) :
-    PlatformWrapper<PlatformAppWithState> {
+public actual value class AppWithState internal constructor(
+    override val native: PlatformAppWithState,
+) : PlatformWrapper<PlatformAppWithState> {
 
     public actual var binaryArch: String?
         get() = native.binaryArch

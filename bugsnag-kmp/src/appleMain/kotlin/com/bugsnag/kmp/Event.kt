@@ -48,9 +48,7 @@ public actual value class Event internal constructor(
         }
 
     public actual val app: AppWithState
-        get() {
-            return AppWithState(native = native.app())
-        }
+        get() = AppWithState(native = native.app())
 
     public actual fun addFeatureFlag(name: String, variant: String?) {
         native.addFeatureFlagWithName(name, variant)

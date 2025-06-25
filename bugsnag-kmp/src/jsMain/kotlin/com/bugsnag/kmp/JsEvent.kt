@@ -9,7 +9,7 @@ public external class JsEvent {
     public var context: String?
     public var groupingHash: String?
     public var severity: String
-    public var app: AppWithState
+    public val app: AppWithState
     internal fun getUser(): JsUser
     public fun setUser(id: String?, email: String?, name: String?)
     public fun addFeatureFlag(name: String, variant: String?)

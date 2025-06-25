@@ -1,6 +1,8 @@
 package com.bugsnag.kmp
 
-public actual typealias PlatformEvent = com.bugsnag.android.Event
+import com.bugsnag.android.Event
+
+public actual typealias PlatformEvent = Event
 
 @JvmInline
 public actual value class Event internal constructor(
@@ -44,9 +46,7 @@ public actual value class Event internal constructor(
         }
 
     public actual val app: AppWithState
-        get() {
-            return AppWithState(native.getApp())
-        }
+        get() = AppWithState(native.app)
 
     public actual fun addFeatureFlag(name: String, variant: String?) {
         native.addFeatureFlag(name, variant)
