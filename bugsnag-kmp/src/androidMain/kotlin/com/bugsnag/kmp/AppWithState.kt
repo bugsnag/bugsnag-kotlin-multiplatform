@@ -1,14 +1,11 @@
 package com.bugsnag.kmp
 
-import com.bugsnag.android.AppWithState
-
-public actual typealias PlatformAppWithState = AppWithState
+public actual typealias PlatformAppWithState = com.bugsnag.android.AppWithState
 
 @JvmInline
 public actual value class AppWithState internal constructor(
     override val native: PlatformAppWithState,
-) :
-    PlatformWrapper<PlatformAppWithState> {
+) : PlatformWrapper<PlatformAppWithState> {
 
     public actual var binaryArch: String?
         get() = native.binaryArch
@@ -45,6 +42,7 @@ public actual value class AppWithState internal constructor(
         set(value) {
             native.type = value
         }
+
     public actual var duration: Number?
         get() = native.duration
         set(value) {

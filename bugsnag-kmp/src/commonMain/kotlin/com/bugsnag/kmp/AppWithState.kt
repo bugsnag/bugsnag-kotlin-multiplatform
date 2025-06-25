@@ -1,8 +1,10 @@
 package com.bugsnag.kmp
 
 public expect class PlatformAppWithState
-public expect value class AppWithState internal constructor(override val native: PlatformAppWithState) :
-    PlatformWrapper<PlatformAppWithState> {
+
+public expect value class AppWithState internal constructor(
+    override val native: PlatformAppWithState,
+) : PlatformWrapper<PlatformAppWithState> {
 
     public var binaryArch: String?
     public var id: String?
