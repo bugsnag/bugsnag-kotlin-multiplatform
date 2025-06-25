@@ -1,8 +1,6 @@
 package com.bugsnag.kmp
 
-import com.bugsnag.android.Event
-
-public actual typealias PlatformEvent = Event
+public actual typealias PlatformEvent = com.bugsnag.android.Event
 
 @JvmInline
 public actual value class Event internal constructor(
@@ -44,6 +42,7 @@ public actual value class Event internal constructor(
         set(value) {
             native.setUser(name = value.name, id = value.id, email = value.email)
         }
+
     public actual val app: AppWithState
         get() {
             return AppWithState(native.getApp())

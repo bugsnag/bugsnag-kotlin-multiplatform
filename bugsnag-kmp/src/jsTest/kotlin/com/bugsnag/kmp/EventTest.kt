@@ -2,6 +2,7 @@ package com.bugsnag.kmp
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 internal class EventTest {
 
@@ -15,8 +16,12 @@ internal class EventTest {
         testEvent.groupingHash = "new groupingHash"
         testEvent.severity = Severity.WARNING
         testEvent.user = User(id = USER_ID, email = USER_EMAIL, name = USER_NAME)
-        testEvent.addMetadata("new_1", "scenario", "EventScenario 1")
-        testEvent.addMetadata("new_2", "scenario", mapOf("test2" to "EventScenario 2"))
+        testEvent.addMetadata("new_1", "string", "test string")
+        testEvent.addMetadata("new_2", "number", 1000)
+        testEvent.addMetadata("new_3", "list", listOf(1, 2, 3))
+        testEvent.addMetadata("new_4", "map", mapOf("test2" to "EventScenario 2"))
+        testEvent.addMetadata("new_6", "string2", "test string2")
+
         testEvent.addFeatureFlag("flag", "new flag 1")
         testEvent.addFeatureFlag("flag 2", "new flag 2")
         testEvent.clearMetadata("new_1")
@@ -29,7 +34,10 @@ internal class EventTest {
         assertEquals(USER_ID, jsEvent.asDynamic()._user.id)
         assertEquals(USER_NAME, jsEvent.asDynamic()._user.name)
         assertEquals(USER_EMAIL, jsEvent.asDynamic()._user.email)
-        assertEquals("EventScenario 2", jsEvent.asDynamic()._metadata.new_2.scenario["test2"])
+        assertNull(jsEvent.asDynamic()._metadata.new_1)
+        assertEquals("test string2", jsEvent.asDynamic()._metadata.new_6.string2)
+        assertEquals("EventScenario 2", jsEvent.asDynamic()._metadata.new_4.map["test2"])
+        assertEquals(1000, jsEvent.asDynamic()._metadata.new_2.number)
         assertEquals("flag 2", jsEvent.asDynamic()._features[1].name)
         assertEquals("new flag 2", jsEvent.asDynamic()._features[1].variant)
     }
