@@ -14,3 +14,13 @@ Feature: Handled event smoke test
     And the event "user.id" equals "test123"
     And the event "user.email" equals "test@example.com"
     And the event "user.name" equals "Jonny User"
+
+    # Device data
+    And the event "device.jailbroken" is false
+    And the event "device.locale" equals "en_US"
+    And the event "device.manufacturer" equals "Google"
+    And the event "device.model" equals "Pixel 8"
+    And the event "device.osName" equals "android"
+    And the event "device.osVersion" equals "14"
+    And the event "device.runtimeVersions" is not null
+    And the event "device.totalMemory" is greater than 0
