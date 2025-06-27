@@ -9,6 +9,8 @@ public external class JsEvent {
     public var context: String?
     public var groupingHash: String?
     public var severity: String
+
+    public val device: DeviceWithState
     internal fun getUser(): JsUser
     public fun setUser(id: String?, email: String?, name: String?)
     public fun addFeatureFlag(name: String, variant: String?)
@@ -18,4 +20,16 @@ public external class JsEvent {
     public fun addMetadata(section: String, key: String, value: Any?)
     public fun clearMetadata(section: String)
     public fun clearMetadata(section: String, key: String)
+}
+
+public external class JsDeviceWithState {
+    public var jailbroken: Boolean
+    public var id: String?
+    public var locale: String?
+    public var manufacturer: String?
+    public var model: String?
+    public var osName: String?
+    public var osVersion: String?
+    public var runtimeVersions: dynamic?
+    public var totalMemory: Long?
 }
