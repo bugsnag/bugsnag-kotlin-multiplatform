@@ -9,6 +9,8 @@ public external class JsEvent {
     public var context: String?
     public var groupingHash: String?
     public var severity: String
+    public val device: JsDevice
+
     internal fun getUser(): JsUser
     public fun setUser(id: String?, email: String?, name: String?)
     public fun addFeatureFlag(name: String, variant: String?)

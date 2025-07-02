@@ -2,6 +2,7 @@ package com.bugsnag.kmp
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 internal class EventTest {
 
@@ -10,17 +11,30 @@ internal class EventTest {
         val jsEvent = JsEvent("Error", "An error occurred")
         val testEvent = Event(jsEvent)
 
-        testEvent.apiKey = API_KEY
-        testEvent.context = CONTEXT
-        testEvent.groupingHash = "new groupingHash"
-        testEvent.severity = Severity.WARNING
-        testEvent.user = User(id = USER_ID, email = USER_EMAIL, name = USER_NAME)
-        testEvent.addMetadata("new_1", "scenario", "EventScenario 1")
-        testEvent.addMetadata("new_2", "scenario", mapOf("test2" to "EventScenario 2"))
-        testEvent.addFeatureFlag("flag", "new flag 1")
-        testEvent.addFeatureFlag("flag 2", "new flag 2")
-        testEvent.clearMetadata("new_1")
-        testEvent.clearFeatureFlag("flag")
+        testEvent.apply {
+            apiKey = API_KEY
+            context = CONTEXT
+            groupingHash = "new groupingHash"
+            severity = Severity.WARNING
+            user = User(id = USER_ID, email = USER_EMAIL, name = USER_NAME)
+            addMetadata("new_1", "string", "test string")
+            addMetadata("new_2", "number", 1000)
+            addMetadata("new_3", "list", listOf(1, 2, 3))
+            addMetadata("new_4", "map", mapOf("test2" to "EventScenario 2"))
+            addMetadata("new_6", "string2", "test string2")
+
+            addFeatureFlag("flag", "new flag 1")
+            addFeatureFlag("flag 2", "new flag 2")
+            clearMetadata("new_1")
+            clearFeatureFlag("flag")
+
+            device.id = DEVICE_ID
+            device.locale = DEVICE_LOCALE
+            device.manufacturer = DEVICE_MANUFACTURER
+            device.model = DEVICE_MODEL
+            device.osName = DEVICE_OS_NAME
+            device.osVersion = DEVICE_OS_VERSION
+        }
 
         assertEquals(API_KEY, jsEvent.asDynamic().apiKey)
         assertEquals(CONTEXT, jsEvent.asDynamic().context)
@@ -29,9 +43,20 @@ internal class EventTest {
         assertEquals(USER_ID, jsEvent.asDynamic()._user.id)
         assertEquals(USER_NAME, jsEvent.asDynamic()._user.name)
         assertEquals(USER_EMAIL, jsEvent.asDynamic()._user.email)
-        assertEquals("EventScenario 2", jsEvent.asDynamic()._metadata.new_2.scenario["test2"])
+        assertNull(jsEvent.asDynamic()._metadata.new_1)
+        assertEquals("test string2", jsEvent.asDynamic()._metadata.new_6.string2)
+        assertEquals("EventScenario 2", jsEvent.asDynamic()._metadata.new_4.map["test2"])
+        assertEquals(1000, jsEvent.asDynamic()._metadata.new_2.number)
+        assertEquals(3, jsEvent.asDynamic()._metadata.new_3.list.length)
         assertEquals("flag 2", jsEvent.asDynamic()._features[1].name)
         assertEquals("new flag 2", jsEvent.asDynamic()._features[1].variant)
+
+        assertEquals(DEVICE_ID, jsEvent.asDynamic().device.id)
+        assertEquals(DEVICE_LOCALE, jsEvent.asDynamic().device.locale)
+        assertEquals(DEVICE_MANUFACTURER, jsEvent.asDynamic().device.manufacturer)
+        assertEquals(DEVICE_MODEL, jsEvent.asDynamic().device.model)
+        assertEquals(DEVICE_OS_NAME, jsEvent.asDynamic().device.osName)
+        assertEquals(DEVICE_OS_VERSION, jsEvent.asDynamic().device.osVersion)
     }
 
     companion object {
@@ -40,5 +65,12 @@ internal class EventTest {
         const val USER_ID = "435897634876"
         const val USER_NAME = "Hames"
         const val USER_EMAIL = "test@example.com"
+
+        const val DEVICE_ID = "device-id"
+        const val DEVICE_LOCALE = "en-US"
+        const val DEVICE_MANUFACTURER = "Bugsnagger"
+        const val DEVICE_MODEL = "Bugsnag Pro Max"
+        const val DEVICE_OS_NAME = "JavaScript"
+        const val DEVICE_OS_VERSION = "1.0.0"
     }
 }
