@@ -14,3 +14,14 @@ Feature: Handled event smoke test
     And the event "user.id" equals "test123"
     And the event "user.email" equals "test@example.com"
     And the event "user.name" equals "Jonny User"
+
+    # App data
+    And the event "app.binaryArch" equals "arm64"
+    And the event "app.id" equals "com.bugsnag.kmp.mazerunner"
+    And the event "app.releaseStage" equals "notify"
+    And the event "app.version" equals "1.0"
+    And the event "app.type" equals "android"
+    And the error payload field "events.0.app.duration" is an integer
+    And the error payload field "events.0.app.durationInForeground" is an integer
+    And the event "app.inForeground" is true
+    And the event "app.isLaunching" is true
