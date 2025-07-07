@@ -43,6 +43,9 @@ public actual value class Event internal constructor(
             native.setUser(value.id, value.email, value.name)
         }
 
+    public actual val app: AppWithState
+        get() = AppWithState(native.app.unsafeCast<PlatformAppWithState>())
+
     public actual fun addFeatureFlag(name: String, variant: String?) {
         native.addFeatureFlag(name, variant)
     }
