@@ -36,6 +36,30 @@ internal class EventTest {
             device.osVersion = DEVICE_OS_VERSION
         }
 
+        testEvent.app.releaseStage = APP_RELEASE_STAGE
+        testEvent.app.version = APP_VERSION
+        testEvent.app.codeBundleId = APP_CODE_BUNDLE_ID
+        testEvent.app.type = APP_TYPE
+        testEvent.app.duration = APP_DURATION
+        testEvent.app.durationInForeground = APP_DURATION_IN_FOREGROUND
+        testEvent.app.inForeground = APP_IN_FOREGROUND
+
+        testEvent.apiKey = API_KEY
+        testEvent.context = CONTEXT
+        testEvent.groupingHash = "new groupingHash"
+        testEvent.severity = Severity.WARNING
+        testEvent.user = User(id = USER_ID, email = USER_EMAIL, name = USER_NAME)
+        testEvent.addMetadata("new_1", "string", "test string")
+        testEvent.addMetadata("new_2", "number", 1000)
+        testEvent.addMetadata("new_3", "list", listOf(1, 2, 3))
+        testEvent.addMetadata("new_4", "map", mapOf("test2" to "EventScenario 2"))
+        testEvent.addMetadata("new_6", "string2", "test string2")
+
+        testEvent.addFeatureFlag("flag", "new flag 1")
+        testEvent.addFeatureFlag("flag 2", "new flag 2")
+        testEvent.clearMetadata("new_1")
+        testEvent.clearFeatureFlag("flag")
+
         assertEquals(API_KEY, jsEvent.asDynamic().apiKey)
         assertEquals(CONTEXT, jsEvent.asDynamic().context)
         assertEquals("new groupingHash", jsEvent.asDynamic().groupingHash)
@@ -57,6 +81,14 @@ internal class EventTest {
         assertEquals(DEVICE_MODEL, jsEvent.asDynamic().device.model)
         assertEquals(DEVICE_OS_NAME, jsEvent.asDynamic().device.osName)
         assertEquals(DEVICE_OS_VERSION, jsEvent.asDynamic().device.osVersion)
+
+        assertEquals(APP_RELEASE_STAGE, jsEvent.asDynamic().app.releaseStage)
+        assertEquals(APP_VERSION, jsEvent.asDynamic().app.version)
+        assertEquals(APP_CODE_BUNDLE_ID, jsEvent.asDynamic().app.codeBundleId)
+        assertEquals(APP_TYPE, jsEvent.asDynamic().app.type)
+        assertEquals(APP_DURATION, jsEvent.asDynamic().app.duration)
+        assertEquals(APP_DURATION_IN_FOREGROUND, jsEvent.asDynamic().app.durationInForeground)
+        assertEquals(APP_IN_FOREGROUND, jsEvent.asDynamic().app.inForeground)
     }
 
     companion object {
@@ -72,5 +104,13 @@ internal class EventTest {
         const val DEVICE_MODEL = "Bugsnag Pro Max"
         const val DEVICE_OS_NAME = "JavaScript"
         const val DEVICE_OS_VERSION = "1.0.0"
+
+        const val APP_CODE_BUNDLE_ID = "bundle-id"
+        const val APP_DURATION = 1000
+        const val APP_DURATION_IN_FOREGROUND = 500
+        const val APP_IN_FOREGROUND = true
+        const val APP_RELEASE_STAGE = "test"
+        const val APP_TYPE = "web"
+        const val APP_VERSION = "1.0.0"
     }
 }

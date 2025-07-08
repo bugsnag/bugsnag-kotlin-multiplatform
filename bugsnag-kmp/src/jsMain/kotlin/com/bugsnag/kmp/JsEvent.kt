@@ -5,11 +5,13 @@ package com.bugsnag.kmp
 @JsName("Event")
 public external class JsEvent {
     public constructor(errorClass: String, errorMessage: String)
+
     public var apiKey: String?
     public var context: String?
     public var groupingHash: String?
     public var severity: String
     public val device: JsDevice
+    public var app: JsApp
 
     internal fun getUser(): JsUser
     public fun setUser(id: String?, email: String?, name: String?)

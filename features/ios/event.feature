@@ -24,3 +24,14 @@ Feature: Handled event smoke test
     And the event "device.osVersion" equals "16.1"
     And the event "device.runtimeVersions" is not null
     And the event "device.totalMemory" is greater than 0
+
+    # App data
+    And the event "app.binaryArch" equals "arm64"
+    And the event "app.id" equals "com.bugsnag.kmp.mazerunner.Mazerunner"
+    And the event "app.releaseStage" equals "notify"
+    And the event "app.version" equals "1.0"
+    And the event "app.type" equals "iOS"
+    And the error payload field "events.0.app.duration" is an integer
+    And the error payload field "events.0.app.durationInForeground" is an integer
+    And the event "app.inForeground" is true
+    And the event "app.isLaunching" is true

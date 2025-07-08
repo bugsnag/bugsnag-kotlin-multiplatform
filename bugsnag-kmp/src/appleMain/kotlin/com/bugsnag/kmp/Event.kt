@@ -49,6 +49,9 @@ public actual value class Event internal constructor(
     public actual val device: DeviceWithState
         get() = DeviceWithState(native = native.device())
 
+    public actual val app: AppWithState
+        get() = AppWithState(native = native.app())
+
     public actual fun addFeatureFlag(name: String, variant: String?) {
         native.addFeatureFlagWithName(name, variant)
     }
