@@ -11,7 +11,7 @@ public actual value class DeviceWithState internal constructor(
     override val native: PlatformDeviceWithState,
 ) : PlatformWrapper<PlatformDeviceWithState> {
     public actual var jailbroken: Boolean
-        get() = native.jailbroken ?: false
+        get() = native.jailbroken
         set(value) {
             native.jailbroken = value
         }

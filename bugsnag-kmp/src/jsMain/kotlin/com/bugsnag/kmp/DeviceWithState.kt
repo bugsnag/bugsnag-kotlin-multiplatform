@@ -2,6 +2,11 @@ package com.bugsnag.kmp
 
 import kotlin.js.Date
 
+/**
+ * In JavaScript this is not a `class` but an `interface`, however KMP forbids us from expressing this while also
+ * using a `value class` to encapsulate any platform variations. This `external class` is effectively a form
+ * of compiler work around and in reality it represents an untyped JavaScript object.
+ */
 public actual external class PlatformDeviceWithState : JsDevice {
     override var id: String?
     override var hostname: String?

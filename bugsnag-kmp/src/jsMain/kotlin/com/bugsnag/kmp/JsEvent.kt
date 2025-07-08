@@ -10,7 +10,7 @@ public external class JsEvent {
     public var context: String?
     public var groupingHash: String?
     public var severity: String
-    public val device: JsDevice
+    public var device: JsDevice
     public var app: JsApp
 
     internal fun getUser(): JsUser
