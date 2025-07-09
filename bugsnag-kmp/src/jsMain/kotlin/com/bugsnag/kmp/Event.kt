@@ -43,6 +43,9 @@ public actual value class Event internal constructor(
             native.setUser(value.id, value.email, value.name)
         }
 
+    public actual val device: DeviceWithState
+        get() = DeviceWithState(native.device.unsafeCast<PlatformDeviceWithState>())
+
     public actual val app: AppWithState
         get() = AppWithState(native.app.unsafeCast<PlatformAppWithState>())
 

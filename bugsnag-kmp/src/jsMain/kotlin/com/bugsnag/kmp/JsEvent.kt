@@ -10,7 +10,9 @@ public external class JsEvent {
     public var context: String?
     public var groupingHash: String?
     public var severity: String
+    public var device: JsDevice
     public var app: JsApp
+
     internal fun getUser(): JsUser
     public fun setUser(id: String?, email: String?, name: String?)
     public fun addFeatureFlag(name: String, variant: String?)

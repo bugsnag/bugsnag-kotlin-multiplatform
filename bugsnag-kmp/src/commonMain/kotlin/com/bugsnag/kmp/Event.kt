@@ -11,6 +11,7 @@ public expect value class Event internal constructor(
     public var groupingHash: String?
     public var severity: Severity
     public var user: User
+    public val device: DeviceWithState
     public val app: AppWithState
 
     public fun addFeatureFlag(name: String, variant: String? = null)

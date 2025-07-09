@@ -2,10 +2,9 @@
 
 package com.bugsnag.kmp
 
-import com.bugsnag.cocoa.BugsnagEvent
 import kotlinx.cinterop.ExperimentalForeignApi
 
-public actual typealias PlatformEvent = BugsnagEvent
+public actual typealias PlatformEvent = com.bugsnag.cocoa.BugsnagEvent
 
 public actual value class Event internal constructor(
     override val native: PlatformEvent,
@@ -46,6 +45,9 @@ public actual value class Event internal constructor(
         set(value) {
             native.setUser(userId = value.id, withEmail = value.email, andName = value.name)
         }
+
+    public actual val device: DeviceWithState
+        get() = DeviceWithState(native = native.device())
 
     public actual val app: AppWithState
         get() = AppWithState(native = native.app())
