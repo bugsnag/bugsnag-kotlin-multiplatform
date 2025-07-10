@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val config = Configuration(applicationContext, "YOUR-API-KEY")
+        val config = Configuration(applicationContext)
         SharedBugsnag().startBugsnag(config)
 
         setContent {
