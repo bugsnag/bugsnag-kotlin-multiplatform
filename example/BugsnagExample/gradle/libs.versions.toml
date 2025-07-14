@@ -1,0 +1,30 @@
+[versions]
+agp = "8.7.3"
+androidx-activity = "1.10.1"
+androidx-appcompat = "1.7.1"
+androidx-lifecycle = "2.9.1"
+bugsnag-android = "6.13.0"
+bugsnag-gradle = "0.4.0"
+composeMultiplatform = "1.8.2"
+kotlin = "2.2.0"
+squareup-okhttp3 = "4.12.0"
+kmp = "+"
+
+[libraries]
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
+androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+bugsnag-android = { group = "com.bugsnag", name = "bugsnag-android", version.ref = "bugsnag-android"}
+bugsnag-okhttp = {group = "com.bugsnag", name = "bugsnag-plugin-android-okhttp", version.ref = "bugsnag-android"}
+squareup-okhttp3 = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "squareup-okhttp3"}
+bugsnag-kmp = { module = "com.bugsnag:bugsnag-kmp", version.ref = "kmp" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+bugsnag-gradle = { id = "com.bugsnag.gradle", version.ref = "bugsnag-gradle"}
+composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
+composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
