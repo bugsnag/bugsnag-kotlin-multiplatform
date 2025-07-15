@@ -7,15 +7,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.bugsnag.kmp.Bugsnag
 import com.bugsnag.kmp.Configuration
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val config = Configuration(applicationContext)
-        config.apiKey = BugsnagCommons().API_KEY
-        Bugsnag.start(config)
+        startBugsnag(
+            Configuration(applicationContext).apply {
+                apiKey = BUGSNAG_API_KEY
+            },
+        )
 
         setContent {
             Surface(

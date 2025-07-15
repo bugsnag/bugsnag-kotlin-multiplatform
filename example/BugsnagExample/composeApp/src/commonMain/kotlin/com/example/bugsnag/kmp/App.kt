@@ -26,11 +26,20 @@ fun App() {
 
             Button(
                 onClick = {
-                    throw RuntimeException("Fatal Crash")
+                    throw RuntimeException("Unhandled Kotlin Exception")
                 },
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text("Trigger A Fatal Crash")
+                Text("Throw An Unhandled Exception")
+            }
+
+            Button(
+                onClick = {
+                    Bugsnag.notify(RuntimeException("Handled Kotlin Exception"))
+                },
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text("A Handled Exception")
             }
 
             Button(

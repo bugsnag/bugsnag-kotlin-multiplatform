@@ -17,26 +17,29 @@ import org.jetbrains.compose.web.renderComposable
 @JsExport
 @OptIn(ExperimentalJsExport::class)
 fun StartComposeAppWeb(rootId: String) {
-    startBugsnag(Configuration(getPlatformBugsnagKey()))
+    startBugsnag(Configuration(BUGSNAG_API_KEY))
     renderComposable(rootId) {
         Div {
             H1 {
                 Text("Bugsnag KMP - Example app")
             }
-            Div(attrs = {
-                style {
-                    display(DisplayStyle.Flex); flexDirection(FlexDirection.Column); width(20.percent);
-                }
-            }) {
+            Div(
+                attrs = {
+                    style {
+                        display(DisplayStyle.Flex); flexDirection(FlexDirection.Column); width(20.percent);
+                    }
+                },
+            ) {
                 TextButton(
                     text = "Trigger A Fatal Crash",
-                    onClick = { Bugsnag.notify(Exception("Fatal Crash")) }
+                    onClick = { Bugsnag.notify(Exception("Fatal Crash")) },
                 )
                 TextButton(
                     text = "Attach Custom Breadcrumbs",
                     onClick = {
                         Bugsnag.leaveBreadcrumb("WebAuthFailure")
-                        Bugsnag.notify(RuntimeException("Error Report with Breadcrumbs"))                    }
+                        Bugsnag.notify(RuntimeException("Error Report with Breadcrumbs"))
+                    },
                 )
             }
         }

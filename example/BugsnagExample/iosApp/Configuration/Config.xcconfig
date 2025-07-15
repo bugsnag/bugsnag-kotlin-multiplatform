@@ -1,6 +1,6 @@
 TEAM_ID=
 
-PRODUCT_NAME=BugsnagExample
+PRODUCT_NAME=Bugsnag Example
 PRODUCT_BUNDLE_IDENTIFIER=com.example.bugsnag.kmp.BugsnagExample$(TEAM_ID)
 
 CURRENT_PROJECT_VERSION=1

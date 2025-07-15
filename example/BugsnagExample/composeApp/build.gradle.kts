@@ -16,20 +16,20 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
-        iosSimulatorArm64()
+        iosSimulatorArm64(),
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
         }
     }
-    
+
     sourceSets {
-        
+
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -51,7 +51,8 @@ kotlin {
     }
 }
 
-android {    namespace = "com.example.bugsnag.kmp.android"
+android {
+    namespace = "com.example.bugsnag.kmp.android"
     compileSdk = 35
     defaultConfig {
         applicationId = "com.example.bugsnag.kmp.android"
@@ -82,8 +83,7 @@ android {    namespace = "com.example.bugsnag.kmp.android"
 dependencies {
     implementation(libs.androidx.appcompat)
     debugImplementation(compose.uiTooling)
+
     implementation(libs.bugsnag.android)
-    implementation(libs.bugsnag.okhttp)
-    implementation(libs.squareup.okhttp3)
     implementation(libs.bugsnag.kmp)
 }

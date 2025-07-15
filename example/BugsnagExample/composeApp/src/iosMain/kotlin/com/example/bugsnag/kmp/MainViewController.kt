@@ -5,6 +5,6 @@ import com.bugsnag.kmp.Configuration
 
 @Suppress("FunctionName", "unused")
 fun MainViewController() = ComposeUIViewController {
-    startBugsnag(Configuration(BugsnagCommons().API_KEY))
+    startBugsnag(Configuration(BUGSNAG_API_KEY))
     App()
 }
