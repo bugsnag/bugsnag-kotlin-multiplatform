@@ -26,7 +26,7 @@ fun App() {
 
             Button(
                 onClick = {
-                    Bugsnag.notify(RuntimeException("Fatal Crash"))
+                    throw RuntimeException("Fatal Crash")
                 },
                 modifier = Modifier.fillMaxWidth(),
             ) {
