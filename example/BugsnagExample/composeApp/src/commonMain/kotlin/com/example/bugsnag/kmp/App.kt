@@ -11,12 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.bugsnag.kmp.BreadcrumbType
 import com.bugsnag.kmp.Bugsnag
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-@Preview
 fun App() {
     MaterialTheme {
         Column(
@@ -38,10 +35,10 @@ fun App() {
 
             Button(
                 onClick = {
-                    Bugsnag.leaveBreadcrumb("LoginButtonClick")
-
-                    val metadata = mapOf(Pair("reason", "incorrect password"))
-                    Bugsnag.leaveBreadcrumb("WebAuthFailure", metadata, BreadcrumbType.ERROR)
+                    Bugsnag.leaveBreadcrumb(
+                        "WebAuthFailure",
+                        mapOf("reason" to "incorrect password"),
+                    )
                     Bugsnag.notify(RuntimeException("Error Report with Breadcrumbs"))
                 },
                 modifier = Modifier.fillMaxWidth(),
