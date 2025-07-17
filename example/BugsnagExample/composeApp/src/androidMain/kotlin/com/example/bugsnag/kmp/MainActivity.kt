@@ -12,11 +12,8 @@ import com.bugsnag.kmp.Configuration
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        startBugsnag(
-            Configuration(applicationContext).apply {
-                apiKey = BUGSNAG_API_KEY
-            },
-        )
+        val config = Configuration(applicationContext, BUGSNAG_API_KEY)
+        startBugsnag(config)
 
         setContent {
             Surface(

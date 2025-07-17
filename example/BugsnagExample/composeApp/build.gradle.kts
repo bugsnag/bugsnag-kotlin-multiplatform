@@ -1,5 +1,5 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -11,7 +11,6 @@ plugins {
 
 kotlin {
     androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
@@ -27,6 +26,20 @@ kotlin {
             isStatic = true
         }
     }
+
+    js(IR) {
+        moduleName = "composeApp"
+        useEsModules()
+        browser {
+            commonWebpackConfig {
+                mode = KotlinWebpackConfig.Mode.PRODUCTION
+            }
+        }
+        binaries.executable()
+    }
+
+    applyDefaultHierarchyTemplate()
+
 
     sourceSets {
 
@@ -45,8 +58,9 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.bugsnag.kmp)
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
+        jsMain.dependencies {
+            implementation(libs.compose.html)
+            implementation(npm("@bugsnag/browser", "=${libs.versions.bugsnag.js.get()}"))
         }
     }
 }
@@ -75,15 +89,15 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 }
 
 dependencies {
-    implementation(libs.androidx.appcompat)
     debugImplementation(compose.uiTooling)
 
+    implementation(libs.androidx.appcompat)
     implementation(libs.bugsnag.android)
     implementation(libs.bugsnag.kmp)
 }

@@ -6,17 +6,18 @@ androidx-lifecycle = "2.9.1"
 bugsnag-android = "6.13.0"
 bugsnag-gradle = "0.4.0"
 composeMultiplatform = "1.8.2"
-kotlin = "2.2.0"
+kotlin = "2.1.0"
 kmp = "+"
+bugsnag-js = "8.2.0"
 
 [libraries]
-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 bugsnag-android = { group = "com.bugsnag", name = "bugsnag-android", version.ref = "bugsnag-android"}
 bugsnag-kmp = { module = "com.bugsnag:bugsnag-kmp", version.ref = "kmp" }
+compose-html = { module = "org.jetbrains.compose.html:html-core-js", version = "1.7.3" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
