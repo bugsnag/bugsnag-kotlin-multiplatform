@@ -10,8 +10,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -20,63 +22,70 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun App() {
-    val message = remember { mutableStateOf("") }
+    var message by remember { mutableStateOf("") }
 
     MaterialTheme {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement
+                .spacedBy(12.dp),
         ) {
             Text("Bugsnag KMP - Example app")
 
-            Button(
+            TextButton(
+                text = "Throw An Unhandled Exception",
                 onClick = {
+                    message = "Unhandled Kotlin Exception triggered"
                     throw RuntimeException("Unhandled Kotlin Exception")
-                    message.value = "Unhandled Kotlin Exception triggered"
                 },
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text("Throw An Unhandled Exception")
-            }
-
-            Button(
+            )
+            TextButton(
+                text = "A Handled Exception",
                 onClick = {
                     Bugsnag.notify(RuntimeException("Handled Kotlin Exception"))
-                    message.value = "Handled Kotlin Exception reported"
+                    message = "Handled Kotlin Exception reported"
                 },
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text("A Handled Exception")
-            }
+            )
 
-            Button(
+            TextButton(
+                text = "Attach Custom Breadcrumbs",
                 onClick = {
                     Bugsnag.leaveBreadcrumb(
                         "WebAuthFailure",
                         mapOf("reason" to "incorrect password"),
                     )
                     Bugsnag.notify(RuntimeException("Error Report with Breadcrumbs"))
-                    message.value = "Custom Breadcrumbs attached"
+                    message = "Custom Breadcrumbs attached"
                 },
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text("Attach Custom Breadcrumbs")
-            }
+            )
 
-            if (message.value.isNotEmpty()) {
+            if (message.isNotEmpty()) {
                 Text(
-                    text = message.value,
+                    text = message,
                     modifier = Modifier.padding(top = 16.dp),
                     style = MaterialTheme.typography.bodyLarge,
-                    color = Color.Red
+                    color = Color.Red,
                 )
-                LaunchedEffect(message.value) {
+                LaunchedEffect(message) {
                     delay(1500)
-                    message.value = ""
+                    message = ""
                 }
             }
         }
+    }
+}
+
+@Composable
+fun TextButton(
+    text: String,
+    onClick: () -> Unit,
+) {
+    Button(
+        onClick = { onClick() },
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Text(text)
     }
 }

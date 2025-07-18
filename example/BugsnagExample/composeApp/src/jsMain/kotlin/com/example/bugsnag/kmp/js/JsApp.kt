@@ -1,8 +1,10 @@
-package com.example.bugsnag.kmp
+package com.example.bugsnag.kmp.js
 
 import androidx.compose.runtime.Composable
 import com.bugsnag.kmp.Bugsnag
 import com.bugsnag.kmp.Configuration
+import com.example.bugsnag.kmp.BUGSNAG_API_KEY
+import com.example.bugsnag.kmp.startBugsnag
 import kotlinx.browser.window
 import org.jetbrains.compose.web.css.DisplayStyle
 import org.jetbrains.compose.web.css.FlexDirection
@@ -28,15 +30,17 @@ fun StartJsApp(rootId: String) {
             Div(
                 attrs = {
                     style {
-                        display(DisplayStyle.Flex); flexDirection(FlexDirection.Column); width(20.percent);
+                        display(DisplayStyle.Flex)
+                        flexDirection(FlexDirection.Column)
+                        width(20.percent)
                     }
                 },
             ) {
                 TextButton(
                     text = "Throw An Unhandled Exception",
                     onClick = {
-                        throw Exception("Unhandled Kotlin Exception")
                         window.alert("Unhandled Exception sent to Bugsnag")
+                        throw Exception("Unhandled Kotlin Exception")
                     },
                 )
 
