@@ -22,6 +22,7 @@ kotlin {
         iosSimulatorArm64(),
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
+            binaryOption("bundleId", "com.example.bugsnag.kmp.ios")
             baseName = "ComposeApp"
             isStatic = true
         }
@@ -89,6 +90,9 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+    lint {
+        disable.add("NullSafeMutableLiveData")
     }
 }
 
