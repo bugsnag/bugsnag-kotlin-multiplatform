@@ -16,8 +16,14 @@ public actual object Bugsnag {
 
     public actual fun isStarted(): Boolean = PlatformBugsnag.isStarted()
 
-    public actual fun notify(error: Throwable) {
-        PlatformBugsnag.notify(error)
+    public actual fun notify(error: Throwable, onError: OnErrorCallback?) {
+        if (onError != null) {
+            PlatformBugsnag.notify(error) { platformEvent ->
+                onError.onError(Event(platformEvent))
+            }
+        } else {
+            PlatformBugsnag.notify(error)
+        }
     }
 
     public actual fun leaveBreadcrumb(

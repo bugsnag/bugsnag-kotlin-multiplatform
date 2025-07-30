@@ -22,8 +22,18 @@ public actual object Bugsnag {
 
     public actual fun isStarted(): Boolean = PlatformBugsnag.isStarted()
 
-    public actual fun notify(error: Throwable) {
-        PlatformBugsnag.notify(BugsnagNSException(error))
+    public actual fun notify(error: Throwable, onError: OnErrorCallback?) {
+        if (onError != null) {
+            PlatformBugsnag.notify(BugsnagNSException(error)) { event ->
+                if (event != null) {
+                    onError.onError(Event(event))
+                } else {
+                    true
+                }
+            }
+        } else {
+            PlatformBugsnag.notify(BugsnagNSException(error))
+        }
     }
 
     public actual fun addMetadata(section: String, key: String, value: Any?) {

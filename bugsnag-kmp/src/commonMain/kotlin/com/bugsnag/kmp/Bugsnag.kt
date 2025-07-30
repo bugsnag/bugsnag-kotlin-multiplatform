@@ -1,5 +1,18 @@
 package com.bugsnag.kmp
 
+/**
+ * The main entry point for interacting with the Bugsnag error monitoring SDK.
+ *
+ * Provides methods to initialize the SDK, report errors, manage sessions, add metadata,
+ * leave breadcrumbs, and handle feature flags. This object is expected to be implemented
+ * for each supported platform.
+ *
+ * Typical usage:
+ * ```
+ * Bugsnag.start(configuration)
+ * Bugsnag.notify(RuntimeException("An error occurred"))
+ * ```
+ */
 public expect object Bugsnag {
 
     /**
@@ -9,9 +22,19 @@ public expect object Bugsnag {
      */
     public fun start(configuration: Configuration)
 
+    /**
+     * Returns `true` if the Bugsnag client has been started, otherwise `false`. If this returns
+     * `false`, then no errors will be reported and any calls to this class
+     * (other than [start] and [isStarted]) will raise errors.
+     */
     public fun isStarted(): Boolean
 
-    public fun notify(error: Throwable)
+    /**
+     * Send a non-fatal error to InsightHub.
+     *
+     * @param error the error to report
+     */
+    public fun notify(error: Throwable, onError: OnErrorCallback? = null)
 
     /**
      * Adds the specified key and value in the specified section. The value can be of
