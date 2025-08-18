@@ -1,6 +1,8 @@
 package com.bugsnag.kmp
 
-public actual typealias PlatformEvent = JsEvent
+import com.bugsnag.js.Event
+
+public actual typealias PlatformEvent = Event
 
 public actual value class Event internal constructor(
     override val native: PlatformEvent,

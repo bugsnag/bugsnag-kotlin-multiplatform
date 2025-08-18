@@ -1,8 +1,8 @@
-package com.bugsnag.kmp
+package com.bugsnag.js
 
 import kotlin.js.Date
 
-public external interface JsDevice {
+public external interface Device {
     public var id: String?
     public var hostname: String?
     public var locale: String?

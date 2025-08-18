@@ -1,19 +1,19 @@
 @file:JsModule("@bugsnag/core")
 
-package com.bugsnag.kmp
+package com.bugsnag.js
 
 @JsName("Event")
-public external class JsEvent {
+public external class Event {
     public constructor(errorClass: String, errorMessage: String)
 
     public var apiKey: String?
     public var context: String?
     public var groupingHash: String?
     public var severity: String
-    public var device: JsDevice
-    public var app: JsApp
+    public var device: Device
+    public var app: App
 
-    internal fun getUser(): JsUser
+    public fun getUser(): User
     public fun setUser(id: String?, email: String?, name: String?)
     public fun addFeatureFlag(name: String, variant: String?)
     public fun clearFeatureFlag(name: String)

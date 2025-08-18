@@ -1,5 +1,6 @@
 package com.bugsnag.kmp
 
+import com.bugsnag.js.Device
 import kotlin.js.Date
 
 /**
@@ -7,7 +8,7 @@ import kotlin.js.Date
  * using a `value class` to encapsulate any platform variations. This `external class` is effectively a form
  * of compiler work around and in reality it represents an untyped JavaScript object.
  */
-public actual external class PlatformDeviceWithState : JsDevice {
+public actual external class PlatformDeviceWithState : Device {
     override var id: String?
     override var hostname: String?
     override var locale: String?

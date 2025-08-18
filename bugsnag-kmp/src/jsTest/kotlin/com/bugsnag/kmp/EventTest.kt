@@ -1,5 +1,6 @@
 package com.bugsnag.kmp
 
+import com.bugsnag.js.Event
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -8,7 +9,7 @@ internal class EventTest {
 
     @Test
     fun eventTest() {
-        val jsEvent = JsEvent("Error", "An error occurred")
+        val jsEvent = Event("Error", "An error occurred")
         val testEvent = Event(jsEvent)
 
         testEvent.apply {
