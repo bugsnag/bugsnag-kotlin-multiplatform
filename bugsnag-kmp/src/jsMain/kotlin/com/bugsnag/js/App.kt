@@ -1,6 +1,6 @@
-package com.bugsnag.kmp
+package com.bugsnag.js
 
-public external interface JsApp {
+public external interface App {
     public var codeBundleId: String?
     public var duration: Number?
     public var durationInForeground: Number?

@@ -1,5 +1,10 @@
 package com.bugsnag.kmp
 
+import com.bugsnag.js.EnabledErrorTypes as JsEnabledErrorTypes
+import com.bugsnag.js.EndpointConfiguration as JsEndpointConfiguration
+import com.bugsnag.js.FeatureFlag as JsFeatureFlag
+import com.bugsnag.js.User as JsUser
+
 public actual typealias PlatformConfiguration = Any
 
 private external fun delete(x: dynamic): Boolean
@@ -137,14 +142,14 @@ public actual class Configuration(
     }
 
     public actual fun setEnabledErrorTypes(types: EnabledErrorTypes) {
-        obj.enabledErrorTypes = JsErrorTypes(
+        obj.enabledErrorTypes = JsEnabledErrorTypes(
             unhandledExceptions = types.jsUnhandledExceptions,
             unhandledRejections = types.jsUnhandledRejections,
         )
     }
 
     public actual fun setEndpoints(notify: String, sessions: String) {
-        obj.endpoints = JsEndpointConfigurations(notify, sessions)
+        obj.endpoints = JsEndpointConfiguration(notify, sessions)
     }
 
     /**

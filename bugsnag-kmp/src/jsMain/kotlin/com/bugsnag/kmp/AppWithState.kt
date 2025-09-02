@@ -1,6 +1,8 @@
 package com.bugsnag.kmp
 
-public actual external class PlatformAppWithState : JsApp {
+import com.bugsnag.js.App
+
+public actual external class PlatformAppWithState : App {
     override var codeBundleId: String?
     override var duration: Number?
     override var durationInForeground: Number?

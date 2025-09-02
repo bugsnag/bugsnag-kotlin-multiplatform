@@ -1,5 +1,7 @@
 package com.bugsnag.kmp
 
+import com.bugsnag.js.Bugsnag as JsBugsnag
+
 public actual object Bugsnag {
     public actual fun start(configuration: Configuration) {
         JsBugsnag.start(configuration.native)
@@ -75,21 +77,21 @@ public actual object Bugsnag {
         get() = null
 
     public actual var context: String?
-        get() = JsBugsnag.context
+        get() = JsBugsnag.getContext()
         set(value) {
-            JsBugsnag.context = value
+            JsBugsnag.setContext(value)
         }
 
     public actual var user: User
         get() {
-            val jsUser = JsBugsnag.user
+            val jsUser = JsBugsnag.getUser()
             return User(
-                jsUser.id,
-                jsUser.email,
-                jsUser.name,
+                id = jsUser.id,
+                email = jsUser.email,
+                name = jsUser.name,
             )
         }
         set(value) {
-            JsBugsnag.user = JsUser(value.id, value.email, value.name)
+            JsBugsnag.setUser(id = value.id, email = value.email, name = value.name)
         }
 }
