@@ -76,6 +76,10 @@ steps:
     concurrency: 25
     concurrency_group: 'bitbar'
     concurrency_method: eager
+    retry:
+      automatic:
+        - exit_status: 103  # Appium session failed
+          limit: 2
 
   - label: ':bitbar: :kotlin: iOS 16 KMP E2E tests'
     depends_on: "fixtures"
@@ -104,6 +108,8 @@ steps:
     retry:
       automatic:
         - exit_status: -1  # Agent was lost
+          limit: 2
+        - exit_status: 103  # Appium session failed
           limit: 2
 
 #  - label: ":bitbar: :kotlin: Browser KMP E2E tests"
