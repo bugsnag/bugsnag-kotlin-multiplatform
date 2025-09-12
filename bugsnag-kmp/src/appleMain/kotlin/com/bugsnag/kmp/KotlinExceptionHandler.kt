@@ -2,6 +2,7 @@
 
 package com.bugsnag.kmp
 
+import com.bugsnag.cocoa.BSGSeverity
 import com.bugsnag.cocoa.__bsg_kotlinCrashed
 import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExperimentalForeignApi
@@ -15,6 +16,7 @@ import platform.objc.class_getInstanceMethod
 import platform.objc.method_getImplementation
 import platform.objc.method_setImplementation
 import kotlin.concurrent.AtomicInt
+import kotlin.concurrent.AtomicReference
 import kotlin.experimental.ExperimentalNativeApi
 import com.bugsnag.cocoa.Bugsnag as PlatformBugsnag
 
@@ -43,7 +45,8 @@ internal class BugsnagNSException(
 private fun overrideUnhandled() {
     // This function is a work-around and will be removed in a future release, once we have a
     // mechanism to affect the delivery strategy directly
-    val handledState = NSClassFromString("BugsnagHandledState") ?: return
+    val handledState = NSClassFromString("BugsnagHandledState")
+        ?: return
     val originalUnhandledSelector = NSSelectorFromString("originalUnhandledValue")
         ?: return
     val unhandledSelector = NSSelectorFromString("unhandled")
@@ -59,21 +62,22 @@ private fun overrideUnhandled() {
 @OptIn(ExperimentalNativeApi::class)
 internal fun installUncaughtExceptionHandler() {
     val unhandledExceptionCrashed = AtomicInt(0)
-    var previousHookRef: ReportUnhandledExceptionHook? = null
-    val previousHook = setUnhandledExceptionHook { throwable ->
-        // We only handle a single Kotlin crash in order to avoid swizzling issues
+    val previousHookRef = AtomicReference<ReportUnhandledExceptionHook?>(null)
+    previousHookRef.value = setUnhandledExceptionHook { throwable ->
+        // We only handle a single Kotlin crash
         if (unhandledExceptionCrashed.compareAndSet(0, 1)) {
             __bsg_kotlinCrashed = true
 
             overrideUnhandled()
             PlatformBugsnag.notify(BugsnagNSException(throwable)) { event ->
                 if (event == null) return@notify true
-                event.setUnhandled(true)
+                event.severity = BSGSeverity.BSGSeverityError
+                event.unhandled = true
                 true
             }
         }
 
-        previousHookRef?.invoke(throwable)
+        previousHookRef.value?.invoke(throwable)
+        terminateWithUnhandledException(throwable)
     }
-    previousHookRef = previousHook
 }
