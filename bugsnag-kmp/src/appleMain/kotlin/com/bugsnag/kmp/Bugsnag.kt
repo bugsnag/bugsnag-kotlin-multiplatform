@@ -8,10 +8,15 @@ import com.bugsnag.cocoa.Bugsnag as PlatformBugsnag
 
 public actual object Bugsnag {
     public actual fun start(configuration: Configuration) {
-        __BSG_KMP_configureCrashReportCallback(configuration.native)
+        val unhandledExceptions = configuration.native.enabledErrorTypes.unhandledExceptions
+        if (unhandledExceptions) {
+            __BSG_KMP_configureCrashReportCallback(configuration.native)
+        }
 
         PlatformBugsnag.startWithConfiguration(configuration.native)
-        installUncaughtExceptionHandler()
+        if (unhandledExceptions) {
+            installUncaughtExceptionHandler()
+        }
     }
 
     public inline fun start(configure: Configuration.() -> Unit) {
