@@ -1,5 +1,10 @@
 # Changelog
 
+## TBD
+
+- Correctly force-terminate Cocoa apps that fatally crash to ensure the app does not appear to become unresponsive
+  [#50](https://github.com/bugsnag/bugsnag-kotlin-multiplatform/pull/50)
+
 ## [1.0.0-beta04] - 2025-07-30
 
 - Add support for `OnErrorCallback` callbacks in `Bugsnag.notify` along with initial support for the `Event` model
