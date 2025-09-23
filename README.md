@@ -10,10 +10,6 @@
 
 Detect crashes in your applications using Kotlin Multiplatform: collecting diagnostic information and immediately notifying your development team, helping you to understand and resolve issues as fast as possible.
 
-## Beta SDK
-
-This SDK is still in beta but builds upon on our existing [bugsnag-android](https://github.com/bugsnag/bugsnag-android/), [bugsnag-cocoa](https://github.com/bugsnag/bugsnag-cocoa) and [bugsnag-js](https://github.com/bugsnag/bugsnag-js) SDKs. As such it can be considered stable and safe for use in production, but possibly missing features in the Kotlin common layer that are available in the platform-specific SDKs. We are working to add more features to the common layer, but if you need a specific feature, please [open an issue](https://github.com/bugsnag/bugsnag-kotlin-multiplatform/issues/new?template=feature_request.md).
-
 ## Installation
 
 Add `bugsnag-kmp` to your `build.gradle.kts` file:
