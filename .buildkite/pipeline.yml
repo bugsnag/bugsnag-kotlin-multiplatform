@@ -152,3 +152,7 @@ steps:
       - scripts/docker-publish.sh
     env:
       JAVA_VERSION: 17
+    plugins:
+      artifacts#v1.9.0:
+        upload:
+          - bugsnag-kmp/build/outputs/aar/bugsnag-kmp-release.aar
