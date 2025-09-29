@@ -1,6 +1,6 @@
 # Changelog
 
-## TBD
+## [1.0.0] - (2025-09-23)
 
 - Correctly force-terminate Cocoa apps that fatally crash to ensure the app does not appear to become unresponsive
   [#50](https://github.com/bugsnag/bugsnag-kotlin-multiplatform/pull/50)

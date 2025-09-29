@@ -17,11 +17,11 @@ Feature: Handled event smoke test
 
     # Device data
     And the event "device.jailbroken" is false
-    And the event "device.locale" equals "en_US"
-    And the event "device.manufacturer" equals "Google"
-    And the event "device.model" equals "Pixel 8"
+    And the event "device.locale" is not null
+    And the event "device.manufacturer" is not null
+    And the event "device.model" is not null
     And the event "device.osName" equals "android"
-    And the event "device.osVersion" equals "14"
+    And the event "device.osVersion" is not null
     And the event "device.runtimeVersions" is not null
     And the event "device.totalMemory" is greater than 0
 

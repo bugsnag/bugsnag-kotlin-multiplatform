@@ -19,6 +19,5 @@ ifneq ($(VERSION),)
 	@echo "Bumping version to $(VERSION)"
 	@./scripts/bump-version.sh $(VERSION)
 else
-	@echo "Please provide a version number"
 	@./scripts/bump-version.sh
 endif
