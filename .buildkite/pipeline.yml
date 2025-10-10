@@ -12,14 +12,14 @@ steps:
       - "build/test-fixture.apk"
       - "build/android_fixture_url.txt"
       - "build/test-fixture.ipa"
-      - "build/ipa_url_bb_release.txt"
+      - "build/ios_fixture_url.txt"
       - "build/web.zip"
       - "build/fixture/*"
     commands:
       - bundle install
       - make test-fixture
       - bundle exec upload-app --farm=bb --app=./build/test-fixture.apk --app-id-file=build/android_fixture_url.txt
-      - bundle exec upload-app --farm=bb --app=./build/test-fixture.ipa --app-id-file=build/ipa_url_bb_release.txt
+      - bundle exec upload-app --farm=bb --app=./build/test-fixture.ipa --app-id-file=build/ios_fixture_url.txt
     env:
       JAVA_VERSION: 17
 
@@ -62,8 +62,8 @@ steps:
           - "maze_output/failed/**/*"
           - "maze_output/metrics.csv"
       docker-compose#v4.7.0:
-        pull: android-maze-runner
-        run: android-maze-runner
+        pull: maze-runner
+        run: maze-runner
         service-ports: true
         command:
           - "features/android"
@@ -76,6 +76,12 @@ steps:
     concurrency: 25
     concurrency_group: 'bitbar'
     concurrency_method: eager
+    retry:
+      automatic:
+        - exit_status: -1  # Agent was lost
+          limit: 2
+        - exit_status: 103  # Appium session failed
+          limit: 2
 
   - label: ':bitbar: :kotlin: iOS 16 KMP E2E tests'
     depends_on: "fixtures"
@@ -84,15 +90,15 @@ steps:
       queue: opensource
     plugins:
       artifacts#v1.9.3:
-        download: "build/ipa_url_bb_release.txt"
+        download: "build/ios_fixture_url.txt"
         upload: "maze_output/failed/**/*"
       docker-compose#v4.7.0:
-        pull: cocoa-maze-runner-bitbar
-        run: cocoa-maze-runner-bitbar
+        pull: maze-runner
+        run: maze-runner
         service-ports: true
         command:
           - "features/ios"
-          - "--app=@/app/build/ipa_url_bb_release.txt"
+          - "--app=@/app/build/ios_fixture_url.txt"
           - "--farm=bb"
           - "--device=IOS_16"
           - "--no-tunnel"
@@ -104,6 +110,8 @@ steps:
     retry:
       automatic:
         - exit_status: -1  # Agent was lost
+          limit: 2
+        - exit_status: 103  # Appium session failed
           limit: 2
 
 #  - label: ":bitbar: :kotlin: Browser KMP E2E tests"
@@ -135,6 +143,8 @@ steps:
 #      automatic:
 #        - exit_status: "*"
 #          limit: 1
+#        - exit_status: 103  # Appium session failed
+#          limit: 2
 
   # If this is the 'main' branch activate a manual publishing step
   - block: 'Trigger package publish'
