@@ -50,17 +50,10 @@ end
 When("I relaunch the app after a crash") do
   manager = Maze::Api::Appium::AppManager.new
   state = wait_for_app_state :not_running
-  if Maze.config.legacy_driver?
-    if state != :not_running
-      manager.close
-    end
-    manager.launch
-  else
-    if state != :not_running
-      manager.terminate
-    end
-    manager.activate
+  if state != :not_running
+    manager.terminate
   end
+  manager.activate
 end
 
 When('I run {string}') do |scenario_name|

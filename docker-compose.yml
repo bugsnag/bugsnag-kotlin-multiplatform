@@ -20,14 +20,12 @@ x-common-environment: &common-environment
   TEST_FIXTURE_SYMBOL_DIR:
 
 services:
-  android-maze-runner:
-    image: 855461928731.dkr.ecr.us-west-1.amazonaws.com/maze-runner-releases:latest-v9-cli
+  maze-runner:
+    image: 855461928731.dkr.ecr.us-west-1.amazonaws.com/maze-runner-releases:latest-v10-cli
     environment:
       <<: *common-environment
       BITBAR_USERNAME:
       BITBAR_ACCESS_KEY:
-      BROWSER_STACK_USERNAME:
-      BROWSER_STACK_ACCESS_KEY:
     ports:
       - "9000-9499:9339"
     volumes:
@@ -36,22 +34,6 @@ services:
       - ./maze_output:/app/maze_output
       - ./reports/:/app/reports/
       - /var/run/docker.sock:/var/run/docker.sock
-
-  cocoa-maze-runner-bitbar:
-    image: 855461928731.dkr.ecr.us-west-1.amazonaws.com/maze-runner-releases:latest-v9-cli
-    environment:
-      <<: *common-environment
-      BITBAR_USERNAME:
-      BITBAR_ACCESS_KEY:
-    ports:
-      - "9000-9499:9339"
-      - "9000-9499:9340"
-    volumes:
-      - ./build:/app/build
-      - ./features/:/app/features/
-      - ./maze_output:/app/maze_output
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./reports/:/app/reports/
 
   browser-maze-runner-bitbar:
     image: 855461928731.dkr.ecr.us-west-1.amazonaws.com/maze-runner-releases:latest-v9-cli
