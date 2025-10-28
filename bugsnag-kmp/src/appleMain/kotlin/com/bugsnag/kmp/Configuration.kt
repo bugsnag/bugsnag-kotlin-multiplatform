@@ -2,6 +2,14 @@
 
 package com.bugsnag.kmp
 
+import com.bugsnag.cocoa.BSGBreadcrumbType.BSGBreadcrumbTypeManual
+import com.bugsnag.cocoa.BSGEnabledBreadcrumbTypeError
+import com.bugsnag.cocoa.BSGEnabledBreadcrumbTypeLog
+import com.bugsnag.cocoa.BSGEnabledBreadcrumbTypeNavigation
+import com.bugsnag.cocoa.BSGEnabledBreadcrumbTypeProcess
+import com.bugsnag.cocoa.BSGEnabledBreadcrumbTypeRequest
+import com.bugsnag.cocoa.BSGEnabledBreadcrumbTypeState
+import com.bugsnag.cocoa.BSGEnabledBreadcrumbTypeUser
 import com.bugsnag.cocoa.BugsnagConfiguration
 import com.bugsnag.cocoa.BugsnagEndpointConfiguration
 import com.bugsnag.cocoa.BugsnagErrorTypes
@@ -78,6 +86,42 @@ public actual class Configuration(
             if (value != null) {
                 native.setUser(andName = value.name, userId = value.id, withEmail = value.email)
             }
+        }
+
+    public actual var breadcrumbTypes: Set<BreadcrumbType>?
+        get() {
+            @Suppress("UNCHECKED_CAST")
+            return native.enabledBreadcrumbTypes as? Set<BreadcrumbType>
+        }
+        set(value) {
+            var cocoaBreadcrumbs = 0UL
+            if (value != null) {
+                if (BreadcrumbType.MANUAL in value) {
+                    cocoaBreadcrumbs = cocoaBreadcrumbs or BSGBreadcrumbTypeManual.value
+                }
+                if (BreadcrumbType.ERROR in value) {
+                    cocoaBreadcrumbs = cocoaBreadcrumbs or BSGEnabledBreadcrumbTypeError
+                }
+                if (BreadcrumbType.LOG in value) {
+                    cocoaBreadcrumbs = cocoaBreadcrumbs or BSGEnabledBreadcrumbTypeLog
+                }
+                if (BreadcrumbType.NAVIGATION in value) {
+                    cocoaBreadcrumbs = cocoaBreadcrumbs or BSGEnabledBreadcrumbTypeNavigation
+                }
+                if (BreadcrumbType.PROCESS in value) {
+                    cocoaBreadcrumbs = cocoaBreadcrumbs or BSGEnabledBreadcrumbTypeProcess
+                }
+                if (BreadcrumbType.REQUEST in value) {
+                    cocoaBreadcrumbs = cocoaBreadcrumbs or BSGEnabledBreadcrumbTypeRequest
+                }
+                if (BreadcrumbType.STATE in value) {
+                    cocoaBreadcrumbs = cocoaBreadcrumbs or BSGEnabledBreadcrumbTypeState
+                }
+                if (BreadcrumbType.USER in value) {
+                    cocoaBreadcrumbs = cocoaBreadcrumbs or BSGEnabledBreadcrumbTypeUser
+                }
+            }
+            native.enabledBreadcrumbTypes = cocoaBreadcrumbs
         }
 
     public actual fun addRedactedKeys(redactedKeys: Collection<String>) {

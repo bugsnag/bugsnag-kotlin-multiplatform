@@ -188,4 +188,23 @@ public actual class Configuration(
         set(value) {
             obj.redactedKeys = value
         }
+    public actual var breadcrumbTypes: Set<BreadcrumbType>?
+        get() = obj.breadcrumbTypes.unsafeCast<Array<BreadcrumbType>?>()?.toSet()
+        set(value) {
+            val types = mutableListOf<String>()
+            value?.forEach { type ->
+                val mappedType = when (type) {
+                    BreadcrumbType.ERROR -> "error"
+                    BreadcrumbType.LOG -> "log"
+                    BreadcrumbType.MANUAL -> "manual"
+                    BreadcrumbType.NAVIGATION -> "navigation"
+                    BreadcrumbType.PROCESS -> "process"
+                    BreadcrumbType.REQUEST -> "request"
+                    BreadcrumbType.STATE -> "state"
+                    BreadcrumbType.USER -> "user"
+                }
+                types.add(mappedType)
+            }
+            obj.breadcrumbTypes = types.toTypedArray()
+        }
 }

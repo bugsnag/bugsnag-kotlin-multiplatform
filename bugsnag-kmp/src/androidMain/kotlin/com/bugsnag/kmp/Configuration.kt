@@ -80,6 +80,49 @@ public actual class Configuration(
             native.versionCode = value
         }
 
+    public actual var breadcrumbTypes: Set<BreadcrumbType>?
+        get() {
+            val androidTypes = native.enabledBreadcrumbTypes ?: return null
+            val types = mutableSetOf<BreadcrumbType>()
+            for (type in androidTypes) {
+                val mappedType = when (type) {
+                    com.bugsnag.android.BreadcrumbType.MANUAL -> BreadcrumbType.MANUAL
+                    com.bugsnag.android.BreadcrumbType.ERROR -> BreadcrumbType.ERROR
+                    com.bugsnag.android.BreadcrumbType.NAVIGATION -> BreadcrumbType.NAVIGATION
+                    com.bugsnag.android.BreadcrumbType.PROCESS -> BreadcrumbType.PROCESS
+                    com.bugsnag.android.BreadcrumbType.REQUEST -> BreadcrumbType.REQUEST
+                    com.bugsnag.android.BreadcrumbType.STATE -> BreadcrumbType.STATE
+                    com.bugsnag.android.BreadcrumbType.USER -> BreadcrumbType.USER
+                    else -> null
+                }
+                if (mappedType != null) {
+                    types.add(mappedType)
+                }
+            }
+            return types
+        }
+        set(value) {
+            val types = mutableSetOf<com.bugsnag.android.BreadcrumbType>()
+            if (value != null) {
+                for (type in value) {
+                    val mappedType = when (type) {
+                        BreadcrumbType.MANUAL -> com.bugsnag.android.BreadcrumbType.MANUAL
+                        BreadcrumbType.ERROR -> com.bugsnag.android.BreadcrumbType.ERROR
+                        BreadcrumbType.NAVIGATION -> com.bugsnag.android.BreadcrumbType.NAVIGATION
+                        BreadcrumbType.PROCESS -> com.bugsnag.android.BreadcrumbType.PROCESS
+                        BreadcrumbType.REQUEST -> com.bugsnag.android.BreadcrumbType.REQUEST
+                        BreadcrumbType.STATE -> com.bugsnag.android.BreadcrumbType.STATE
+                        BreadcrumbType.USER -> com.bugsnag.android.BreadcrumbType.USER
+                        else -> null
+                    }
+                    if (mappedType != null) {
+                        types.add(mappedType)
+                    }
+                }
+            }
+            native.enabledBreadcrumbTypes = types
+        }
+
     public actual fun addRedactedKeys(redactedKeys: Collection<String>) {
         redactedKeys.mapTo(native.redactedKeys) { Pattern.compile(it, Pattern.LITERAL) }
     }

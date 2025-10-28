@@ -74,6 +74,8 @@ public expect class Configuration : PlatformWrapper<PlatformConfiguration> {
      */
     public var user: User?
 
+    public var breadcrumbTypes: Set<BreadcrumbType>?
+
     /**
      * Adds keys to be redacted from error reports for security/privacy.
      * Any keys matching these values (case-insensitive) will be redacted
