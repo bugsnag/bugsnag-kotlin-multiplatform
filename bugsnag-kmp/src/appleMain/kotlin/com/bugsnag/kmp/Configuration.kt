@@ -88,9 +88,8 @@ public actual class Configuration(
             }
         }
 
-    public actual var breadcrumbTypes: Set<BreadcrumbType>?
+    public actual var enabledBreadcrumbTypes: Set<BreadcrumbType>?
         get() {
-            @Suppress("UNCHECKED_CAST")
             return native.enabledBreadcrumbTypes as? Set<BreadcrumbType>
         }
         set(value) {

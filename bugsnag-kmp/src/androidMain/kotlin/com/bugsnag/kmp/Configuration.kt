@@ -80,7 +80,7 @@ public actual class Configuration(
             native.versionCode = value
         }
 
-    public actual var breadcrumbTypes: Set<BreadcrumbType>?
+    public actual var enabledBreadcrumbTypes: Set<BreadcrumbType>?
         get() {
             val androidTypes = native.enabledBreadcrumbTypes ?: return null
             val types = mutableSetOf<BreadcrumbType>()
@@ -105,22 +105,10 @@ public actual class Configuration(
             val types = mutableSetOf<com.bugsnag.android.BreadcrumbType>()
             if (value != null) {
                 for (type in value) {
-                    val mappedType = when (type) {
-                        BreadcrumbType.MANUAL -> com.bugsnag.android.BreadcrumbType.MANUAL
-                        BreadcrumbType.ERROR -> com.bugsnag.android.BreadcrumbType.ERROR
-                        BreadcrumbType.NAVIGATION -> com.bugsnag.android.BreadcrumbType.NAVIGATION
-                        BreadcrumbType.PROCESS -> com.bugsnag.android.BreadcrumbType.PROCESS
-                        BreadcrumbType.REQUEST -> com.bugsnag.android.BreadcrumbType.REQUEST
-                        BreadcrumbType.STATE -> com.bugsnag.android.BreadcrumbType.STATE
-                        BreadcrumbType.USER -> com.bugsnag.android.BreadcrumbType.USER
-                        else -> null
-                    }
-                    if (mappedType != null) {
-                        types.add(mappedType)
-                    }
+                    types.add(type.toPlatformType())
                 }
             }
-            native.enabledBreadcrumbTypes = types
+            native.enabledBreadcrumbTypes = value.orEmpty().mapTo(HashSet()) { it.toPlatformType() }
         }
 
     public actual fun addRedactedKeys(redactedKeys: Collection<String>) {

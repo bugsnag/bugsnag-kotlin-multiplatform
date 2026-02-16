@@ -74,7 +74,7 @@ public expect class Configuration : PlatformWrapper<PlatformConfiguration> {
      */
     public var user: User?
 
-    public var breadcrumbTypes: Set<BreadcrumbType>?
+    public var enabledBreadcrumbTypes: Set<BreadcrumbType>?
 
     /**
      * Adds keys to be redacted from error reports for security/privacy.

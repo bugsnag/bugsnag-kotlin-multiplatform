@@ -188,23 +188,74 @@ public actual class Configuration(
         set(value) {
             obj.redactedKeys = value
         }
-    public actual var breadcrumbTypes: Set<BreadcrumbType>?
-        get() = obj.breadcrumbTypes.unsafeCast<Array<BreadcrumbType>?>()?.toSet()
-        set(value) {
-            val types = mutableListOf<String>()
-            value?.forEach { type ->
-                val mappedType = when (type) {
-                    BreadcrumbType.ERROR -> "error"
-                    BreadcrumbType.LOG -> "log"
-                    BreadcrumbType.MANUAL -> "manual"
-                    BreadcrumbType.NAVIGATION -> "navigation"
-                    BreadcrumbType.PROCESS -> "process"
-                    BreadcrumbType.REQUEST -> "request"
-                    BreadcrumbType.STATE -> "state"
-                    BreadcrumbType.USER -> "user"
-                }
-                types.add(mappedType)
+
+    public actual var enabledBreadcrumbTypes: Set<BreadcrumbType>?
+        get() {
+            val nativeTypes = obj.enabledBreadcrumbTypes
+            if (nativeTypes == 0uL) {
+                return null
             }
-            obj.breadcrumbTypes = types.toTypedArray()
+
+            val breadcrumbTypes = mutableSetOf<BreadcrumbType>()
+
+            if (nativeTypes and BreadcrumbType.ERROR != 0uL) {
+                breadcrumbTypes.add(BreadcrumbType.ERROR)
+            }
+
+            if (nativeTypes and BreadcrumbType.LOG != 0uL) {
+                breadcrumbTypes.add(BreadcrumbType.LOG)
+            }
+
+            if (nativeTypes and BreadcrumbType.PROCESS != 0uL) {
+                breadcrumbTypes.add(BreadcrumbType.PROCESS)
+            }
+
+            if (nativeTypes and BreadcrumbType.NAVIGATION != 0uL) {
+                breadcrumbTypes.add(BreadcrumbType.NAVIGATION)
+            }
+
+            if (nativeTypes and BreadcrumbType.STATE != 0uL) {
+                breadcrumbTypes.add(BreadcrumbType.STATE)
+            }
+
+            if (nativeTypes and BreadcrumbType.MANUAL != 0uL) {
+                breadcrumbTypes.add(BreadcrumbType.MANUAL)
+            }
+
+            if (nativeTypes and BreadcrumbType.REQUEST != 0uL) {
+                breadcrumbTypes.add(BreadcrumbType.REQUEST)
+            }
+
+            if (nativeTypes and BreadcrumbType.USER != 0uL) {
+                breadcrumbTypes.add(BreadcrumbType.USER)
+            }
+            return breadcrumbTypes
+        }
+        set(value) {
+            val breadcrumbTypes = mutableSetOf<BreadcrumbType>()
+            if (value != null) {
+                if (BreadcrumbType.ERROR in value) {
+                    breadcrumbTypes.add(BreadcrumbType.ERROR)
+                }
+                if (BreadcrumbType.LOG in value) {
+                    breadcrumbTypes.add(BreadcrumbType.LOG)
+                }
+                if (BreadcrumbType.PROCESS in value) {
+                    breadcrumbTypes.add(BreadcrumbType.PROCESS)
+                }
+                if (BreadcrumbType.NAVIGATION in value) {
+                    breadcrumbTypes.add(BreadcrumbType.NAVIGATION)
+                }
+                if (BreadcrumbType.STATE in value) {
+                    breadcrumbTypes.add(BreadcrumbType.STATE)
+                }
+                if (BreadcrumbType.MANUAL in value) {
+                    breadcrumbTypes.add(BreadcrumbType.MANUAL)
+                }
+                if (BreadcrumbType.REQUEST in value) {
+                    breadcrumbTypes.add(BreadcrumbType.REQUEST)
+                }
+            }
+            obj.enabledBreadcrumbTypes = breadcrumbTypes
         }
 }
