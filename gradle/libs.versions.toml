@@ -27,3 +27,4 @@ dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.32.0" }
 native-cocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
+jsPlainObject = {id = 'org.jetbrains.kotlin.plugin.js-plain-objects', version.ref = "kotlin" }

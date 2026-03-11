@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.dokka)
+    alias(libs.plugins.jsPlainObject)
 }
 
 version = "${project.properties["VERSION_NAME"]}"
@@ -73,6 +74,7 @@ kotlin {
             }
         }
         binaries.library()
+        browser()
     }
 
     applyDefaultHierarchyTemplate()

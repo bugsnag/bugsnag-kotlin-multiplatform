@@ -192,70 +192,16 @@ public actual class Configuration(
     public actual var enabledBreadcrumbTypes: Set<BreadcrumbType>?
         get() {
             val nativeTypes = obj.enabledBreadcrumbTypes
-            if (nativeTypes == 0uL) {
-                return null
-            }
+                ?.unsafeCast<Array<String>>()
+                ?: return null
 
-            val breadcrumbTypes = mutableSetOf<BreadcrumbType>()
-
-            if (nativeTypes and BreadcrumbType.ERROR != 0uL) {
-                breadcrumbTypes.add(BreadcrumbType.ERROR)
+            return nativeTypes.mapNotNullTo(mutableSetOf()) {
+                breadcrumbTypeFromPlatformType(it)
             }
-
-            if (nativeTypes and BreadcrumbType.LOG != 0uL) {
-                breadcrumbTypes.add(BreadcrumbType.LOG)
-            }
-
-            if (nativeTypes and BreadcrumbType.PROCESS != 0uL) {
-                breadcrumbTypes.add(BreadcrumbType.PROCESS)
-            }
-
-            if (nativeTypes and BreadcrumbType.NAVIGATION != 0uL) {
-                breadcrumbTypes.add(BreadcrumbType.NAVIGATION)
-            }
-
-            if (nativeTypes and BreadcrumbType.STATE != 0uL) {
-                breadcrumbTypes.add(BreadcrumbType.STATE)
-            }
-
-            if (nativeTypes and BreadcrumbType.MANUAL != 0uL) {
-                breadcrumbTypes.add(BreadcrumbType.MANUAL)
-            }
-
-            if (nativeTypes and BreadcrumbType.REQUEST != 0uL) {
-                breadcrumbTypes.add(BreadcrumbType.REQUEST)
-            }
-
-            if (nativeTypes and BreadcrumbType.USER != 0uL) {
-                breadcrumbTypes.add(BreadcrumbType.USER)
-            }
-            return breadcrumbTypes
         }
         set(value) {
-            val breadcrumbTypes = mutableSetOf<BreadcrumbType>()
-            if (value != null) {
-                if (BreadcrumbType.ERROR in value) {
-                    breadcrumbTypes.add(BreadcrumbType.ERROR)
-                }
-                if (BreadcrumbType.LOG in value) {
-                    breadcrumbTypes.add(BreadcrumbType.LOG)
-                }
-                if (BreadcrumbType.PROCESS in value) {
-                    breadcrumbTypes.add(BreadcrumbType.PROCESS)
-                }
-                if (BreadcrumbType.NAVIGATION in value) {
-                    breadcrumbTypes.add(BreadcrumbType.NAVIGATION)
-                }
-                if (BreadcrumbType.STATE in value) {
-                    breadcrumbTypes.add(BreadcrumbType.STATE)
-                }
-                if (BreadcrumbType.MANUAL in value) {
-                    breadcrumbTypes.add(BreadcrumbType.MANUAL)
-                }
-                if (BreadcrumbType.REQUEST in value) {
-                    breadcrumbTypes.add(BreadcrumbType.REQUEST)
-                }
-            }
-            obj.enabledBreadcrumbTypes = breadcrumbTypes
+            obj.enabledBreadcrumbTypes = value
+                ?.map { it.toPlatformType() }
+                ?.toTypedArray()
         }
 }

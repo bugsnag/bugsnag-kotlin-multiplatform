@@ -102,12 +102,6 @@ public actual class Configuration(
             return types
         }
         set(value) {
-            val types = mutableSetOf<com.bugsnag.android.BreadcrumbType>()
-            if (value != null) {
-                for (type in value) {
-                    types.add(type.toPlatformType())
-                }
-            }
             native.enabledBreadcrumbTypes = value.orEmpty().mapTo(HashSet()) { it.toPlatformType() }
         }
 
